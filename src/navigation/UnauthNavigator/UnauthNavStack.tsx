@@ -10,12 +10,14 @@ import UnauthNavStackHeader from "./UnauthNavStackHeader";
 import RegisterScreen from "src/features/register/RegisterScreen";
 import RegisterSuccessScreen from "src/features/register/RegisterSuccessScreen";
 import OnboardingScreen from "src/features/onboarding/OnboardingScreen";
+import TrackNavigator from "src/features/track/TrackNavigator";
 
 export type UnauthNavParams = {
   onboarding: undefined;
   login: undefined;
   register: undefined;
   "register-success": undefined;
+  track: undefined;
 };
 
 export type UnauthNavProps = NativeStackNavigationProp<UnauthNavParams>;
@@ -35,6 +37,7 @@ const UnauthNavStack = () => {
       <Stack.Screen name="login" component={LoginScreen} />
       <Stack.Screen name="register" component={RegisterScreen} />
       <Stack.Screen name="register-success" component={RegisterSuccessScreen} />
+      <Stack.Screen name="track" component={TrackNavigator} />
     </Stack.Navigator>
   );
 };

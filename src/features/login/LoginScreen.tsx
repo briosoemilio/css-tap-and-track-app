@@ -40,7 +40,7 @@ const LoginScreen = () => {
         <Text variant="body2bold" style={{ marginBottom: 12 }}>
           For tracking peripherals, no account needed
         </Text>
-        <Button title="Track Now" onPress={() => navigation.push("register")} />
+        <Button title="Track Now" onPress={() => navigation.push("track")} />
       </View>
     </ScreenContainer>
   );
