@@ -23,7 +23,7 @@ const TextField = (props: TextFieldProps) => {
   const { label, containerStyle = {}, labelStyle = {}, error, ...rest } = props;
   return (
     <View style={containerStyle}>
-      <Text variant="body1regular" style={{ marginBottom: 12, ...labelStyle }}>
+      <Text variant="body2regular" style={{ marginBottom: 12, ...labelStyle }}>
         {label}
       </Text>
       <TextInput

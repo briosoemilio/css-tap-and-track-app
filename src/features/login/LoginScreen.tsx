@@ -32,7 +32,7 @@ const LoginScreen = () => {
         <Button
           title="Click here to sign up"
           variant="text"
-          onPress={() => navigation.push("register")}
+          onPress={() => navigation.push("register-onboarding")}
         />
       </ScrollView>
       <View style={styles.buttonContainer}>

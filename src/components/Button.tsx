@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedbackProps,
   ViewStyle,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import { COLORS } from "src/constants/colors";
@@ -16,7 +17,8 @@ type ButtonComponentProps = TouchableWithoutFeedbackProps & {
   onPress?: () => void;
   style?: ViewStyle;
   disabled?: boolean;
-  variant?: "solid" | "text";
+  variant?: "solid" | "text" | "outlined";
+  isLoading?: boolean;
 };
 
 const Button = (props: ButtonComponentProps) => {
@@ -26,6 +28,7 @@ const Button = (props: ButtonComponentProps) => {
     style = {},
     disabled = false,
     variant = "solid",
+    isLoading = false,
     ...rest
   } = props;
   return (
@@ -33,7 +36,11 @@ const Button = (props: ButtonComponentProps) => {
       onPress={onPress}
       style={[
         styles.button,
-        variant === "solid" ? styles.buttonSolid : styles.buttonText,
+        variant === "solid"
+          ? styles.buttonSolid
+          : variant === "outlined"
+          ? styles.buttonOutlined
+          : styles.buttonText,
         style,
       ]}
       disabled={disabled}
@@ -43,7 +50,8 @@ const Button = (props: ButtonComponentProps) => {
         variant="body2bold"
         style={variant === "text" ? styles.textBlue : {}}
       >
-        {title}
+        {`${title}    `}
+        {isLoading && <ActivityIndicator color={COLORS.white} />}
       </Text>
     </TouchableOpacity>
   );
@@ -68,5 +76,10 @@ const styles = StyleSheet.create({
   textBlue: {
     color: COLORS.blue,
     textDecorationLine: "underline",
+  },
+  buttonOutlined: {
+    backgroundColor: COLORS.transparent,
+    borderColor: COLORS.blue,
+    borderWidth: 5,
   },
 });

@@ -27,7 +27,7 @@ const LoginForm = () => {
     setIsLoading(true);
     try {
       const res = await login(data);
-      await onLogin(res)
+      await onLogin(res);
     } catch (err) {
       const errMessage = getErrorMessage(err);
       if (errMessage.includes("email not found")) {
@@ -73,6 +73,7 @@ const LoginForm = () => {
         title="Login"
         style={{ marginTop: 24 }}
         onPress={handleSubmit(onSubmit)}
+        isLoading={isLoading}
       />
     </>
   );

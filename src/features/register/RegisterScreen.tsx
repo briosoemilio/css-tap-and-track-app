@@ -6,25 +6,23 @@ import TextField from "src/components/TextField/TextField";
 import Button from "src/components/Button";
 import { CONSTANTS } from "src/constants/constants";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { UnauthNavParams } from "src/navigation/UnauthNavigator/UnauthNavStack";
+import { Role } from "src/types/Role";
+import RegisterStudentForm from "./components/RegisterStudentForm";
+import RegisterProfessorForm from "./components/RegisterProfessorForm";
 
 const RegisterScreen = () => {
+  const route = useRoute<RouteProp<UnauthNavParams, "register">>();
+  const { role } = route.params;
   const navigation = useUnauthNavigation();
 
   return (
     <ScreenContainer>
       <ScrollView style={styles.mainContainer}>
         <Text variant="header2">Sign Up</Text>
-        <TextField label="Email" containerStyle={styles.mtmb} />
-        <TextField label="Password" containerStyle={styles.mb12} />
-        <TextField label="Confirm Password" containerStyle={styles.mb12} />
-        <TextField label="Full Name" containerStyle={styles.mb12} />
-        <TextField label="Year and Section" containerStyle={styles.mb12} />
-        <TextField label="ID Number" containerStyle={styles.mb12} />
-        <Button
-          title="SIGN UP"
-          style={{ marginTop: 12, marginBottom: 24 }}
-          onPress={() => navigation.push("register-success")}
-        />
+        {role === Role.STUDENT && <RegisterStudentForm />}
+        {role === Role.PROF && <RegisterProfessorForm />}
       </ScrollView>
     </ScreenContainer>
   );
