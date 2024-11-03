@@ -1,14 +1,21 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import React from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 import GreenCheck from "@assets/png/green-check.png";
 import Button from "src/components/Button";
+import { CONSTANTS } from "src/constants/constants";
+import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 
 const RegisterSuccessScreen = () => {
+  const navigation = useUnauthNavigation();
+
   return (
     <ScreenContainer>
-      <View style={{ display: "flex", alignItems: "center" }}>
+      <ScrollView
+        style={styles.mainContainer}
+        contentContainerStyle={styles.contentContainer}
+      >
         <Image
           source={GreenCheck}
           style={{ width: 93, height: 85, marginVertical: 24 }}
@@ -23,12 +30,27 @@ const RegisterSuccessScreen = () => {
             together!
           </Text>
         </View>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Back to Log In"
+          style={{ marginTop: 24 }}
+          onPress={() => navigation.push("login")}
+        />
       </View>
-      <Button title="Back to Log In" style={{ marginTop: 24 }} />
     </ScreenContainer>
   );
 };
 
 export default RegisterSuccessScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mainContainer: { paddingHorizontal: CONSTANTS.layout },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 80,
+  },
+  buttonContainer: { paddingHorizontal: CONSTANTS.layout },
+});

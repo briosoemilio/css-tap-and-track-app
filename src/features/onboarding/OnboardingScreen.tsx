@@ -10,6 +10,8 @@ import ChevronRight from "@assets/icons/chevron-right.svg";
 
 import { COLORS } from "src/constants/colors";
 import Button from "src/components/Button";
+import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
+import { CONSTANTS } from "src/constants/constants";
 
 const PermissionButton = (props: {
   text: string;
@@ -41,6 +43,7 @@ const PermissionButton = (props: {
 };
 
 const OnboardingScreen = () => {
+  const navigation = useUnauthNavigation();
   return (
     <ScreenContainer>
       <ScrollView
@@ -59,7 +62,7 @@ const OnboardingScreen = () => {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <Button title="Get Started" />
+        <Button title="Get Started" onPress={() => navigation.push("login")} />
       </View>
     </ScreenContainer>
   );
@@ -68,7 +71,7 @@ const OnboardingScreen = () => {
 export default OnboardingScreen;
 
 const styles = StyleSheet.create({
-  mainContainer: { paddingHorizontal: 20 },
+  mainContainer: { paddingHorizontal: CONSTANTS.layout },
   contentContainer: {
     flexGrow: 1,
     justifyContent: "center",
