@@ -9,7 +9,6 @@ const wretch = () => {
 
   return _wretch(API_BASE_URL)
     .middlewares(middlewares)
-    .catcher(401, catcher)
     .catcherFallback((err) => {
       throw err;
     });

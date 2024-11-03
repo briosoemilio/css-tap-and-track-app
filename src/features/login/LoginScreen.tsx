@@ -2,10 +2,11 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import React from "react";
 import ScreenContainer from "../../components/ScreenContainer";
 import Text from "src/components/Text";
-import TextField from "src/components/TextField";
+import TextField from "src/components/TextField/TextField";
 import Button from "src/components/Button";
 import { CONSTANTS } from "src/constants/constants";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
+import LoginForm from "./components/LoginForm";
 
 const LoginScreen = () => {
   const navigation = useUnauthNavigation();
@@ -16,9 +17,7 @@ const LoginScreen = () => {
         contentContainerStyle={styles.contentContainer}
       >
         <Text variant="header2">Login</Text>
-        <TextField label="Email" containerStyle={{ marginTop: 12 }} />
-        <TextField label="Password" containerStyle={{ marginTop: 12 }} />
-        <Button title="Login" style={{ marginTop: 24 }} />
+        <LoginForm />
         <View
           style={{
             display: "flex",

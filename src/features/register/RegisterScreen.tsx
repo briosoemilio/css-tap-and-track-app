@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import React from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
-import TextField from "src/components/TextField";
+import TextField from "src/components/TextField/TextField";
 import Button from "src/components/Button";
 import { CONSTANTS } from "src/constants/constants";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";

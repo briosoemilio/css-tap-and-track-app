@@ -17,7 +17,7 @@ const AuthNavStack = () => {
     <AuthStack.Navigator initialRouteName="main">
       <AuthStack.Screen
         name="main"
-        component={HomeScreen}
+        component={BottomTabNavStack}
         options={{ headerShown: false }}
       />
     </AuthStack.Navigator>

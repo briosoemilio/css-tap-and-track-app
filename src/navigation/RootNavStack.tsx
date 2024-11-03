@@ -5,9 +5,9 @@ import UnauthNavStack from "./UnauthNavigator/UnauthNavStack";
 import AuthNavStack from "./AuthNavigator/AuthNavStack";
 
 const RootNavStack = () => {
-  const { session } = useAuth();
+  const { user } = useAuth();
 
-  if (session === "") return <UnauthNavStack />;
+  if (user === undefined) return <UnauthNavStack />;
 
   return <AuthNavStack />;
 };
