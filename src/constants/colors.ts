@@ -5,4 +5,5 @@ export const COLORS = {
   darkBlue: "#395784",
   red: "#FF0004",
   marron: "#974647",
+  transparent: "transparent",
 };
