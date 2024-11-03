@@ -14,12 +14,12 @@ import { COLORS } from "src/constants/colors";
 export type TextFieldProps = TextInputProps & {
   label: string;
   required?: boolean;
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TextStyle | TextStyle[];
 };
 
 const TextField = (props: TextFieldProps) => {
-  const { label, containerStyle, labelStyle = {}, ...rest } = props;
+  const { label, containerStyle = {}, labelStyle = {}, ...rest } = props;
   return (
     <View style={containerStyle}>
       <Text variant="body1regular" style={{ marginBottom: 12, ...labelStyle }}>
