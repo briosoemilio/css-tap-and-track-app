@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 
@@ -12,6 +12,7 @@ import { COLORS } from "src/constants/colors";
 import Button from "src/components/Button";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 import { CONSTANTS } from "src/constants/constants";
+import wretch from "src/lib/wretch/wretch";
 
 const PermissionButton = (props: {
   text: string;
@@ -44,6 +45,21 @@ const PermissionButton = (props: {
 
 const OnboardingScreen = () => {
   const navigation = useUnauthNavigation();
+
+  const testFetch = async () => {
+    const res = await wretch()
+      .url("/users")
+      .get()
+      .json()
+      .catch((err) => {
+        console.log("Error po : ", JSON.stringify(err));
+      });
+
+    console.log("here res : ", res);
+  };
+  useEffect(() => {
+    testFetch();
+  }, []);
   return (
     <ScreenContainer>
       <ScrollView
