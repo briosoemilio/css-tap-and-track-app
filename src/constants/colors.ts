@@ -4,6 +4,7 @@ export const COLORS = {
   blue: "#2194F2",
   darkBlue: "#395784",
   red: "#FF0004",
-  marron: "#974647",
+  maroon: "#974647",
+  gray: "#293038",
   transparent: "transparent",
 };

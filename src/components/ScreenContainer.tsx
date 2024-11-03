@@ -5,7 +5,7 @@ import { COLORS } from "../constants/colors";
 const ScreenContainer = (props: { children: ReactNode }) => {
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.black, flex: 1 }}>
-      <ScrollView style={{ padding: 16 }}>{props.children}</ScrollView>
+      {props.children}
     </SafeAreaView>
   );
 };
