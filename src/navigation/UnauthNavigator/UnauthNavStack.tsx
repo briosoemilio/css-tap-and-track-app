@@ -33,7 +33,9 @@ const UnauthNavStack = () => {
     <Stack.Navigator
       initialRouteName="onboarding"
       screenOptions={{
-        header: () => <UnauthNavStackHeader />,
+        header: ({ navigation }) => (
+          <UnauthNavStackHeader canGoBack={navigation.canGoBack()} />
+        ),
       }}
     >
       <Stack.Screen name="onboarding" component={OnboardingScreen} />
