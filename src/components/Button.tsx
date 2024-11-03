@@ -50,7 +50,7 @@ const Button = (props: ButtonComponentProps) => {
         variant="body2bold"
         style={variant === "text" ? styles.textBlue : {}}
       >
-        {`${title}    `}
+        {title}
         {isLoading && <ActivityIndicator color={COLORS.white} />}
       </Text>
     </TouchableOpacity>
