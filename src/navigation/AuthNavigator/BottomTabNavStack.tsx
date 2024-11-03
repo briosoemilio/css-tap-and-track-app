@@ -20,6 +20,7 @@ const BottomTabNavStack = () => {
     <BottomStack.Navigator
       initialRouteName="home"
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarIcon: () => {
           const icon = () => {
             switch (route.name) {

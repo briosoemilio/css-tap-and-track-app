@@ -7,4 +7,5 @@ export const COLORS = {
   maroon: "#974647",
   gray: "#293038",
   transparent: "transparent",
+  teal: "#395784",
 };

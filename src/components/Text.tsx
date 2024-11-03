@@ -17,7 +17,8 @@ export type TextComponentProps = TextProps & {
 };
 
 export type FontVariantKeys =
-  | "header1"
+  | "headerInstrument1"
+  | "headerInstrument2"
   | "header2"
   | "header3"
   | "body1regular"
@@ -57,7 +58,11 @@ export default Text;
 
 const styles = StyleSheet.create({
   textWhite: { color: COLORS.white },
-  header1: {
+  headerInstrument1: {
+    fontFamily: "Instrument-Serif",
+    fontSize: 32,
+  },
+  headerInstrument2: {
     fontFamily: "Instrument-Serif",
     fontSize: 20,
   },

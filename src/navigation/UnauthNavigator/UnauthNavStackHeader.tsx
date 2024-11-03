@@ -32,7 +32,7 @@ const UnauthNavStackHeader = (props: { canGoBack?: boolean }) => {
         )}
         <Image source={CCSLogo} style={{ width: 208, height: 160 }} />
         {!canGoBack && (
-          <TextComponent variant="header1" textAlign="center">
+          <TextComponent variant="headerInstrument2" textAlign="center">
             {`CCS: Tap and Track Computer \n Laboratory System`}
           </TextComponent>
         )}
