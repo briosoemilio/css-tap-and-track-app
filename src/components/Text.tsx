@@ -4,15 +4,16 @@ import {
   Text as RNText,
   TextStyle,
   View,
+  TextProps,
 } from "react-native";
 import React, { ReactNode } from "react";
 import { COLORS } from "src/constants/colors";
 
-export type TextComponentProps = {
+export type TextComponentProps = TextProps & {
   variant?: FontVariantKeys;
-  style?: StyleProp<TextStyle>;
   children: ReactNode;
   textAlign?: "auto" | "center" | "justify" | "left" | "right";
+  style?: TextStyle | TextStyle[];
 };
 
 export type FontVariantKeys =
@@ -30,13 +31,22 @@ const Text = (props: TextComponentProps) => {
   const {
     children,
     variant = "body1regular",
-    style,
     textAlign = "left",
+    style = {},
+    ...rest
   } = props;
+
   return (
     <RNText
-      style={[styles[variant], styles.textWhite, { textAlign }]}
-      {...props}
+      style={[
+        {
+          ...styles[variant],
+          ...styles.textWhite,
+          textAlign,
+        },
+        style,
+      ]}
+      {...rest}
     >
       {children}
     </RNText>
@@ -53,27 +63,31 @@ const styles = StyleSheet.create({
   },
   header2: {
     fontFamily: "Inter-Bold",
-    fontSize: 24,
+    fontSize: 32,
   },
   header3: {
     fontFamily: "Inter-Bold",
-    fontSize: 16,
+    fontSize: 24,
+  },
+  header4: {
+    fontFamily: "Inter-Bold",
+    fontSize: 20,
   },
   body1regular: {
     fontFamily: "Inter-Regular",
-    fontSize: 16,
+    fontSize: 20,
   },
   body1bold: {
     fontFamily: "Inter-Bold",
-    fontSize: 16,
+    fontSize: 20,
   },
   body2regular: {
     fontFamily: "Inter-Regular",
-    fontSize: 14,
+    fontSize: 16,
   },
   body2bold: {
     fontFamily: "Inter-Bold",
-    fontSize: 14,
+    fontSize: 16,
   },
   body3regular: {
     fontFamily: "Inter-Regular",
