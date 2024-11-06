@@ -3,6 +3,19 @@
 export default ({ config }) => {
   return {
     ...config,
+    expo: {
+      plugins: [
+        [
+          "react-native-nfc-manager",
+          {
+            nfcPermission: "Custom permission message",
+            selectIdentifiers: ["A0000002471001"],
+            systemCodes: ["8008"],
+            includeNdefEntitlement: false,
+          },
+        ],
+      ],
+    },
     name: "CCS Tap and Track",
     slug: "ccs-tap-and-track",
     version: "1.0.0",
