@@ -81,15 +81,13 @@ const LoginScreen = () => {
             variant="text"
             onPress={() => navigation.push("track")}
           />
-        </ScrollView>
-        <View style={styles.buttonContainer}>
           <Button
             title="Login"
             style={{ marginTop: 24 }}
             onPress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />
-        </View>
+        </ScrollView>
       </ScreenContainer>
     </FormProvider>
   );
