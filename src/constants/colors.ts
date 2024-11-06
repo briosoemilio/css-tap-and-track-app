@@ -8,4 +8,5 @@ export const COLORS = {
   gray: "#293038",
   transparent: "transparent",
   teal: "#395784",
+  green: "#34cc33",
 };
