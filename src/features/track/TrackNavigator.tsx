@@ -14,7 +14,10 @@ export type TrackNavParams = {
   "choose-track": undefined;
   nfc: undefined;
   qr: undefined;
-  "peripheral-details": undefined;
+  "peripheral-details": {
+    id: number;
+    type: string;
+  };
 };
 
 export type TrackNavProps = NativeStackNavigationProp<TrackNavParams>;
