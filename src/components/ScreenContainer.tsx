@@ -4,7 +4,9 @@ import { COLORS } from "../constants/colors";
 
 const ScreenContainer = (props: { children: ReactNode }) => {
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.black, flex: 1 }}>
+    <SafeAreaView
+      style={{ backgroundColor: COLORS.black, flex: 1, paddingBottom: 24 }}
+    >
       {props.children}
     </SafeAreaView>
   );
