@@ -28,7 +28,6 @@ export type UnauthNavProps = NativeStackNavigationProp<UnauthNavParams>;
 const Stack = createNativeStackNavigator<UnauthNavParams>();
 
 const UnauthNavStack = () => {
-  const { onLogin } = useAuth();
   return (
     <Stack.Navigator
       initialRouteName="onboarding"
