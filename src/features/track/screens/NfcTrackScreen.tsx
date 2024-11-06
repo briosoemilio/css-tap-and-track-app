@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import Button from "src/components/Button";
@@ -7,9 +7,45 @@ import Button from "src/components/Button";
 import NFCIcon from "@assets/icons/nfc-track-icon.svg";
 import Text from "src/components/Text";
 import { useTrackNavigation } from "../useTrackNavigation";
+import NfcManager, { NfcTech, Ndef } from "react-native-nfc-manager";
 
 const NFCTrackScreen = () => {
   const navigation = useTrackNavigation();
+  async function readNdef() {
+    try {
+      // register for the NFC tag with NDEF in it
+      await NfcManager.requestTechnology(NfcTech.Ndef);
+      // the resolved tag object will contain `ndefMessage` property
+      const tag = await NfcManager.getTag();
+      if (tag?.ndefMessage) {
+        for (let record of tag.ndefMessage) {
+          if (record?.tnf === Ndef.TNF_WELL_KNOWN) {
+            // Decode the raw text payload from the NFC record
+            const payload = record?.payload as unknown as Uint8Array;
+            const text = JSON.parse(Ndef.text.decodePayload(payload));
+            const json = JSON.parse(text);
+            peripheralDetected(json);
+            return;
+          }
+        }
+      }
+    } catch (ex) {
+      console.warn("Oops!", ex);
+    } finally {
+      // stop the nfc scanning
+      NfcManager.cancelTechnologyRequest();
+    }
+  }
+
+  const peripheralDetected = (json: { id: number; type: string }) => {
+    navigation.navigate("peripheral-details", json);
+  };
+
+  useEffect(() => {
+    console.log("123456");
+    readNdef();
+  });
+
   return (
     <ScreenContainer>
       <ScrollView
@@ -28,6 +64,7 @@ const NFCTrackScreen = () => {
       </ScrollView>
       <View style={styles.buttonContainer}>
         <Button title="Back" onPress={() => navigation?.goBack()} />
+        {/* <Button title="Test" onPress={(peripheralDetected)} /> */}
       </View>
     </ScreenContainer>
   );
