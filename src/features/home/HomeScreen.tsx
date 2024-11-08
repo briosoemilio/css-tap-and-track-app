@@ -19,22 +19,38 @@ import ReportIcon from "@assets/icons/home/report-icon.svg";
 import TrackIcon from "@assets/icons/home/track-icon.svg";
 import { COLORS } from "src/constants/colors";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
+import { useTrackNavigation } from "../track/useTrackNavigation";
+import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
+import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 
 const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
+  const navigation = useAuthNavigation();
   const { type } = props;
   const icon = () => {
     switch (type) {
       case "time-in":
-        return { icon: <TimeInIcon />, text: "Time - in" };
+        return {
+          icon: <TimeInIcon />,
+          text: "Time - in",
+          onPress: () => showUnderDevelopment(),
+        };
       case "report":
-        return { icon: <ReportIcon />, text: "Report this PC" };
+        return {
+          icon: <ReportIcon />,
+          text: "Report this PC",
+          onPress: () => showUnderDevelopment(),
+        };
       case "track":
-        return { icon: <TrackIcon />, text: "Track Here" };
+        return {
+          icon: <TrackIcon />,
+          text: "Track Here",
+          onPress: () => navigation.navigate("track"),
+        };
     }
   };
 
   return (
-    <TouchableOpacity onPress={showUnderDevelopment} style={styles.homeIcon}>
+    <TouchableOpacity onPress={() => icon().onPress()} style={styles.homeIcon}>
       {icon().icon}
       <Text variant="body2bold" style={{ marginTop: 12 }}>
         {icon().text}
@@ -92,8 +108,8 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: 130,
-    height: 130,
+    width: 140,
+    height: 140,
     borderRadius: 12,
   },
   helloText: { marginBottom: 36 },
