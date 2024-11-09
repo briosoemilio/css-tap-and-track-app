@@ -32,7 +32,7 @@ const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
         return {
           icon: <TimeInIcon />,
           text: "Time - in",
-          onPress: () => showUnderDevelopment(),
+          onPress: () => navigation.navigate("time-in"),
         };
       case "report":
         return {
