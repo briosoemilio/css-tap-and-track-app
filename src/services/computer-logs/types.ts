@@ -50,6 +50,12 @@ export interface EndComputerLogRes {
   data: ComputerLog;
 }
 
+export interface CreateComputerLogRes {
+  statusCode: number;
+  message: string;
+  data: ComputerLog;
+}
+
 export interface ComputerLog {
   id: number;
   uuid: string;
