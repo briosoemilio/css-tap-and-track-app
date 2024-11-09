@@ -27,8 +27,6 @@ const TimeInScreen = () => {
   const route = useRoute<RouteProp<AuthNavParams, "time-in">>();
   const { computerId } = route.params;
   const [computerDetails, setComputerDetails] = useState<ComputerDetails>();
-  console.log({ computerDetails });
-  const { secondsLeft, isRunning, startTimer, stopTimer } = useTimeLog();
 
   const loadDetails = async () => {
     try {
@@ -61,21 +59,9 @@ const TimeInScreen = () => {
           containerStyle={styles.mb24}
           editable={false}
         />
-        <View style={styles.buttonContainers}>
-          <Button
-            title="Time In"
-            left={<TimeInIcon />}
-            style={styles.timeInButton}
-            onPress={() => startTimer()}
-          />
-          <Button
-            title="Time Out"
-            left={<TimeOutIcon />}
-            style={styles.timeOutButton}
-            onPress={() => stopTimer()}
-          />
-        </View>
-        {isRunning && <ComputerRunningComponent secondsLeft={secondsLeft} />}
+        {computerDetails?.status === ItemStatus.AVAILABLE && (
+          <ComputerRunningComponent computerDetails={computerDetails} />
+        )}
         {computerDetails?.status === ItemStatus.IN_USE && (
           <ComputerInUseComponent computerDetails={computerDetails} />
         )}
