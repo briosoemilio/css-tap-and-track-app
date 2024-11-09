@@ -8,7 +8,6 @@ import {
 import React from "react";
 import { useAuth } from "src/context/auth/useAuth";
 import ScreenContainer from "src/components/ScreenContainer";
-import Button from "src/components/Button";
 import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
 import { getCurrentTime } from "src/helpers/getCurrentTime";
@@ -19,9 +18,8 @@ import ReportIcon from "@assets/icons/home/report-icon.svg";
 import TrackIcon from "@assets/icons/home/track-icon.svg";
 import { COLORS } from "src/constants/colors";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
-import { useTrackNavigation } from "../track/useTrackNavigation";
-import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
+import { TrackType } from "../track/types";
 
 const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
   const navigation = useAuthNavigation();
@@ -32,7 +30,8 @@ const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
         return {
           icon: <TimeInIcon />,
           text: "Time - in",
-          onPress: () => navigation.navigate("time-in"),
+          onPress: () =>
+            navigation.navigate("track", { trackType: TrackType.COMPUTER_LOG }),
         };
       case "report":
         return {
@@ -44,7 +43,8 @@ const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
         return {
           icon: <TrackIcon />,
           text: "Track Here",
-          onPress: () => navigation.navigate("track"),
+          onPress: () =>
+            navigation.navigate("track", { trackType: TrackType.ITEM_DETAILS }),
         };
     }
   };

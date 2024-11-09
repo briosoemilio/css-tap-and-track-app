@@ -5,9 +5,14 @@ import { CONSTANTS } from "src/constants/constants";
 import Text from "src/components/Text";
 import Button from "src/components/Button";
 import { useTrackNavigation } from "../useTrackNavigation";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { TrackNavParams } from "../TrackNavigator";
 
 const QRTrackScreen = () => {
   const navigation = useTrackNavigation();
+  const route = useRoute<RouteProp<TrackNavParams, "qr">>();
+  const { trackType } = route.params;
+  console.log("Track type inside qr track screen: ", trackType);
   return (
     <ScreenContainer>
       <ScrollView

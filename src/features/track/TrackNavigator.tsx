@@ -9,14 +9,17 @@ import QRTrackScreen from "./screens/QRTrackScreen";
 import PeripheralDetailsScreen from "./screens/PeripheralDetailsScreen";
 import UnauthNavStackHeader from "src/navigation/UnauthNavigator/UnauthNavStackHeader";
 import NFCTrackScreen from "./screens/NfcTrackScreen";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { AuthNavParams } from "src/navigation/AuthNavigator/AuthNavStack";
+import { TagType, TrackType } from "./types";
 
 export type TrackNavParams = {
   "choose-track": undefined;
-  nfc: undefined;
-  qr: undefined;
+  nfc: { trackType?: TrackType };
+  qr: { trackType?: TrackType };
   "peripheral-details": {
     id: number;
-    type: string;
+    tagType: TagType;
   };
 };
 
@@ -30,6 +33,8 @@ type TrackNavigatorProps = {
 
 const TrackNavigator = (props: TrackNavigatorProps) => {
   const { withHeader = false } = props;
+  const route = useRoute<RouteProp<AuthNavParams, "track">>();
+  const trackType = route.params?.trackType;
   return (
     <Stack.Navigator
       initialRouteName="choose-track"
@@ -39,8 +44,16 @@ const TrackNavigator = (props: TrackNavigatorProps) => {
       }}
     >
       <Stack.Screen name="choose-track" component={ChooseTrackScreen} />
-      <Stack.Screen name="nfc" component={NFCTrackScreen} />
-      <Stack.Screen name="qr" component={QRTrackScreen} />
+      <Stack.Screen
+        name="nfc"
+        component={NFCTrackScreen}
+        initialParams={{ trackType }}
+      />
+      <Stack.Screen
+        name="qr"
+        component={QRTrackScreen}
+        initialParams={{ trackType }}
+      />
       <Stack.Screen
         name="peripheral-details"
         component={PeripheralDetailsScreen}

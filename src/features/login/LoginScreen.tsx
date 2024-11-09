@@ -2,7 +2,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import ScreenContainer from "../../components/ScreenContainer";
 import Text from "src/components/Text";
-import TextField from "src/components/TextField/TextField";
 import Button from "src/components/Button";
 import { CONSTANTS } from "src/constants/constants";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
@@ -11,6 +10,7 @@ import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { useAuth } from "src/context/auth/useAuth";
 import { getErrorMessage } from "src/services/helpers";
 import { login } from "src/services/login/login";
+import { TrackType } from "../track/types";
 
 const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -79,7 +79,9 @@ const LoginScreen = () => {
           <Button
             title="Track Now"
             variant="text"
-            onPress={() => navigation.push("track")}
+            onPress={() =>
+              navigation.push("track", { trackType: TrackType.ITEM_DETAILS })
+            }
           />
           <Button
             title="Login"

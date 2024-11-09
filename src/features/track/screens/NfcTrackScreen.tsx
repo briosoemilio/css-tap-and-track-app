@@ -8,9 +8,17 @@ import NFCIcon from "@assets/icons/nfc-track-icon.svg";
 import Text from "src/components/Text";
 import { useTrackNavigation } from "../useTrackNavigation";
 import NfcManager, { NfcTech, Ndef } from "react-native-nfc-manager";
+import { TagType, TrackType } from "../types";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { TrackNavParams } from "../TrackNavigator";
+import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 
 const NFCTrackScreen = () => {
   const navigation = useTrackNavigation();
+  const authNavigation = useAuthNavigation();
+  const route = useRoute<RouteProp<TrackNavParams, "nfc">>();
+  const { trackType } = route.params;
+  console.log("Track type inside nfc track screen: ", trackType);
   async function readNdef() {
     try {
       // register for the NFC tag with NDEF in it
@@ -37,8 +45,25 @@ const NFCTrackScreen = () => {
     }
   }
 
-  const peripheralDetected = (json: { id: number; type: string }) => {
-    navigation.navigate("peripheral-details", json);
+  const peripheralDetected = (json: { id: number; type: TagType }) => {
+    const { id, type: tagType } = json;
+    switch (trackType) {
+      case TrackType.COMPUTER_LOG: {
+        if (tagType === TagType.COMPUTER) {
+          authNavigation.navigate("time-in", { computerId: id });
+          break;
+        }
+
+        if (tagType === TagType.ITEM) {
+          // show modal
+          break;
+        }
+      }
+      case TrackType.ITEM_DETAILS: {
+        navigation.navigate("peripheral-details", { id, tagType });
+        break;
+      }
+    }
   };
 
   useEffect(() => {

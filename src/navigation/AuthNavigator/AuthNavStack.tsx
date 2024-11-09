@@ -7,11 +7,12 @@ import {
 import BottomTabNavStack from "./BottomTabNavStack";
 import TrackNavigator from "src/features/track/TrackNavigator";
 import TimeInScreen from "src/features/timein/screens/TimeInScreen";
+import { TrackType } from "src/features/track/types";
 
 export type AuthNavParams = {
   main: undefined;
-  track: undefined;
-  "time-in": undefined;
+  track: { trackType: TrackType };
+  "time-in": { computerId: number };
 };
 
 export type AuthNavProps = NativeStackNavigationProp<AuthNavParams>;

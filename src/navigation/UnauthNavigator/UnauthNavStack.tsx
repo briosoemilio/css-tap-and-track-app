@@ -13,6 +13,7 @@ import OnboardingScreen from "src/features/onboarding/OnboardingScreen";
 import TrackNavigator from "src/features/track/TrackNavigator";
 import RegisterOnboardingScreen from "src/features/register/RegisterOnboardingScreen";
 import { Role } from "src/types/Role";
+import { TrackType } from "src/features/track/types";
 
 export type UnauthNavParams = {
   onboarding: undefined;
@@ -20,7 +21,7 @@ export type UnauthNavParams = {
   "register-onboarding": undefined;
   register: { role: Role.STUDENT | Role.PROF };
   "register-success": undefined;
-  track: undefined;
+  track: { trackType: TrackType };
 };
 
 export type UnauthNavProps = NativeStackNavigationProp<UnauthNavParams>;

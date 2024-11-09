@@ -13,18 +13,34 @@ import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigatio
 import { format } from "date-fns";
 import AsyncStorage from "src/lib/storage/storage";
 import useTimeLog from "src/hooks/useTimeLog";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { AuthNavParams } from "src/navigation/AuthNavigator/AuthNavStack";
+import { ComputerDetails } from "src/services/computer/types";
+import { getComputerDetails } from "src/services/computer/getComputerDetails";
+import { ItemStatus } from "src/types/ItemStatus";
+import ComputerInUseComponent from "../component/ComputerInUseComponent";
+import ComputerUnderMaintenanceComponent from "../component/ComputerUnderMaintenanceComponent";
+import ComputerRunningComponent from "../component/ComputerRunningComponent";
 
 const TimeInScreen = () => {
   const navigation = useAuthNavigation();
+  const route = useRoute<RouteProp<AuthNavParams, "time-in">>();
+  const { computerId } = route.params;
+  const [computerDetails, setComputerDetails] = useState<ComputerDetails>();
+  console.log({ computerDetails });
   const { secondsLeft, isRunning, startTimer, stopTimer } = useTimeLog();
 
-  const test = async () => {
-    const time = await AsyncStorage.getItem("time-in-log");
-    console.log({ time });
+  const loadDetails = async () => {
+    try {
+      const _computerDetails = await getComputerDetails(computerId);
+      setComputerDetails(_computerDetails);
+    } catch (err) {
+      console.log("loadDetails error => ", err);
+    }
   };
 
   useEffect(() => {
-    test();
+    loadDetails();
   }, []);
 
   return (
@@ -35,13 +51,15 @@ const TimeInScreen = () => {
       >
         <TextFieldOutline
           label={"Computer"}
-          value={"Computer_1"}
+          value={computerDetails?.name as string}
           containerStyle={[styles.mb24, styles.mt50]}
+          editable={false}
         />
         <TextFieldOutline
           label={"Date"}
           value={"09/27/2024"}
           containerStyle={styles.mb24}
+          editable={false}
         />
         <View style={styles.buttonContainers}>
           <Button
@@ -57,21 +75,14 @@ const TimeInScreen = () => {
             onPress={() => stopTimer()}
           />
         </View>
-        {isRunning && (
-          <View>
-            <View style={styles.remainingTimeHeader}>
-              <Text variant="body1bold">Session Timeout</Text>
-            </View>
-            <View style={styles.remainingTimeContainer}>
-              <View style={styles.remainingTimeContent}>
-                <TimerIcon />
-                <Text variant="body2regular" style={{ marginLeft: 12 }}>
-                  Remaining Time
-                </Text>
-              </View>
-              <Text variant="header2">{secondsLeft}</Text>
-            </View>
-          </View>
+        {isRunning && <ComputerRunningComponent secondsLeft={secondsLeft} />}
+        {computerDetails?.status === ItemStatus.IN_USE && (
+          <ComputerInUseComponent computerDetails={computerDetails} />
+        )}
+        {computerDetails?.status === ItemStatus.UNDER_MAINTENANCE && (
+          <ComputerUnderMaintenanceComponent
+            computerDetails={computerDetails}
+          />
         )}
       </ScrollView>
       <View style={styles.backButtonContainer}>
