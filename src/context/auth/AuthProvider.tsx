@@ -41,6 +41,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
 
   const onLogout = async () => {
     await AsyncStorage.removeItem("session");
+    await AsyncStorage.removeItem("time-in-log");
     setUser(undefined);
     setIsAdmin(false);
   };
