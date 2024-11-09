@@ -12,7 +12,7 @@ import TimeOutIcon from "@assets/icons/time-in/time-out.svg";
 const ComputerRunningComponent = (props: {
   computerDetails: ComputerDetails;
 }) => {
-  const { secondsLeft, isRunning, startTimer, stopTimer } = useTimeLog();
+  const { secondsLeft, startTimer, stopTimer } = useTimeLog();
   return (
     <View>
       <View style={styles.buttonContainers}>
