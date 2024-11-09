@@ -20,23 +20,15 @@ const useTimeLog = (): UseCountdownTimerReturn => {
     return `${hrs}:${mins}:${secs}`;
   };
 
-  useEffect(() => {
-    const loadTimer = async () => {
-      const savedStartTime = (await AsyncStorage.getItem(
-        "time-in-log"
-      )) as string;
-      if (savedStartTime) {
-        const startTime = new Date(savedStartTime).getTime();
-        const currentTime = Date.now();
-        const elapsedTime = Math.floor((currentTime - startTime) / 1000);
-        const timeLeft = INITIAL_DURATION - elapsedTime;
+  const loadTimer = async (savedStartTime: string) => {
+    const startTime = new Date(savedStartTime).getTime();
+    const currentTime = Date.now();
+    const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+    const timeLeft = INITIAL_DURATION - elapsedTime;
 
-        setSecondsLeft(timeLeft > 0 ? timeLeft : 0);
-        setIsRunning(timeLeft > 0);
-      }
-    };
-    loadTimer();
-  }, []);
+    setSecondsLeft(timeLeft > 0 ? timeLeft : 0);
+    setIsRunning(timeLeft > 0);
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -59,15 +51,14 @@ const useTimeLog = (): UseCountdownTimerReturn => {
     return () => clearInterval(interval);
   }, [isRunning, secondsLeft]);
 
-  const startTimer = useCallback(async (_startTime?: string) => {
+  const startTimer = useCallback((_startTime?: string) => {
     setIsRunning(true);
     const startTime = _startTime || new Date().toISOString();
-    await AsyncStorage.setItem("time-in-log", startTime);
+    loadTimer(startTime);
   }, []);
 
-  const stopTimer = useCallback(async () => {
+  const stopTimer = useCallback(() => {
     setIsRunning(false);
-    await AsyncStorage.removeItem("time-in-log");
   }, []);
 
   return {
