@@ -11,7 +11,7 @@ import {
   View,
   TextStyle,
 } from "react-native";
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { COLORS } from "src/constants/colors";
 import Text from "./Text";
 
@@ -22,6 +22,7 @@ type ButtonComponentProps = TouchableWithoutFeedbackProps & {
   disabled?: boolean;
   variant?: "solid" | "text" | "outlined";
   isLoading?: boolean;
+  left?: ReactNode;
 };
 
 const Button = (props: ButtonComponentProps) => {
@@ -32,6 +33,7 @@ const Button = (props: ButtonComponentProps) => {
     disabled = false,
     variant = "solid",
     isLoading = false,
+    left = null,
     ...rest
   } = props;
 
@@ -94,14 +96,15 @@ const Button = (props: ButtonComponentProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.button, customStyle.buttonStyle]}
+      style={[styles.button, customStyle.buttonStyle, style]}
       disabled={disabled}
       {...rest}
     >
+      {left && <View style={{ marginRight: 8 }}>{left}</View>}
       <Text variant="body2bold" style={customStyle.textStyle}>
         {title}
-        {isLoading && <ActivityIndicator color={COLORS.white} />}
       </Text>
+      {isLoading && <ActivityIndicator color={COLORS.white} />}
     </TouchableOpacity>
   );
 };
@@ -113,6 +116,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 12,
     display: "flex",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
