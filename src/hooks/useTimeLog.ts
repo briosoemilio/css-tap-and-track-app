@@ -4,7 +4,7 @@ import AsyncStorage from "src/lib/storage/storage";
 type UseCountdownTimerReturn = {
   secondsLeft: string;
   isRunning: boolean;
-  startTimer: () => void;
+  startTimer: (_startTime?: string) => void;
   stopTimer: () => void;
 };
 
@@ -59,9 +59,9 @@ const useTimeLog = (): UseCountdownTimerReturn => {
     return () => clearInterval(interval);
   }, [isRunning, secondsLeft]);
 
-  const startTimer = useCallback(async () => {
+  const startTimer = useCallback(async (_startTime?: string) => {
     setIsRunning(true);
-    const startTime = new Date().toISOString();
+    const startTime = _startTime || new Date().toISOString();
     await AsyncStorage.setItem("time-in-log", startTime);
   }, []);
 
