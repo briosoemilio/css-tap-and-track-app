@@ -1,18 +1,12 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import { COLORS } from "src/constants/colors";
-import Text from "src/components/Text";
+
 import TextFieldOutline from "src/components/TextField/TextFieldOutline";
 import Button from "src/components/Button";
-import TimeInIcon from "@assets/icons/time-in/time-in.svg";
-import TimeOutIcon from "@assets/icons/time-in/time-out.svg";
-import TimerIcon from "@assets/icons/time-in/timer.svg";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
-import { format } from "date-fns";
-import AsyncStorage from "src/lib/storage/storage";
-import useTimeLog from "src/hooks/useTimeLog";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AuthNavParams } from "src/navigation/AuthNavigator/AuthNavStack";
 import { ComputerDetails } from "src/services/computer/types";
@@ -21,17 +15,27 @@ import { ItemStatus } from "src/types/ItemStatus";
 import ComputerInUseComponent from "../component/ComputerInUseComponent";
 import ComputerUnderMaintenanceComponent from "../component/ComputerUnderMaintenanceComponent";
 import ComputerRunningComponent from "../component/ComputerRunningComponent";
+import { getComputerLogDetails } from "src/services/computer-logs/getComputerLogDetails";
+import { useAuth } from "src/context/auth/useAuth";
 
 const TimeInScreen = () => {
   const navigation = useAuthNavigation();
+  const { user } = useAuth();
   const route = useRoute<RouteProp<AuthNavParams, "time-in">>();
   const { computerId } = route.params;
   const [computerDetails, setComputerDetails] = useState<ComputerDetails>();
+  const [isSameUser, setIsSameUser] = useState(false);
 
   const loadDetails = async () => {
     try {
       const _computerDetails = await getComputerDetails(computerId);
       setComputerDetails(_computerDetails);
+
+      const lastLogUUID = _computerDetails.lastLogUUID;
+      const computerLog = await getComputerLogDetails(lastLogUUID);
+      if (computerLog.user.uuid === user?.uuid) {
+        setIsSameUser(true);
+      }
     } catch (err) {
       console.log("loadDetails error => ", err);
     }
@@ -59,11 +63,15 @@ const TimeInScreen = () => {
           containerStyle={styles.mb24}
           editable={false}
         />
-        {computerDetails?.status === ItemStatus.AVAILABLE && (
-          <ComputerRunningComponent computerDetails={computerDetails} />
+        {(computerDetails?.status === ItemStatus.AVAILABLE || isSameUser) && (
+          <ComputerRunningComponent
+            computerDetails={computerDetails as ComputerDetails}
+          />
         )}
         {computerDetails?.status === ItemStatus.IN_USE && (
-          <ComputerInUseComponent computerDetails={computerDetails} />
+          <ComputerInUseComponent
+            computerDetails={computerDetails as ComputerDetails}
+          />
         )}
         {computerDetails?.status === ItemStatus.UNDER_MAINTENANCE && (
           <ComputerUnderMaintenanceComponent
