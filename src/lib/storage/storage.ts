@@ -1,6 +1,6 @@
 import _AsyncStorage from "@react-native-async-storage/async-storage";
 
-export type StorageKeys = "session" | "time-in-log";
+export type StorageKeys = "session";
 
 const AsyncStorage = {
   async getItem<T>(key: StorageKeys): Promise<T | null> {
