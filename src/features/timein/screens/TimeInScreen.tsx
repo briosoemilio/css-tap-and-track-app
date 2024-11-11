@@ -41,6 +41,42 @@ const TimeInScreen = () => {
     }
   };
 
+  const ContentSwitcher = () => {
+    const status = computerDetails?.status as ItemStatus;
+    switch (status) {
+      case ItemStatus.AVAILABLE: {
+        return (
+          <ComputerRunningComponent
+            computerDetails={computerDetails as ComputerDetails}
+            isSameUser={isSameUser}
+          />
+        );
+      }
+      case ItemStatus.IN_USE: {
+        if (isSameUser) {
+          return (
+            <ComputerRunningComponent
+              computerDetails={computerDetails as ComputerDetails}
+              isSameUser={isSameUser}
+            />
+          );
+        }
+        return (
+          <ComputerInUseComponent
+            computerDetails={computerDetails as ComputerDetails}
+          />
+        );
+      }
+      case ItemStatus.UNDER_MAINTENANCE: {
+        return (
+          <ComputerUnderMaintenanceComponent
+            computerDetails={computerDetails as ComputerDetails}
+          />
+        );
+      }
+    }
+  };
+
   useEffect(() => {
     loadDetails();
   }, []);
@@ -63,21 +99,7 @@ const TimeInScreen = () => {
           containerStyle={styles.mb24}
           editable={false}
         />
-        {(computerDetails?.status === ItemStatus.AVAILABLE || isSameUser) && (
-          <ComputerRunningComponent
-            computerDetails={computerDetails as ComputerDetails}
-          />
-        )}
-        {computerDetails?.status === ItemStatus.IN_USE && (
-          <ComputerInUseComponent
-            computerDetails={computerDetails as ComputerDetails}
-          />
-        )}
-        {computerDetails?.status === ItemStatus.UNDER_MAINTENANCE && (
-          <ComputerUnderMaintenanceComponent
-            computerDetails={computerDetails}
-          />
-        )}
+        <ContentSwitcher />
       </ScrollView>
       <View style={styles.backButtonContainer}>
         <Button title="Back" onPress={() => navigation.goBack()} />

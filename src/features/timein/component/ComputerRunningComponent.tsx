@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Text from "src/components/Text";
 import { COLORS } from "src/constants/colors";
 import TimerIcon from "@assets/icons/time-in/timer.svg";
@@ -8,25 +8,72 @@ import useTimeLog from "src/hooks/useTimeLog";
 import Button from "src/components/Button";
 import TimeInIcon from "@assets/icons/time-in/time-in.svg";
 import TimeOutIcon from "@assets/icons/time-in/time-out.svg";
+import { createComputerLog } from "src/services/computer-logs/createComputerLog";
+import { endComputerLog } from "src/services/computer-logs/endComputerLog";
+import { ComputerLogDetails } from "src/services/computer-logs/types";
+import { getComputerLogDetails } from "src/services/computer-logs/getComputerLogDetails";
 
 const ComputerRunningComponent = (props: {
   computerDetails: ComputerDetails;
+  isSameUser: boolean;
 }) => {
+  const { computerDetails, isSameUser } = props;
   const { secondsLeft, startTimer, stopTimer } = useTimeLog();
+  const [computerLogDetails, setComputerLogDetails] =
+    useState<ComputerLogDetails>();
+
+  const loadLogDetails = async () => {
+    try {
+      const _logDetails = await getComputerLogDetails(
+        computerDetails?.lastLogUUID
+      );
+      setComputerLogDetails(_logDetails);
+
+      if (isSameUser) {
+        const startedAt = _logDetails?.startedAt as unknown as string;
+        startTimer(startedAt);
+      }
+    } catch (err) {
+      console.log("Error loading computer log details -> ", err);
+    }
+  };
+  useEffect(() => {
+    loadLogDetails();
+  }, []);
+
+  const timeIn = async () => {
+    await createComputerLog({
+      computerId: computerDetails.id,
+    });
+    startTimer();
+  };
+
+  const timeOut = async () => {
+    await endComputerLog(computerDetails?.lastLogUUID);
+    stopTimer();
+  };
   return (
     <View>
       <View style={styles.buttonContainers}>
         <Button
           title="Time In"
           left={<TimeInIcon />}
-          style={styles.timeInButton}
-          onPress={() => startTimer()}
+          style={[
+            styles.timeInButton,
+            isSameUser && { backgroundColor: COLORS.lightGray },
+          ]}
+          onPress={() => timeIn()}
+          disabled={isSameUser}
         />
         <Button
           title="Time Out"
           left={<TimeOutIcon />}
-          style={styles.timeOutButton}
-          onPress={() => stopTimer()}
+          style={[
+            styles.timeOutButton,
+            secondsLeft === "03:00:00" && { backgroundColor: COLORS.lightGray },
+          ]}
+          onPress={() => timeOut()}
+          disabled={secondsLeft === "03:00:00"}
         />
       </View>
       <View style={styles.remainingTimeHeader}>
@@ -40,6 +87,15 @@ const ComputerRunningComponent = (props: {
           </Text>
         </View>
         <Text variant="header2">{secondsLeft}</Text>
+        {secondsLeft === "00:00:00" && (
+          <Text
+            variant="body3regular"
+            textAlign="center"
+            style={{ marginTop: 24 }}
+          >
+            {`Your time is up. \n Please TIME OUT for the next user.`}
+          </Text>
+        )}
       </View>
     </View>
   );
