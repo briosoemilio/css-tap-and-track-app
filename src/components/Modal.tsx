@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Modal as RNModal } from "react-native";
+import { StyleSheet, View, Modal as RNModal } from "react-native";
 import React, { ReactNode } from "react";
 
 export type ModalProps = {
@@ -15,18 +15,26 @@ const Modal = (props: ModalProps) => {
     transparent = true,
     children,
   } = props;
+
   return (
     <RNModal
       visible={visible}
       onRequestClose={onRequestClose}
       transparent={transparent}
-      animationType="slide"
+      animationType="fade"
     >
-      {children}
+      <View style={styles.modalWrapper}>{children}</View>
     </RNModal>
   );
 };
 
 export default Modal;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  modalWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+});
