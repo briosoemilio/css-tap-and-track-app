@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import Button from "src/components/Button";
@@ -15,12 +15,16 @@ import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigatio
 import { COLORS } from "src/constants/colors";
 import TrackBottomSheet from "src/components/TrackBottomSheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import ItemModal from "../components/ItemModal";
 
 const NFCTrackScreen = () => {
   const navigation = useTrackNavigation();
   const authNavigation = useAuthNavigation();
   const route = useRoute<RouteProp<TrackNavParams, "nfc">>();
   const { trackType } = route.params;
+
+  const [showModal, setShowModal] = useState(false);
+  const [tagDetails, setTagDetails] = useState<{ id: number; type: TagType }>();
 
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
@@ -60,7 +64,8 @@ const NFCTrackScreen = () => {
         }
 
         if (tagType === TagType.ITEM) {
-          // show modal
+          setTagDetails({ id, type: tagType });
+          setShowModal(true);
           break;
         }
       }
@@ -97,9 +102,18 @@ const NFCTrackScreen = () => {
         />
         <Button title="Back" onPress={() => navigation?.goBack()} />
       </View>
-      <TrackBottomSheet
-        bottomSheetRef={bottomSheetRef}
-        onOpen={readNdef}
+      <TrackBottomSheet bottomSheetRef={bottomSheetRef} onOpen={readNdef} />
+
+      {/* Modals */}
+      <ItemModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPressYes={() =>
+          navigation.navigate("peripheral-details", {
+            id: tagDetails?.id as number,
+            tagType: tagDetails?.type as TagType,
+          })
+        }
       />
     </ScreenContainer>
   );
