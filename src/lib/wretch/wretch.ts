@@ -1,11 +1,10 @@
 import _wretch from "wretch";
 import { queryString } from "./middlewares/queryString";
 import { API_BASE_URL } from "../constants";
-import { catcher } from "./catcher/catcher";
+import { auth } from "./middlewares/auth";
 
 const wretch = () => {
-  const middlewares = [queryString()];
-  console.log("API_BASE_URL : ", API_BASE_URL);
+  const middlewares = [queryString(), auth()];
 
   return _wretch(API_BASE_URL)
     .middlewares(middlewares)
