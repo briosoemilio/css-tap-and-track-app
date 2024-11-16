@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import Button from "src/components/Button";
@@ -12,13 +12,18 @@ import { TagType, TrackType } from "../types";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { TrackNavParams } from "../TrackNavigator";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
+import { COLORS } from "src/constants/colors";
+import TrackBottomSheet from "src/components/TrackBottomSheet";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
 const NFCTrackScreen = () => {
   const navigation = useTrackNavigation();
   const authNavigation = useAuthNavigation();
   const route = useRoute<RouteProp<TrackNavParams, "nfc">>();
   const { trackType } = route.params;
-  console.log("Track type inside nfc track screen: ", trackType);
+
+  const bottomSheetRef = useRef<BottomSheetMethods>(null);
+
   async function readNdef() {
     try {
       // register for the NFC tag with NDEF in it
@@ -66,11 +71,6 @@ const NFCTrackScreen = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("123456");
-    readNdef();
-  });
-
   return (
     <ScreenContainer>
       <ScrollView
@@ -88,9 +88,19 @@ const NFCTrackScreen = () => {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
+        <Button
+          title="Start Tracking"
+          style={{ marginBottom: 12, backgroundColor: COLORS.red }}
+          onPress={() => {
+            bottomSheetRef.current?.snapToIndex(0);
+          }}
+        />
         <Button title="Back" onPress={() => navigation?.goBack()} />
-        {/* <Button title="Test" onPress={(peripheralDetected)} /> */}
       </View>
+      <TrackBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        onOpen={readNdef}
+      />
     </ScreenContainer>
   );
 };

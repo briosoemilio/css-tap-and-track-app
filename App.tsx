@@ -5,6 +5,7 @@ import NavContainer from "./src/navigation/NavContainer";
 import { useFonts } from "@assets/fonts/useFonts";
 import { useCallback, useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts();
@@ -26,7 +27,9 @@ export default function App() {
   return (
     <NavContainer>
       <AuthProvider>
-        <RootNavStack />
+        <GestureHandlerRootView>
+          <RootNavStack />
+        </GestureHandlerRootView>
       </AuthProvider>
     </NavContainer>
   );
