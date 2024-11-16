@@ -45,21 +45,6 @@ const PermissionButton = (props: {
 
 const OnboardingScreen = () => {
   const navigation = useUnauthNavigation();
-
-  const testFetch = async () => {
-    const res = await wretch()
-      .url("/users")
-      .get()
-      .json()
-      .catch((err) => {
-        console.log("Error po : ", JSON.stringify(err));
-      });
-
-    console.log("here res : ", res);
-  };
-  useEffect(() => {
-    testFetch();
-  }, []);
   return (
     <ScreenContainer>
       <ScrollView
