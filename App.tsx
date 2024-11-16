@@ -6,6 +6,7 @@ import { useFonts } from "@assets/fonts/useFonts";
 import { useCallback, useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Provider as RNPaperProvider } from "react-native-paper";
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts();
@@ -27,9 +28,11 @@ export default function App() {
   return (
     <NavContainer>
       <AuthProvider>
-        <GestureHandlerRootView>
-          <RootNavStack />
-        </GestureHandlerRootView>
+        <RNPaperProvider>
+          <GestureHandlerRootView>
+            <RootNavStack />
+          </GestureHandlerRootView>
+        </RNPaperProvider>
       </AuthProvider>
     </NavContainer>
   );

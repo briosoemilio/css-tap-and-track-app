@@ -16,18 +16,31 @@ export type TextFieldProps = TextInputProps & {
   required?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TextStyle | TextStyle[];
+  textInputStyle?: TextStyle | TextStyle[];
   error?: string;
 };
 
 const TextField = (props: TextFieldProps) => {
-  const { label, containerStyle = {}, labelStyle = {}, error, ...rest } = props;
+  const {
+    label,
+    containerStyle = {},
+    labelStyle = {},
+    textInputStyle = {},
+    error,
+    ...rest
+  } = props;
   return (
     <View style={containerStyle}>
       <Text variant="body2regular" style={{ marginBottom: 12, ...labelStyle }}>
         {label}
       </Text>
       <TextInput
-        style={{ backgroundColor: COLORS.white, padding: 12, borderRadius: 12 }}
+        style={{
+          backgroundColor: COLORS.white,
+          padding: 12,
+          borderRadius: 12,
+          ...textInputStyle,
+        }}
         {...rest}
       />
       {error && (
