@@ -11,6 +11,7 @@ import { useAuth } from "src/context/auth/useAuth";
 import { getErrorMessage } from "src/services/helpers";
 import { login } from "src/services/login/login";
 import { TrackType } from "../track/types";
+import { Role } from "src/types/Role";
 
 const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +63,7 @@ const LoginScreen = () => {
           <Button
             title="Click here to sign up"
             variant="text"
-            onPress={() => navigation.push("register-onboarding")}
+            onPress={() => navigation.push("register", { role: Role.STUDENT })}
             style={{ marginBottom: 12 }}
           />
           <View
