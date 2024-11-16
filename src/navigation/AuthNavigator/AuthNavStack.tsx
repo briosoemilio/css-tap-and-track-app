@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import {
   createNativeStackNavigator,
@@ -7,14 +7,20 @@ import {
 import BottomTabNavStack from "./BottomTabNavStack";
 import TrackNavigator from "src/features/track/TrackNavigator";
 import TimeInScreen from "src/features/timein/screens/TimeInScreen";
-import { TrackType } from "src/features/track/types";
+import { TagType, TrackType } from "src/features/track/types";
 import SuccessScreen from "src/features/success/SuccessScreen";
+import ReportScreen from "src/features/report/ReportScreen";
+import BackIcon from "@assets/icons/back-icon.svg";
 
 export type AuthNavParams = {
   main: undefined;
   track: { trackType: TrackType };
   "time-in": { computerId: number };
   success: { message?: string };
+  report: {
+    id: number;
+    tagType: TagType;
+  };
 };
 
 export type AuthNavProps = NativeStackNavigationProp<AuthNavParams>;
@@ -31,6 +37,7 @@ const AuthNavStack = () => {
       <AuthStack.Screen name="track" component={TrackNavigator} />
       <AuthStack.Screen name="time-in" component={TimeInScreen} />
       <AuthStack.Screen name="success" component={SuccessScreen} />
+      <AuthStack.Screen name="report" component={ReportScreen} />
     </AuthStack.Navigator>
   );
 };

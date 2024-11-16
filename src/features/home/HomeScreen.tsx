@@ -37,7 +37,10 @@ const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
         return {
           icon: <ReportIcon />,
           text: "Report this PC",
-          onPress: () => showUnderDevelopment(),
+          onPress: () =>
+            navigation.navigate("track", {
+              trackType: TrackType.CREATE_REPORT,
+            }),
         };
       case "track":
         return {

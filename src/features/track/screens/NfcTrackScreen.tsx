@@ -73,6 +73,10 @@ const NFCTrackScreen = () => {
         navigation.navigate("peripheral-details", { id, tagType });
         break;
       }
+      case TrackType.CREATE_REPORT: {
+        authNavigation.navigate("report", { id, tagType });
+        break;
+      }
     }
   };
 
