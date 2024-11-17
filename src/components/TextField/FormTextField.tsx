@@ -6,9 +6,9 @@ import {
   ControllerProps,
   FieldValues,
 } from "react-hook-form";
-import TextField from "./TextField";
+import TextField, { TextFieldProps } from "./TextField";
 
-export type ControlledInputProps<T> = TextInputProps & {
+export type ControlledInputProps<T> = TextFieldProps & {
   label: string;
   name: string;
   control: Control<any, T>;
