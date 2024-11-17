@@ -18,6 +18,7 @@ import ErrorModal from "./ErrorModal";
 import { ComputerLogDetails } from "src/services/computer-logs/types";
 import { getErrorMessage } from "src/services/helpers";
 import { ERROR_MESSAGES } from "../constants";
+import TimeInModal from "./TimeInModal";
 
 const ComputerRunningComponent = (props: {
   computerDetails: ComputerDetails;
@@ -25,8 +26,11 @@ const ComputerRunningComponent = (props: {
 }) => {
   const { computerDetails, isSameUser } = props;
   const { secondsLeft, startTimer, stopTimer, isRunning } = useTimeLog();
+  console.log({ isRunning });
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState<"time-out" | "error">();
+  const [modalType, setModalType] = useState<
+    "time-out" | "error" | "time-in"
+  >();
   const [computerLogDetails, setComputerLogDetails] =
     useState<ComputerLogDetails>();
   const [errorPCDetails, setErrorPCDetails] = useState<ComputerDetails>();
@@ -58,6 +62,7 @@ const ComputerRunningComponent = (props: {
       await createComputerLog({
         computerId: computerDetails.id,
       });
+      openModal("time-in");
       startTimer();
     } catch (err: any) {
       console.log("Error time in -> ", err);
@@ -70,7 +75,7 @@ const ComputerRunningComponent = (props: {
     }
   };
 
-  const openModal = (type: "time-out" | "error") => {
+  const openModal = (type: "time-out" | "error" | "time-in") => {
     setShowModal(true);
     setModalType(type);
   };
@@ -157,6 +162,14 @@ const ComputerRunningComponent = (props: {
           timeOut={() => timeOut(errorPCDetails?.lastLogUUID)}
           computerName={errorPCDetails?.name as unknown as string}
           lastLog={computerLogDetails?.createdAt as unknown as string}
+        />
+      )}
+
+      {modalType === "time-in" && (
+        <TimeInModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          onPressClose={startTimer}
         />
       )}
     </>
