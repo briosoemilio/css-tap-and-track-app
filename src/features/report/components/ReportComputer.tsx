@@ -117,6 +117,7 @@ const ReportComputer = (props: { id: number }) => {
           containerStyle={{ marginVertical: 12, marginBottom: 24 }}
           placeholder="Write your concern here..."
           multiline
+          rules={{ required: "Remarks is required" }}
         />
         <View
           style={{ display: "flex", flexDirection: "row", marginBottom: 12 }}
