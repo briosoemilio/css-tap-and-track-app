@@ -2,7 +2,7 @@
  * Note: imports TextField dumb component
  */
 import React, { ReactNode } from "react";
-import { Platform, ScrollView, View } from "react-native";
+import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import { List, Menu } from "react-native-paper";
 
 import { COLORS } from "src/constants/colors";
@@ -73,19 +73,21 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
           borderColor: COLORS.blue,
         }}
         anchor={
-          <View onLayout={(e) => setInputLayout(e.nativeEvent.layout)}>
+          <TouchableOpacity
+            onLayout={(e) => setInputLayout(e.nativeEvent.layout)}
+            onPress={openMenu}
+          >
             <TextFieldOutline
               label={label as string}
-              onPress={openMenu}
               testID={`${testID}Input`}
               placeholder={placeholder}
               value={value}
               required={required}
               error={error}
-              editable={!isDisabled}
+              editable={false}
               right={<ChevronDown />}
             />
-          </View>
+          </TouchableOpacity>
         }
         style={[
           {
