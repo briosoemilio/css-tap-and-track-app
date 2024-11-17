@@ -45,6 +45,10 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     setIsAdmin(false);
   };
 
+  const updateUser = (newUser: UserModel) => {
+    setUser(newUser);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -52,6 +56,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
         isAdmin,
         onLogin,
         onLogout,
+        updateUser,
       }}
     >
       {props.children}

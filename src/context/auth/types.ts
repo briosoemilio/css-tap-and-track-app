@@ -5,4 +5,5 @@ export type AuthContextType = {
   isAdmin: boolean;
   onLogin: (res: any) => void;
   onLogout: () => void;
+  updateUser: (newUser: UserModel) => void;
 };

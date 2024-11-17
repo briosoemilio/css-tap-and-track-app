@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import {
   createNativeStackNavigator,
@@ -10,9 +10,8 @@ import TimeInScreen from "src/features/timein/screens/TimeInScreen";
 import { TagType, TrackType } from "src/features/track/types";
 import SuccessScreen from "src/features/success/SuccessScreen";
 import ReportScreen from "src/features/report/ReportScreen";
-import BackIcon from "@assets/icons/back-icon.svg";
-import ReportListScreen from "src/features/report/ReportListScreen";
 import ReportDetailsScreen from "src/features/report/ReportDetailsScreen";
+import ChangeSectionScreen from "src/features/account/ChangeSectionScreen";
 
 export type AuthNavParams = {
   main: undefined;
@@ -29,6 +28,7 @@ export type AuthNavParams = {
     categoryName: string;
     remarks: string;
   };
+  "change-section": undefined;
 };
 
 export type AuthNavProps = NativeStackNavigationProp<AuthNavParams>;
@@ -47,6 +47,7 @@ const AuthNavStack = () => {
       <AuthStack.Screen name="success" component={SuccessScreen} />
       <AuthStack.Screen name="report" component={ReportScreen} />
       <AuthStack.Screen name="report-details" component={ReportDetailsScreen} />
+      <AuthStack.Screen name="change-section" component={ChangeSectionScreen} />
     </AuthStack.Navigator>
   );
 };

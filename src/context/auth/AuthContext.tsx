@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { AuthContextType } from "./types";
+import { UserModel } from "src/types/UserModel";
 
 export const AuthContext = createContext<AuthContextType>({
   user: undefined,
@@ -8,6 +9,9 @@ export const AuthContext = createContext<AuthContextType>({
     // placeholder
   },
   onLogout: function (): void {
+    // placeholder
+  },
+  updateUser: function (newUser: UserModel): void {
     // placeholder
   },
 });

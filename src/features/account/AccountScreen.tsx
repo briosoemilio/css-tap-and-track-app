@@ -9,9 +9,11 @@ import { useAuth } from "src/context/auth/useAuth";
 import AccountIconLarge from "@assets/icons/account/account-icon-large.svg";
 import Text from "src/components/Text";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
+import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 
 const AccountScreen = () => {
   const { user, onLogout } = useAuth();
+  const navigation = useAuthNavigation();
 
   const onPressLogout = () => {
     Alert.alert("LOGOUT", `Are you sure you want to log out?`, [
@@ -43,7 +45,7 @@ const AccountScreen = () => {
         <View style={styles.buttonContainers}>
           <Button
             title="Change Section"
-            onPress={showUnderDevelopment}
+            onPress={() => navigation.navigate("change-section")}
             style={styles.changeSectionButton}
           />
           <Button title="Change Password" onPress={showUnderDevelopment} />
