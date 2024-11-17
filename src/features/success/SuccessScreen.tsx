@@ -24,7 +24,7 @@ const SuccessScreen = () => {
           style={{ width: 93, height: 85, marginVertical: 24 }}
         />
         <Text variant="header2">SUCCESS</Text>
-        <Text>{message}</Text>
+        <Text textAlign="center">{message}</Text>
       </ScrollView>
       <View style={styles.backButtonContainer}>
         <Button
