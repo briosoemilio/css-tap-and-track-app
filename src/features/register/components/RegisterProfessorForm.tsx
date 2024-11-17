@@ -1,10 +1,9 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import FormTextField from "src/components/TextField/FormTextField";
 import Button from "src/components/Button";
 import { register } from "src/services/register/register";
-import { Role } from "src/types/Role";
 import { getErrorMessage } from "src/services/helpers";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 

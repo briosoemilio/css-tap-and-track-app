@@ -2,7 +2,6 @@ import { FlatList, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { CONSTANTS } from "src/constants/constants";
-import { COLORS } from "src/constants/colors";
 import Text from "src/components/Text";
 import ScreenContainer from "src/components/ScreenContainer";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";

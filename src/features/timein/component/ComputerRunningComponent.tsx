@@ -11,7 +11,6 @@ import TimeOutIcon from "@assets/icons/time-in/time-out.svg";
 import { createComputerLog } from "src/services/computer-logs/createComputerLog";
 import { endComputerLog } from "src/services/computer-logs/endComputerLog";
 import { getComputerLogDetails } from "src/services/computer-logs/getComputerLogDetails";
-import Modal from "src/components/Modal";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 import TimeOutModal from "./TimeOutModal";
 import ErrorModal from "./ErrorModal";

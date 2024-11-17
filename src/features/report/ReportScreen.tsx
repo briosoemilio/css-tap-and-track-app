@@ -1,11 +1,9 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { CONSTANTS } from "src/constants/constants";
 import { COLORS } from "src/constants/colors";
-import Text from "src/components/Text";
 import ScreenContainer from "src/components/ScreenContainer";
-import Button from "src/components/Button";
 import { AuthNavParams } from "src/navigation/AuthNavigator/AuthNavStack";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 import { TagType } from "../track/types";

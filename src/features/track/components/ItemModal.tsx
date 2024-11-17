@@ -1,10 +1,9 @@
-import { StyleSheet, TextStyle, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import Modal from "src/components/Modal";
 import { COLORS } from "src/constants/colors";
-import Text, { FontVariantKeys } from "src/components/Text";
+import Text from "src/components/Text";
 import Button from "src/components/Button";
-import { formatDate } from "src/helpers/formatDate";
 
 const ItemModal = (props: {
   showModal: boolean;

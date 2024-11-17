@@ -1,18 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import TextFieldOutline from "src/components/TextField/TextFieldOutline";
-import { ComputerDetails } from "src/services/computer/types";
-import { getComputerDetails } from "src/services/computer/getComputerDetails";
 import { formatDate } from "src/helpers/formatDate";
 import Button from "src/components/Button";
-import { DropdownOption } from "src/components/Dropdown/types";
-import { getComputerPeripherals } from "../utils";
 import { Checkbox } from "react-native-paper";
 import { COLORS } from "src/constants/colors";
 import { createReport } from "src/services/report/createReport";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 import { FormProvider, useForm } from "react-hook-form";
-import FormDropdown from "src/components/Dropdown/FormDropdown";
 import FormTextField from "src/components/TextField/FormTextField";
 import { getItemDetails } from "src/services/item/getItemDetails";
 import { ItemDetails } from "src/services/item/types";

@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import { COLORS } from "src/constants/colors";
