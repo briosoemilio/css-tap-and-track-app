@@ -12,6 +12,7 @@ import AccountIcon from "@assets/icons/account-icon.svg";
 import Text from "src/components/Text";
 import { capitalize } from "lodash";
 import { COLORS } from "src/constants/colors";
+import ReportListScreen from "src/features/report/ReportListScreen";
 
 export const BottomStack = createBottomTabNavigator<BottomNavParams>();
 
@@ -56,7 +57,7 @@ const BottomTabNavStack = () => {
     >
       <BottomStack.Screen name={"home"} component={HomeScreen} />
       <BottomStack.Screen name={"account"} component={AccountScreen} />
-      <BottomStack.Screen name={"report"} component={ReportScreen} />
+      <BottomStack.Screen name={"report"} component={ReportListScreen} />
     </BottomStack.Navigator>
   );
 };

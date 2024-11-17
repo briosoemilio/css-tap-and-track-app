@@ -11,6 +11,8 @@ import { TagType, TrackType } from "src/features/track/types";
 import SuccessScreen from "src/features/success/SuccessScreen";
 import ReportScreen from "src/features/report/ReportScreen";
 import BackIcon from "@assets/icons/back-icon.svg";
+import ReportListScreen from "src/features/report/ReportListScreen";
+import ReportDetailsScreen from "src/features/report/ReportDetailsScreen";
 
 export type AuthNavParams = {
   main: undefined;
@@ -20,6 +22,12 @@ export type AuthNavParams = {
   report: {
     id: number;
     tagType: TagType;
+  };
+  "report-details": {
+    itemName: string;
+    date: string;
+    categoryName: string;
+    remarks: string;
   };
 };
 
@@ -38,6 +46,7 @@ const AuthNavStack = () => {
       <AuthStack.Screen name="time-in" component={TimeInScreen} />
       <AuthStack.Screen name="success" component={SuccessScreen} />
       <AuthStack.Screen name="report" component={ReportScreen} />
+      <AuthStack.Screen name="report-details" component={ReportDetailsScreen} />
     </AuthStack.Navigator>
   );
 };
