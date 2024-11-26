@@ -7,7 +7,7 @@ export default () => {
       slug: "ccs-tap-and-track",
       scheme: "ccstapandtrack",
       version: VERSION,
-      owner: "elmo",
+      owner: "briosoemilio",
       orientation: "portrait",
       icon: "./assets/icon.png",
       userInterfaceStyle: "dark",
@@ -42,6 +42,15 @@ export default () => {
             selectIdentifiers: ["A0000002471001"],
             systemCodes: ["8008"],
             includeNdefEntitlement: false,
+          },
+        ],
+        [
+          "expo-camera",
+          {
+            cameraPermission: "Allow CCS Tap and Track to access your camera",
+            microphonePermission:
+              "Allow CCS Tap and Track to access your microphone",
+            recordAudioAndroid: false,
           },
         ],
       ],
