@@ -12,6 +12,7 @@ import { COLORS } from "src/constants/colors";
 import Button from "src/components/Button";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 import { CONSTANTS } from "src/constants/constants";
+import { useCameraPermissions } from "expo-camera";
 
 const PermissionButton = (props: {
   text: string;
@@ -44,6 +45,7 @@ const PermissionButton = (props: {
 
 const OnboardingScreen = () => {
   const navigation = useUnauthNavigation();
+  const [permission, requestPermission] = useCameraPermissions();
   return (
     <ScreenContainer>
       <ScrollView
@@ -56,13 +58,21 @@ const OnboardingScreen = () => {
             Before we proceed please allow the permissions required to use the
             app
           </Text>
-          <PermissionButton text={"Enable Camera"} icon={"camera"} />
+          <PermissionButton
+            text={"Enable Camera"}
+            icon={"camera"}
+            onPress={requestPermission}
+          />
           <PermissionButton text={"Enable Wifi"} icon={"wifi"} />
           <PermissionButton text={"Enable NFC"} icon={"nfc"} />
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <Button title="Get Started" onPress={() => navigation.push("login")} />
+        <Button
+          disabled={permission?.granted === false}
+          title="Get Started"
+          onPress={() => navigation.push("login")}
+        />
       </View>
     </ScreenContainer>
   );
