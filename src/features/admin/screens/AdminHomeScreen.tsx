@@ -32,7 +32,7 @@ const HomeIcon = (props: { type: HomeIconTypes }) => {
         return {
           icon: <InventoryIcon />,
           text: "Inventory",
-          onPress: () => showUnderDevelopment(),
+          onPress: () => navigation.navigate("inventory"),
         };
       case "reports":
         return {
