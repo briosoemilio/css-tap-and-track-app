@@ -7,10 +7,13 @@ import {
 import AdminHomeScreen from "src/features/admin/screens/AdminHomeScreen";
 import TrackNavigator from "src/features/track/TrackNavigator";
 import { TrackType } from "src/features/track/types";
+import AdminAccounSettingsScreen from "src/features/admin/screens/AdminAccountSettingsScreen";
+import AdminNavStackHeader from "./AdminNavStackHeader";
 
 export type AdminNavParams = {
   main: undefined;
   track: { trackType: TrackType };
+  account: undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -21,10 +24,15 @@ const AdminNavStack = () => {
   return (
     <AdminStack.Navigator
       initialRouteName="home"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        header: ({ navigation }) => (
+          <AdminNavStackHeader canGoBack={navigation?.canGoBack()} />
+        ),
+      }}
     >
       <AdminStack.Screen name="home" component={AdminHomeScreen} />
       <AdminStack.Screen name="track" component={TrackNavigator} />
+      <AdminStack.Screen name="account" component={AdminAccounSettingsScreen} />
     </AdminStack.Navigator>
   );
 };
