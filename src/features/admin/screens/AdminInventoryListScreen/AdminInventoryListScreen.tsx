@@ -1,38 +1,43 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import LottieView from "lottie-react-native";
+
+// components
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
-import { getCategoryList } from "src/services/category/getCategoryList";
-import { CategoryData } from "src/services/category/types";
+import Loader from "src/components/Loader";
+import EmptyInventoryLottie from "@assets/animation/empty-inventory-lottie.json";
+
+// constants
 import { ItemDetails } from "src/services/item/types";
-import { parseCategoryData, parseCategoryName } from "./utils";
-import { capitalize } from "lodash";
+import { parseCategoryName } from "./utils";
 import { COLORS } from "src/constants/colors";
+import { ItemStatus } from "src/types/ItemStatus";
+
+// hooks
+import { useGetCategoryList } from "./hooks/useGetCategoryList";
+import { useGetItemList } from "./hooks/useGetItemList";
 
 const AdminInventoryListScreen = () => {
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [categoryList, setCategoryList] = useState<CategoryData[]>([]);
-  const [itemList, setItemList] = useState<ItemDetails[]>([]);
-  const [selectedCategory, setCategory] = useState<string>("ALL");
-  const flatListRef = useRef<FlatList>(null);
+  const { categoryList, selectedCategory, onPressCategory, categoryListRef } =
+    useGetCategoryList();
 
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const categoryData = await getCategoryList();
-      const parsedCategoryData = parseCategoryData(categoryData.data);
-      setCategoryList(parsedCategoryData);
-    } catch (e) {
-      console.log("Error loading data -> ", e);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    itemList,
+    endReached,
+    isScrolling,
+    isLoading,
+    page,
+    setPage,
+    setIsScrolling,
+    loadItemList,
+    resetState,
+  } = useGetItemList();
 
   useEffect(() => {
-    loadData();
-  }, []);
+    loadItemList(selectedCategory, page);
+  }, [page, selectedCategory]);
 
   return (
     <ScreenContainer>
@@ -40,23 +45,48 @@ const AdminInventoryListScreen = () => {
         <Text variant="body1bold">Inventory List</Text>
         <View style={{ marginTop: 12 }}>
           <FlatList
-            ref={flatListRef}
+            ref={categoryListRef}
             data={categoryList}
             renderItem={({ item, index }) => (
               <CategoryCard
                 name={item.name}
                 isSelected={item.name === selectedCategory}
                 onPress={() => {
-                  setCategory(item.name);
-                  flatListRef.current?.scrollToIndex({
-                    animated: true,
-                    index,
-                    viewPosition: 0.5,
-                  });
+                  resetState();
+                  onPressCategory(item, index);
                 }}
               />
             )}
             horizontal
+          />
+        </View>
+        <View style={{ marginTop: 12, flex: 1 }}>
+          <FlatList
+            data={itemList}
+            renderItem={({ item }) => <ItemCard itemDetails={item} />}
+            keyExtractor={(_, index) => `key-${index}`}
+            onEndReached={() => {
+              if (endReached || isScrolling === false) return;
+              setPage((prev) => prev + 1);
+            }}
+            onEndReachedThreshold={0.1}
+            onMomentumScrollBegin={() => setIsScrolling(true)}
+            ListFooterComponent={() => isLoading && <Loader size={"large"} />}
+            ListEmptyComponent={() =>
+              !isLoading && (
+                <View>
+                  <LottieView
+                    source={EmptyInventoryLottie}
+                    style={{ height: 300, width: 300 }}
+                    autoPlay
+                    loop
+                  />
+                  <Text variant="header3" textAlign="center">
+                    Sorry this category has no items
+                  </Text>
+                </View>
+              )
+            }
           />
         </View>
       </View>
@@ -80,10 +110,39 @@ const CategoryCard = (props: {
   );
 };
 
+const ItemCard = (props: { itemDetails: ItemDetails }) => {
+  const { itemDetails } = props;
+  const { name, locationName, categoryName, status } = itemDetails;
+  return (
+    <TouchableOpacity style={styles.itemCard}>
+      <View>
+        <Text variant="body2bold">{name}</Text>
+        <Text variant="body3regular">{locationName}</Text>
+      </View>
+      <View>
+        <Text variant="body3regular" textAlign="right">
+          {categoryName}
+        </Text>
+        <Text
+          variant="body3regular"
+          textAlign="right"
+          style={
+            status === ItemStatus.UNDER_MAINTENANCE
+              ? { color: COLORS.red }
+              : { color: COLORS.green }
+          }
+        >
+          {status}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 export default AdminInventoryListScreen;
 
 const styles = StyleSheet.create({
-  mainContainer: { paddingHorizontal: CONSTANTS.layout },
+  mainContainer: { flex: 1, paddingHorizontal: CONSTANTS.layout },
   categoryCard: {
     paddingHorizontal: 18,
     borderColor: COLORS.blue,
@@ -92,4 +151,16 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   selectedCategory: { backgroundColor: COLORS.darkBlue },
+  itemCard: {
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderColor: COLORS.blue,
+    borderWidth: 3,
+    marginBottom: 12,
+    borderRadius: 12,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });

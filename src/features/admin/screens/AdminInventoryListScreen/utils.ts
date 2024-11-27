@@ -1,5 +1,6 @@
 import { capitalize } from "lodash";
 import { CategoryData } from "src/services/category/types";
+import { ItemDetails } from "src/services/item/types";
 
 export const parseCategoryData = (categoryData: CategoryData[]) => {
   const allCategories = {
@@ -11,4 +12,8 @@ export const parseCategoryData = (categoryData: CategoryData[]) => {
 
 export const parseCategoryName = (name: string) => {
   return capitalize(name.replace("_", " "));
+};
+
+export const parseItemList = async (itemData: ItemDetails[]) => {
+  return itemData;
 };
