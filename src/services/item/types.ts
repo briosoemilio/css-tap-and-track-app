@@ -16,3 +16,16 @@ export interface ItemDetails {
   updatedAt: Date;
   computerId: null;
 }
+
+export interface GetAllItemsRes {
+  statusCode: number;
+  message: string;
+  data: GetAllItemsResData;
+}
+
+export interface GetAllItemsResData {
+  data: ItemDetails[];
+  total: number;
+  page: number;
+  itemsPerPage: number;
+}
