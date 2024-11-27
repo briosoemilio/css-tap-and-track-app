@@ -17,7 +17,6 @@ import TimeInIcon from "@assets/icons/home/timein-icon.svg";
 import ReportIcon from "@assets/icons/home/report-icon.svg";
 import TrackIcon from "@assets/icons/home/track-icon.svg";
 import { COLORS } from "src/constants/colors";
-import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 import { TrackType } from "../track/types";
 
