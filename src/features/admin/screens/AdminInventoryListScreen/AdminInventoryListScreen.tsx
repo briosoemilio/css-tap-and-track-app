@@ -101,6 +101,7 @@ const AdminInventoryListScreen = () => {
                   resetState();
                   onPressCategory(item, index);
                 }}
+                disabled={isLoading}
               />
             )}
             horizontal

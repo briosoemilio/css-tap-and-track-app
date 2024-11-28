@@ -8,12 +8,14 @@ const CategoryCard = (props: {
   name: string;
   isSelected: boolean;
   onPress: () => void;
+  disabled?: boolean;
 }) => {
-  const { name, isSelected, onPress } = props;
+  const { name, isSelected, onPress, disabled = false } = props;
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.categoryCard, isSelected && styles.selectedCategory]}
+      disabled={disabled}
     >
       <Text variant="body2regular">{parseCategoryName(name)}</Text>
     </TouchableOpacity>
