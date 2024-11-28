@@ -1,30 +1,33 @@
-import React, { ReactNode, useCallback, useMemo, useRef } from "react";
-import LottieView from "lottie-react-native";
-import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import React, { useCallback } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import BottomSheet, {
   BottomSheetBackdrop,
-  BottomSheetProps,
   BottomSheetView,
-  SNAP_POINT_TYPE,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { COLORS } from "src/constants/colors";
-import NFCTrackAnimation from "@assets/animation/nfc-lottie.json";
 import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
 import { ItemStatus } from "src/types/ItemStatus";
 import CategoryCard from "./CategoryCard";
 import { useLocationList } from "../hooks/useLocationList";
 import { capitalize, toUpper, upperCase } from "lodash";
+import { FilterOption, useGetItemList } from "../hooks/useGetItemList";
 
 interface FilterBottomSheetProps {
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
   onOpen?: () => Promise<void>;
+  filters: FilterOption[];
+  onPressFilter: (filter: FilterOption) => void;
+  resetFilters: () => void;
 }
 
 const FilterBottomSheet = (props: FilterBottomSheetProps) => {
-  const { bottomSheetRef, onOpen } = props;
+  const { bottomSheetRef, onOpen, filters, onPressFilter, resetFilters } =
+    props;
   const { locationList } = useLocationList();
+  const locationFilter = filters.find((filter) => filter.type === "location");
+  const statusFilter = filters.find((filter) => filter.type === "status");
 
   const onSheetChange = useCallback(
     async (index: number) => {
@@ -36,10 +39,10 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
   );
 
   const itemStatusData = [
-    { status: "ALL" },
-    { status: ItemStatus.AVAILABLE },
-    { status: ItemStatus.IN_USE },
-    { status: ItemStatus.UNDER_MAINTENANCE },
+    { name: "ALL" },
+    { name: ItemStatus.AVAILABLE },
+    { name: ItemStatus.IN_USE },
+    { name: ItemStatus.UNDER_MAINTENANCE },
   ];
 
   return (
@@ -65,7 +68,7 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
           <Text variant="header3" textAlign="left">
             Filters
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={resetFilters}>
             <Text variant="body2regular">Reset</Text>
           </TouchableOpacity>
         </View>
@@ -75,12 +78,14 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
           <Text variant="body2bold" textAlign="left">
             Location
           </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: 12 }}>
+          <View style={styles.filterContainer}>
             {locationList.map((location, index) => (
               <CategoryCard
                 name={toUpper(location.name)}
-                isSelected={false}
-                onPress={() => null}
+                isSelected={locationFilter?.name === location.name}
+                onPress={() =>
+                  onPressFilter({ type: "location", name: location.name })
+                }
                 key={`location-${index}`}
               />
             ))}
@@ -92,12 +97,14 @@ const FilterBottomSheet = (props: FilterBottomSheetProps) => {
           <Text variant="body2bold" textAlign="left">
             Status
           </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: 12 }}>
+          <View style={styles.filterContainer}>
             {itemStatusData.map((itemStatus, index) => (
               <CategoryCard
-                name={capitalize(itemStatus.status)}
-                isSelected={false}
-                onPress={() => null}
+                name={capitalize(itemStatus.name)}
+                isSelected={statusFilter?.name === itemStatus.name}
+                onPress={() =>
+                  onPressFilter({ type: "status", name: itemStatus.name })
+                }
                 key={`category-${index}`}
               />
             ))}
@@ -129,4 +136,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     gap: 12,
   },
+  filterContainer: { flexDirection: "row", flexWrap: "wrap", rowGap: 12 },
 });
