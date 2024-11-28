@@ -7,7 +7,6 @@ import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
 import Loader from "src/components/Loader";
-import EmptyInventoryLottie from "@assets/animation/empty-inventory-lottie.json";
 import FilterIcon from "@assets/icons/inventory-list/filter-icon.svg";
 import CategoryCard from "./components/CategoryCard";
 import ItemCard from "./components/ItemCard";
@@ -20,6 +19,8 @@ import { COLORS } from "src/constants/colors";
 // hooks
 import { useGetCategoryList } from "./hooks/useGetCategoryList";
 import { useGetItemList } from "./hooks/useGetItemList";
+import ListFooter from "./components/ListFooter";
+import ListEmpty from "./components/ListEmpty";
 
 const AdminInventoryListScreen = () => {
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
@@ -83,32 +84,16 @@ const AdminInventoryListScreen = () => {
             keyExtractor={(_, index) => `key-${index}`}
             ListFooterComponent={() => {
               return (
-                <View>
-                  {!endReached && itemList.length > 0 && !isLoading && (
-                    <TouchableOpacity
-                      onPress={() => setPage((prev) => prev + 1)}
-                      style={styles.loadMore}
-                    >
-                      <Text variant="body2bold">Load More</Text>
-                    </TouchableOpacity>
-                  )}
-                  {isLoading && <Loader size={"large"} />}
-                </View>
+                <ListFooter
+                  showFooter={!endReached && itemList.length > 0 && !isLoading}
+                  showLoader={isLoading}
+                  onPress={() => {
+                    setPage((prev) => prev + 1);
+                  }}
+                />
               );
             }}
-            ListEmptyComponent={() => (
-              <View>
-                <LottieView
-                  source={EmptyInventoryLottie}
-                  style={{ height: 300 }}
-                  autoPlay
-                  loop
-                />
-                <Text variant="header3" textAlign="center">
-                  Sorry this category has no items
-                </Text>
-              </View>
-            )}
+            ListEmptyComponent={() => !isLoading && <ListEmpty />}
           />
         </View>
       </View>
