@@ -15,6 +15,7 @@ import FilterBottomSheet from "./components/FilterBottomSheet";
 
 // constants
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { COLORS } from "src/constants/colors";
 
 // hooks
 import { useGetCategoryList } from "./hooks/useGetCategoryList";
@@ -29,13 +30,14 @@ const AdminInventoryListScreen = () => {
   const {
     itemList,
     endReached,
-    isScrolling,
     isLoading,
     page,
     setPage,
-    setIsScrolling,
     loadItemList,
     resetState,
+    filters,
+    resetFilters,
+    onPressFilter,
   } = useGetItemList();
 
   useEffect(() => {
@@ -79,33 +81,44 @@ const AdminInventoryListScreen = () => {
             data={itemList}
             renderItem={({ item }) => <ItemCard itemDetails={item} />}
             keyExtractor={(_, index) => `key-${index}`}
-            onEndReached={() => {
-              if (endReached || isScrolling === false) return;
-              setPage((prev) => prev + 1);
-            }}
-            onEndReachedThreshold={0.1}
-            onMomentumScrollBegin={() => setIsScrolling(true)}
-            ListFooterComponent={() => isLoading && <Loader size={"large"} />}
-            ListEmptyComponent={() =>
-              !isLoading && (
+            ListFooterComponent={() => {
+              return (
                 <View>
-                  <LottieView
-                    source={EmptyInventoryLottie}
-                    style={{ height: 300 }}
-                    autoPlay
-                    loop
-                  />
-                  <Text variant="header3" textAlign="center">
-                    Sorry this category has no items
-                  </Text>
+                  {!endReached && itemList.length > 0 && !isLoading && (
+                    <TouchableOpacity
+                      onPress={() => setPage((prev) => prev + 1)}
+                      style={styles.loadMore}
+                    >
+                      <Text variant="body2bold">Load More</Text>
+                    </TouchableOpacity>
+                  )}
+                  {isLoading && <Loader size={"large"} />}
                 </View>
-              )
-            }
+              );
+            }}
+            ListEmptyComponent={() => (
+              <View>
+                <LottieView
+                  source={EmptyInventoryLottie}
+                  style={{ height: 300 }}
+                  autoPlay
+                  loop
+                />
+                <Text variant="header3" textAlign="center">
+                  Sorry this category has no items
+                </Text>
+              </View>
+            )}
           />
         </View>
       </View>
 
-      <FilterBottomSheet bottomSheetRef={bottomSheetRef} />
+      <FilterBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        filters={filters}
+        onPressFilter={onPressFilter}
+        resetFilters={resetFilters}
+      />
     </ScreenContainer>
   );
 };
@@ -114,4 +127,11 @@ export default AdminInventoryListScreen;
 
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, paddingHorizontal: CONSTANTS.layout },
+  loadMore: {
+    paddingVertical: 8,
+    backgroundColor: COLORS.blue,
+    marginBottom: 12,
+    borderRadius: 12,
+    alignItems: "center",
+  },
 });
