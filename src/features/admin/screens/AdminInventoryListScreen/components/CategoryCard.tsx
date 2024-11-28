@@ -30,5 +30,5 @@ const styles = StyleSheet.create({
     marginRight: 12,
     borderRadius: 12,
   },
-  selectedCategory: { backgroundColor: COLORS.darkBlue },
+  selectedCategory: { backgroundColor: COLORS.blue },
 });
