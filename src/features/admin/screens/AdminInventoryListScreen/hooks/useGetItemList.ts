@@ -45,13 +45,11 @@ export const useGetItemList = () => {
   const loadItemList = async (categoryName: string, nextPage: number) => {
     if (isLoading || endReached) return;
     setIsLoading(true);
-    console.log({ categoryName });
     try {
       const { data: newItems } =
         categoryName === "ALL"
           ? await getAllItems(page)
           : await getItemByCategory(categoryName, nextPage);
-      console.log({ newItems });
 
       if (newItems.length < 10) {
         setEndReached(true);
