@@ -10,6 +10,7 @@ import CategoryCard from "./components/CategoryCard";
 import ItemCard from "./components/ItemCard";
 import FilterBottomSheet from "./components/FilterBottomSheet";
 import CloseIcon from "@assets/icons/close-icon.svg";
+import AddIcon from "@assets/icons/inventory-list/add-icon.svg";
 
 // constants
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
@@ -50,13 +51,7 @@ const AdminInventoryListScreen = () => {
   return (
     <ScreenContainer>
       <View style={styles.mainContainer}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          }}
-        >
+        <View style={styles.headerContainer}>
           {locationFilter?.name !== "ALL" && (
             <TouchableOpacity
               style={styles.filterButton}
@@ -79,14 +74,12 @@ const AdminInventoryListScreen = () => {
           )}
           <TouchableOpacity
             onPress={() => bottomSheetRef?.current?.expand()}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 8,
-            }}
+            style={{ marginRight: 12 }}
           >
             <FilterIcon />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <AddIcon />
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 12 }}>
@@ -142,6 +135,12 @@ export default AdminInventoryListScreen;
 
 const styles = StyleSheet.create({
   mainContainer: { flex: 1, paddingHorizontal: CONSTANTS.layout },
+  headerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
   loadMore: {
     paddingVertical: 8,
     backgroundColor: COLORS.blue,
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   filterButton: {
-    paddingHorizontal: 18,
     marginRight: 12,
     borderRadius: 12,
     alignItems: "center",
