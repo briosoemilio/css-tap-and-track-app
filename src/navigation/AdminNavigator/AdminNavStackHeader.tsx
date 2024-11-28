@@ -37,6 +37,11 @@ const AdminNavStackHeader = (props: {
             Inventory List
           </Text>
         )}
+        {props.routeName === "inventory-creator" && (
+          <Text variant="header3" style={{ marginLeft: 25 }}>
+            Create Peripheral
+          </Text>
+        )}
       </View>
     </View>
   );

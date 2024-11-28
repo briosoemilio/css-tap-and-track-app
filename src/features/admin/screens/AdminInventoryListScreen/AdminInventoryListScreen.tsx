@@ -22,9 +22,11 @@ import { useGetItemList } from "./hooks/useGetItemList";
 import ListFooter from "./components/ListFooter";
 import ListEmpty from "./components/ListEmpty";
 import { parseCategoryName } from "./utils";
+import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 
 const AdminInventoryListScreen = () => {
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
+  const navigation = useAdminNavigation();
 
   const { categoryList, selectedCategory, onPressCategory, categoryListRef } =
     useGetCategoryList();
@@ -78,7 +80,9 @@ const AdminInventoryListScreen = () => {
           >
             <FilterIcon />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation?.navigate("inventory-creator")}
+          >
             <AddIcon />
           </TouchableOpacity>
         </View>

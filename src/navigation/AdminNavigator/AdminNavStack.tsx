@@ -10,12 +10,14 @@ import { TrackType } from "src/features/track/types";
 import AdminAccounSettingsScreen from "src/features/admin/screens/AdminAccountSettingsScreen";
 import AdminNavStackHeader from "./AdminNavStackHeader";
 import AdminInventoryListScreen from "src/features/admin/screens/AdminInventoryListScreen/AdminInventoryListScreen";
+import AdminInventoryCreatorScreen from "src/features/admin/screens/AdminInventoryCreatorScreen/AdminInventoryCreatorScreen";
 
 export type AdminNavParams = {
   main: undefined;
   track: { trackType: TrackType };
   account: undefined;
   inventory: undefined;
+  "inventory-creator": undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -41,6 +43,10 @@ const AdminNavStack = () => {
       <AdminStack.Screen
         name="inventory"
         component={AdminInventoryListScreen}
+      />
+      <AdminStack.Screen
+        name="inventory-creator"
+        component={AdminInventoryCreatorScreen}
       />
     </AdminStack.Navigator>
   );
