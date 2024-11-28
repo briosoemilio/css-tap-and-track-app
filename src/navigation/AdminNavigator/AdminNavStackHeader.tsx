@@ -4,8 +4,12 @@ import { useAdminNavigation } from "./useAdminNavigation";
 import BackIcon from "@assets/icons/back-icon.svg";
 import { StatusBar } from "expo-status-bar";
 import { COLORS } from "src/constants/colors";
+import Text from "src/components/Text";
 
-const AdminNavStackHeader = (props: { canGoBack: boolean }) => {
+const AdminNavStackHeader = (props: {
+  canGoBack: boolean;
+  routeName: string;
+}) => {
   const navigation = useAdminNavigation();
   return (
     <View>
@@ -15,17 +19,23 @@ const AdminNavStackHeader = (props: { canGoBack: boolean }) => {
           height: 100,
           backgroundColor: COLORS.black,
           display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
+          flexDirection: "row",
+          alignContent: "center",
+          alignItems: "flex-end",
         }}
       >
         {props.canGoBack && (
           <TouchableOpacity
             onPress={() => navigation?.goBack()}
-            style={{ alignSelf: "flex-start", marginLeft: 25 }}
+            style={{ marginLeft: 25 }}
           >
             <BackIcon />
           </TouchableOpacity>
+        )}
+        {props.routeName === "inventory" && (
+          <Text variant="header3" style={{ marginLeft: 25 }}>
+            Inventory List
+          </Text>
         )}
       </View>
     </View>

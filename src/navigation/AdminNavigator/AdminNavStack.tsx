@@ -27,8 +27,11 @@ const AdminNavStack = () => {
     <AdminStack.Navigator
       initialRouteName="home"
       screenOptions={{
-        header: ({ navigation }) => (
-          <AdminNavStackHeader canGoBack={navigation?.canGoBack()} />
+        header: ({ navigation, route }) => (
+          <AdminNavStackHeader
+            canGoBack={navigation?.canGoBack()}
+            routeName={route?.name}
+          />
         ),
       }}
     >

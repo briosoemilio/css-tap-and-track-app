@@ -1,16 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import LottieView from "lottie-react-native";
 
 // components
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
-import Loader from "src/components/Loader";
 import FilterIcon from "@assets/icons/inventory-list/filter-icon.svg";
 import CategoryCard from "./components/CategoryCard";
 import ItemCard from "./components/ItemCard";
 import FilterBottomSheet from "./components/FilterBottomSheet";
+import CloseIcon from "@assets/icons/close-icon.svg";
 
 // constants
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
@@ -21,6 +20,7 @@ import { useGetCategoryList } from "./hooks/useGetCategoryList";
 import { useGetItemList } from "./hooks/useGetItemList";
 import ListFooter from "./components/ListFooter";
 import ListEmpty from "./components/ListEmpty";
+import { parseCategoryName } from "./utils";
 
 const AdminInventoryListScreen = () => {
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
@@ -40,6 +40,8 @@ const AdminInventoryListScreen = () => {
     resetFilters,
     onPressFilter,
   } = useGetItemList();
+  const locationFilter = filters?.find((filter) => filter.type === "location");
+  const statusFilter = filters?.find((filter) => filter.type === "status");
 
   useEffect(() => {
     loadItemList(selectedCategory, page);
@@ -52,11 +54,38 @@ const AdminInventoryListScreen = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
           }}
         >
-          <Text variant="body1bold">Inventory List</Text>
-          <TouchableOpacity onPress={() => bottomSheetRef?.current?.expand()}>
+          {locationFilter?.name !== "ALL" && (
+            <TouchableOpacity
+              style={styles.filterButton}
+              onPress={() => onPressFilter({ type: "location", name: "ALL" })}
+            >
+              <CloseIcon />
+              <Text variant="body3bold">Location: {locationFilter?.name}</Text>
+            </TouchableOpacity>
+          )}
+          {statusFilter?.name !== "ALL" && (
+            <TouchableOpacity
+              style={styles.filterButton}
+              onPress={() => onPressFilter({ type: "status", name: "ALL" })}
+            >
+              <CloseIcon />
+              <Text variant="body3bold" ellipsizeMode="tail">
+                Status: {parseCategoryName(statusFilter?.name as string)}
+              </Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            onPress={() => bottomSheetRef?.current?.expand()}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
             <FilterIcon />
           </TouchableOpacity>
         </View>
@@ -118,5 +147,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 12,
     alignItems: "center",
+  },
+  filterButton: {
+    paddingHorizontal: 18,
+    marginRight: 12,
+    borderRadius: 12,
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    gap: 4,
   },
 });
