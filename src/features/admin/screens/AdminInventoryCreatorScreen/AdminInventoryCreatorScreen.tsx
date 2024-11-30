@@ -13,6 +13,7 @@ import CreateSuccessModal from "./components/CreateSuccessModal";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 import { COLORS } from "src/constants/colors";
 import { getErrorMessage } from "src/services/helpers";
+import { ItemDetails } from "src/services/item/types";
 
 const AdminInventoryCreatorScreen = () => {
   // Form Hooks
@@ -23,6 +24,7 @@ const AdminInventoryCreatorScreen = () => {
   // React Hooks
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState("");
+  const [itemDetails, setItemDetails] = useState<ItemDetails>();
   const navigation = useAdminNavigation();
 
   // functions
@@ -31,6 +33,7 @@ const AdminInventoryCreatorScreen = () => {
       const res = await createItem(data);
       if (res) {
         setShowModal(true);
+        setItemDetails(res);
       }
     } catch (err) {
       const errMessage = getErrorMessage(err);
@@ -74,10 +77,11 @@ const AdminInventoryCreatorScreen = () => {
             index: 1,
             routes: [
               {
-                name: "main",
+                name: "home",
               },
               {
                 name: "peripheral-details",
+                params: { itemDetails },
               },
             ],
           });

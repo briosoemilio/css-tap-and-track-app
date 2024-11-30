@@ -12,14 +12,15 @@ import AdminNavStackHeader from "./AdminNavStackHeader";
 import AdminInventoryListScreen from "src/features/admin/screens/AdminInventoryListScreen/AdminInventoryListScreen";
 import AdminInventoryCreatorScreen from "src/features/admin/screens/AdminInventoryCreatorScreen/AdminInventoryCreatorScreen";
 import AdminPeripheralDetailsScreen from "src/features/admin/screens/AdminPeripheralDetailsScreen/AdminPeripheralDetailsScreen";
+import { ItemDetails } from "src/services/item/types";
 
 export type AdminNavParams = {
-  main: undefined;
+  home: undefined;
   track: { trackType: TrackType };
   account: undefined;
   inventory: undefined;
   "inventory-creator": undefined;
-  "peripheral-details": undefined;
+  "peripheral-details": { itemDetails: ItemDetails };
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
