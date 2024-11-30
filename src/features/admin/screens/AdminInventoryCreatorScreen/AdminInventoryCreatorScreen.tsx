@@ -71,8 +71,11 @@ const AdminInventoryCreatorScreen = () => {
         setShowModal={setShowModal}
         onDismiss={() => {
           navigation?.reset({
-            index: 0,
+            index: 1,
             routes: [
+              {
+                name: "main",
+              },
               {
                 name: "peripheral-details",
               },
