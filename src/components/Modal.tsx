@@ -6,6 +6,7 @@ export type ModalProps = {
   onRequestClose: () => void;
   transparent: boolean;
   children: ReactNode;
+  onDismiss?: () => void;
 };
 
 const Modal = (props: ModalProps) => {
@@ -14,6 +15,7 @@ const Modal = (props: ModalProps) => {
     onRequestClose = () => null,
     transparent = true,
     children,
+    onDismiss,
   } = props;
 
   return (
@@ -22,6 +24,7 @@ const Modal = (props: ModalProps) => {
       onRequestClose={onRequestClose}
       transparent={transparent}
       animationType="fade"
+      onDismiss={() => console.log("dismissed")}
     >
       <View style={styles.modalWrapper}>{children}</View>
     </RNModal>
