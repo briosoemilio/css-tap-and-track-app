@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import { useAdminNavigation } from "./useAdminNavigation";
 import BackIcon from "@assets/icons/back-icon.svg";
 import { StatusBar } from "expo-status-bar";
@@ -9,8 +9,31 @@ import Text from "src/components/Text";
 const AdminNavStackHeader = (props: {
   canGoBack: boolean;
   routeName: string;
+  params?: any;
 }) => {
+  // Props
+  const { canGoBack, routeName, params } = props;
+
+  // nav hooks
   const navigation = useAdminNavigation();
+
+  // react hooks
+  const headerName = useMemo(() => {
+    switch (routeName) {
+      case "inventory": {
+        return "Inventory List";
+      }
+      case "inventory-creator": {
+        return "Create Peripheral";
+      }
+      case "peripheral-details": {
+        return params?.itemDetails?.name;
+      }
+      default: {
+        return "";
+      }
+    }
+  }, [routeName]);
   return (
     <View>
       <StatusBar />
@@ -24,7 +47,7 @@ const AdminNavStackHeader = (props: {
           alignItems: "flex-end",
         }}
       >
-        {props.canGoBack && (
+        {canGoBack && (
           <TouchableOpacity
             onPress={() => navigation?.goBack()}
             style={{ marginLeft: 25 }}
@@ -32,14 +55,9 @@ const AdminNavStackHeader = (props: {
             <BackIcon />
           </TouchableOpacity>
         )}
-        {props.routeName === "inventory" && (
+        {headerName && (
           <Text variant="header3" style={{ marginLeft: 25 }}>
-            Inventory List
-          </Text>
-        )}
-        {props.routeName === "inventory-creator" && (
-          <Text variant="header3" style={{ marginLeft: 25 }}>
-            Create Peripheral
+            {headerName}
           </Text>
         )}
       </View>

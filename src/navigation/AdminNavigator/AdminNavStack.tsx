@@ -36,6 +36,7 @@ const AdminNavStack = () => {
           <AdminNavStackHeader
             canGoBack={navigation?.canGoBack()}
             routeName={route?.name}
+            params={route?.params}
           />
         ),
       }}

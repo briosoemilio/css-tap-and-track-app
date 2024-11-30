@@ -5,11 +5,11 @@ import { COLORS } from "src/constants/colors";
 import { ItemStatus } from "src/types/ItemStatus";
 import { ItemDetails } from "src/services/item/types";
 
-const ItemCard = (props: { itemDetails: ItemDetails }) => {
-  const { itemDetails } = props;
+const ItemCard = (props: { itemDetails: ItemDetails; onPress: () => void }) => {
+  const { itemDetails, onPress } = props;
   const { name, locationName, categoryName, status } = itemDetails;
   return (
-    <TouchableOpacity style={styles.itemCard}>
+    <TouchableOpacity style={styles.itemCard} onPress={onPress}>
       <View>
         <Text variant="body2bold">{name}</Text>
         <Text variant="body3regular">{locationName}</Text>

@@ -107,7 +107,16 @@ const AdminInventoryListScreen = () => {
         <View style={{ marginTop: 12, flex: 1 }}>
           <FlatList
             data={itemList}
-            renderItem={({ item }) => <ItemCard itemDetails={item} />}
+            renderItem={({ item }) => (
+              <ItemCard
+                itemDetails={item}
+                onPress={() =>
+                  navigation.navigate("peripheral-details", {
+                    itemDetails: item,
+                  })
+                }
+              />
+            )}
             keyExtractor={(_, index) => `key-${index}`}
             ListFooterComponent={() => {
               return (
