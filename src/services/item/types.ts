@@ -29,3 +29,9 @@ export interface GetAllItemsResData {
   page: number;
   itemsPerPage: number;
 }
+
+export interface CreateItemRes {
+  statusCode: number;
+  message: string;
+  data: ItemDetails;
+}
