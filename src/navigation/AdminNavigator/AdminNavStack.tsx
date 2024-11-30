@@ -11,6 +11,7 @@ import AdminAccounSettingsScreen from "src/features/admin/screens/AdminAccountSe
 import AdminNavStackHeader from "./AdminNavStackHeader";
 import AdminInventoryListScreen from "src/features/admin/screens/AdminInventoryListScreen/AdminInventoryListScreen";
 import AdminInventoryCreatorScreen from "src/features/admin/screens/AdminInventoryCreatorScreen/AdminInventoryCreatorScreen";
+import AdminPeripheralDetailsScreen from "src/features/admin/screens/AdminPeripheralDetailsScreen/AdminPeripheralDetailsScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -18,6 +19,7 @@ export type AdminNavParams = {
   account: undefined;
   inventory: undefined;
   "inventory-creator": undefined;
+  "peripheral-details": undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -47,6 +49,10 @@ const AdminNavStack = () => {
       <AdminStack.Screen
         name="inventory-creator"
         component={AdminInventoryCreatorScreen}
+      />
+      <AdminStack.Screen
+        name="peripheral-details"
+        component={AdminPeripheralDetailsScreen}
       />
     </AdminStack.Navigator>
   );
