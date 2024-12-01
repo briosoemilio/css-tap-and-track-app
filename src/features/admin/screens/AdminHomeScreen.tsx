@@ -38,7 +38,7 @@ const HomeIcon = (props: { type: HomeIconTypes }) => {
         return {
           icon: <ReportsIcon />,
           text: "Reports",
-          onPress: () => showUnderDevelopment(),
+          onPress: () => navigation.navigate("reports"),
         };
       case "track":
         return {

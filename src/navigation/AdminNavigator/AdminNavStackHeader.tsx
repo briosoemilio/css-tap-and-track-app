@@ -32,6 +32,9 @@ const AdminNavStackHeader = (props: {
       case "add-location": {
         return "Location List";
       }
+      case "reports": {
+        return "Reports List";
+      }
       default: {
         return "";
       }

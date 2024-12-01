@@ -15,6 +15,7 @@ import AdminPeripheralDetailsScreen from "src/features/admin/screens/AdminPeriph
 import { ItemDetails } from "src/services/item/types";
 import SuccessScreen from "src/features/success/SuccessScreen";
 import AdminLocationListScreen from "src/features/admin/screens/AdminLocationListScreen/AdminLocationListScreen";
+import AdminReportsScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportsScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -25,6 +26,7 @@ export type AdminNavParams = {
   "peripheral-details": { itemDetails: ItemDetails };
   success: { message?: string };
   "add-location": undefined;
+  reports: undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -65,6 +67,7 @@ const AdminNavStack = () => {
         name="add-location"
         component={AdminLocationListScreen}
       />
+      <AdminStack.Screen name="reports" component={AdminReportsScreen} />
     </AdminStack.Navigator>
   );
 };
