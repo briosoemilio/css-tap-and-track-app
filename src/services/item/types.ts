@@ -41,3 +41,9 @@ export interface UpdateItemLocationRes {
   message: string;
   data: ItemDetails;
 }
+
+export interface UpdateItemStatusRes {
+  statusCode: number;
+  message: string;
+  data: ItemDetails;
+}
