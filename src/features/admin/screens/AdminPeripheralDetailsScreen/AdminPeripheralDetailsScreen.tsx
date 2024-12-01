@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
@@ -10,6 +10,9 @@ import EditIcon from "@assets/icons/inventory-list/edit-icon.svg";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 import { parseStringifiedMetadata } from "./utils";
 import { formatDate } from "src/helpers/formatDate";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import UpdateLocationBottomSheet from "./components/UpdateLocationBottomSheet";
+import UpdateStatusBottomSheet from "./components/UpdateStatusBottomSheet";
 
 export type DetailValues = { detail: string; value: string };
 
@@ -40,6 +43,7 @@ const AdminPeripheralDetailsScreen = () => {
   const route = useRoute<RouteProp<AdminNavParams, "peripheral-details">>();
   const { itemDetails } = route.params;
   const {
+    id,
     metadata: _metadata,
     createdAt: _createdAt,
     categoryName,
@@ -48,6 +52,9 @@ const AdminPeripheralDetailsScreen = () => {
   } = itemDetails;
   const metadata = parseStringifiedMetadata(_metadata);
   const createdAt = formatDate(_createdAt) as string;
+
+  const locationBottomSheetRef = useRef<BottomSheetMethods>(null);
+  const statusBottomSheetRef = useRef<BottomSheetMethods>(null);
   return (
     <ScreenContainer>
       <ScrollView
@@ -65,14 +72,14 @@ const AdminPeripheralDetailsScreen = () => {
             detail: "Location",
             value: locationName,
           }}
-          onPress={showUnderDevelopment}
+          onPress={() => locationBottomSheetRef?.current?.expand()}
         />
         <DetailComponent
           details={{
             detail: "Status",
             value: status,
           }}
-          onPress={showUnderDevelopment}
+          onPress={() => statusBottomSheetRef?.current?.expand()}
         />
         {metadata?.map((details, index) => (
           <DetailComponent details={details} key={`detail-${index}`} />
@@ -108,6 +115,12 @@ const AdminPeripheralDetailsScreen = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <UpdateLocationBottomSheet
+        itemId={id}
+        bottomSheetRef={locationBottomSheetRef}
+        locationName={locationName}
+      />
+      <UpdateStatusBottomSheet bottomSheetRef={statusBottomSheetRef} />
     </ScreenContainer>
   );
 };
