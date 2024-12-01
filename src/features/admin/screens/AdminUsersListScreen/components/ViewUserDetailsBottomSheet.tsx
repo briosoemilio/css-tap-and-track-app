@@ -20,6 +20,7 @@ import { CONSTANTS } from "src/constants/constants";
 import { UserDetails } from "src/services/user/types";
 import { formatDate } from "src/helpers/formatDate";
 import { AdminReportCardInfo } from "../../AdminReportsScreen/components/AdminReportCard";
+import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 
 interface AddLocationBottomSheetProps {
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
@@ -34,6 +35,7 @@ const ReportList = (props: {
   isLoading: boolean;
 }) => {
   const { parsedList, isLoading } = props;
+  const navigation = useAdminNavigation();
 
   if (isLoading) {
     return <Loader />;
@@ -62,6 +64,9 @@ const ReportList = (props: {
             borderWidth: 3,
             borderRadius: 12,
           }}
+          onPress={() =>
+            navigation?.push("reports", { reportsList: parsedList })
+          }
         >
           <Text variant="body2bold">See More Reports</Text>
         </TouchableOpacity>

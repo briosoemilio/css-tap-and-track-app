@@ -6,8 +6,14 @@ import AdminReportCard from "./components/AdminReportCard";
 import { useAdminReportList } from "./hooks/useAdminReportList";
 import ListFooter from "./components/ListFooter";
 import ListEmpty from "./components/ListEmpty";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { AdminNavParams } from "src/navigation/AdminNavigator/AdminNavStack";
 
 const AdminReportsScreen = () => {
+  // props
+  const route = useRoute<RouteProp<AdminNavParams, "reports">>();
+  const reportsList = route.params?.reportsList;
+
   const {
     parsedAdminReportList,
     endReached,
@@ -20,7 +26,7 @@ const AdminReportsScreen = () => {
     <ScreenContainer>
       <View style={styles.mainContainer}>
         <FlatList
-          data={parsedAdminReportList}
+          data={reportsList || parsedAdminReportList}
           keyExtractor={(_, index) => `report-${index}`}
           contentContainerStyle={{ gap: 15 }}
           renderItem={({ item: report }) => (

@@ -17,6 +17,7 @@ import SuccessScreen from "src/features/success/SuccessScreen";
 import AdminLocationListScreen from "src/features/admin/screens/AdminLocationListScreen/AdminLocationListScreen";
 import AdminReportsScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportsScreen";
 import AdminUsersListScreen from "src/features/admin/screens/AdminUsersListScreen/AdminUsersListScreen";
+import { AdminReportCardInfo } from "src/features/admin/screens/AdminReportsScreen/components/AdminReportCard";
 
 export type AdminNavParams = {
   main: undefined;
@@ -27,7 +28,7 @@ export type AdminNavParams = {
   "peripheral-details": { itemDetails: ItemDetails };
   success: { message?: string };
   "add-location": undefined;
-  reports: undefined;
+  reports?: { reportsList?: AdminReportCardInfo[] };
   users: undefined;
 };
 
