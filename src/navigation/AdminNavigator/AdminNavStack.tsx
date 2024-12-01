@@ -16,6 +16,7 @@ import { ItemDetails } from "src/services/item/types";
 import SuccessScreen from "src/features/success/SuccessScreen";
 import AdminLocationListScreen from "src/features/admin/screens/AdminLocationListScreen/AdminLocationListScreen";
 import AdminReportsScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportsScreen";
+import AdminUsersListScreen from "src/features/admin/screens/AdminUsersListScreen/AdminUsersListScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -27,6 +28,7 @@ export type AdminNavParams = {
   success: { message?: string };
   "add-location": undefined;
   reports: undefined;
+  users: undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -68,6 +70,7 @@ const AdminNavStack = () => {
         component={AdminLocationListScreen}
       />
       <AdminStack.Screen name="reports" component={AdminReportsScreen} />
+      <AdminStack.Screen name="users" component={AdminUsersListScreen} />
     </AdminStack.Navigator>
   );
 };

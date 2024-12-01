@@ -51,7 +51,7 @@ const HomeIcon = (props: { type: HomeIconTypes }) => {
         return {
           icon: <UsersIcon />,
           text: "Users",
-          onPress: () => showUnderDevelopment(),
+          onPress: () => navigation.navigate("users"),
         };
       case "account-settings":
         return {
