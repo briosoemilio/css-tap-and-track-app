@@ -1,18 +1,47 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
-import Text from "src/components/Text";
 import { CONSTANTS } from "src/constants/constants";
 import ScreenContainer from "src/components/ScreenContainer";
+import AdminReportCard from "./components/AdminReportCard";
+import { useAdminReportList } from "./hooks/useAdminReportList";
+import ListFooter from "./components/ListFooter";
+import ListEmpty from "./components/ListEmpty";
 
 const AdminReportsScreen = () => {
+  const {
+    parsedAdminReportList,
+    endReached,
+    reportList,
+    isLoading,
+    loadMoreReports,
+  } = useAdminReportList();
+
   return (
     <ScreenContainer>
-      <ScrollView
-        style={styles.mainContainer}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Text>AdminReportsScreen</Text>
-      </ScrollView>
+      <View style={styles.mainContainer}>
+        <FlatList
+          data={parsedAdminReportList}
+          keyExtractor={(_, index) => `report-${index}`}
+          renderItem={({ item: report }) => (
+            <AdminReportCard
+              userName={report.userName}
+              itemName={report.itemName}
+              locationName={report.locationName}
+              reportDetails={report.reportDetails}
+            />
+          )}
+          ListFooterComponent={() => {
+            return (
+              <ListFooter
+                showFooter={!endReached && reportList.length > 0 && !isLoading}
+                showLoader={isLoading}
+                onPress={() => loadMoreReports()}
+              />
+            );
+          }}
+          ListEmptyComponent={() => !isLoading && <ListEmpty />}
+        />
+      </View>
     </ScreenContainer>
   );
 };
@@ -20,11 +49,9 @@ const AdminReportsScreen = () => {
 export default AdminReportsScreen;
 
 const styles = StyleSheet.create({
-  mainContainer: { paddingHorizontal: CONSTANTS.layout },
-  contentContainer: {
-    flexGrow: 1,
+  mainContainer: {
+    paddingHorizontal: CONSTANTS.layout,
     paddingTop: 20,
     gap: 15,
-    display: "flex",
   },
 });
