@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
+  TouchableOpacity,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
@@ -17,6 +18,7 @@ import OptionCard from "./OptionCard";
 import { useLocationList } from "../../AdminInventoryListScreen/hooks/useLocationList";
 import { updateItemLocation } from "src/services/item/updateItemLocation";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
+import AddIcon from "@assets/icons/inventory-list/add-icon.svg";
 
 // constants
 import { COLORS } from "src/constants/colors";
@@ -110,6 +112,11 @@ const UpdateLocationBottomSheet = (props: UpdateLocationBottomSheetProps) => {
           <Text variant="header3" textAlign="left">
             Update Location
           </Text>
+          <TouchableOpacity
+            onPress={() => navigation?.navigate("add-location")}
+          >
+            <AddIcon />
+          </TouchableOpacity>
         </View>
         <View
           style={{

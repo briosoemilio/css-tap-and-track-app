@@ -14,6 +14,7 @@ import AdminInventoryCreatorScreen from "src/features/admin/screens/AdminInvento
 import AdminPeripheralDetailsScreen from "src/features/admin/screens/AdminPeripheralDetailsScreen/AdminPeripheralDetailsScreen";
 import { ItemDetails } from "src/services/item/types";
 import SuccessScreen from "src/features/success/SuccessScreen";
+import AdminLocationListScreen from "src/features/admin/screens/AdminLocationListScreen/AdminLocationListScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -23,6 +24,7 @@ export type AdminNavParams = {
   "inventory-creator": undefined;
   "peripheral-details": { itemDetails: ItemDetails };
   success: { message?: string };
+  "add-location": undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -59,6 +61,10 @@ const AdminNavStack = () => {
         component={AdminPeripheralDetailsScreen}
       />
       <AdminStack.Screen name="success" component={SuccessScreen} />
+      <AdminStack.Screen
+        name="add-location"
+        component={AdminLocationListScreen}
+      />
     </AdminStack.Navigator>
   );
 };

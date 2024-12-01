@@ -29,6 +29,9 @@ const AdminNavStackHeader = (props: {
       case "peripheral-details": {
         return params?.itemDetails?.name;
       }
+      case "add-location": {
+        return "Location List";
+      }
       default: {
         return "";
       }
