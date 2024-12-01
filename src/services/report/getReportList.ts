@@ -3,10 +3,15 @@ import { GetReportListRes } from "./types";
 
 export const getReportList = async (
   page: number = 1,
+  userID?: number,
   itemsPerPage: number = 10
 ) => {
+  const endpoint = userID
+    ? `/report/user-reports?page=${page}&itemsPerPage=${itemsPerPage}&userID=${userID}`
+    : `/report/user-reports?page=${page}&itemsPerPage=${itemsPerPage}`;
+
   const res = await wretch()
-    .url(`/report/user-reports?page=${page}&itemsPerPage=${itemsPerPage}`)
+    .url(endpoint)
     .get()
     .json<GetReportListRes>()
     .catch((err) => {

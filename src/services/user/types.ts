@@ -4,6 +4,12 @@ export interface GetUserDetailsRes {
   data: UserDetails;
 }
 
+export interface GetAllUsersRes {
+  statusCode: number;
+  message: string;
+  data: { data: UserDetails[] };
+}
+
 export interface UserDetails {
   id: number;
   uuid: string;
