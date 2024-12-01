@@ -7,7 +7,7 @@ import Text from "src/components/Text";
 import { TrackType } from "src/features/track/types";
 import InventoryIcon from "@assets/icons/admin-home/inventory-icon.svg";
 import AccountSettingsIcon from "@assets/icons/admin-home/account-settings-icon.svg";
-import MaintenanceIcon from "@assets/icons/admin-home/maintenance-icon.svg";
+import UsersIcon from "@assets/icons/admin-home/users-icon.svg";
 import PeripheralsCategoryIcon from "@assets/icons/admin-home/peripherals-category-icon.svg";
 import ReportsIcon from "@assets/icons/admin-home/reports-icon.svg";
 import TrackIcon from "@assets/icons/admin-home/track-icon.svg";
@@ -18,9 +18,9 @@ export type HomeIconTypes =
   | "inventory"
   | "reports"
   | "track"
-  | "maintenance"
+  | "users"
   | "account-settings"
-  | "peripheral";
+  | "computer";
 
 const HomeIcon = (props: { type: HomeIconTypes }) => {
   const navigation = useAdminNavigation();
@@ -47,10 +47,10 @@ const HomeIcon = (props: { type: HomeIconTypes }) => {
           onPress: () =>
             navigation.navigate("track", { trackType: TrackType.ITEM_DETAILS }),
         };
-      case "maintenance":
+      case "users":
         return {
-          icon: <MaintenanceIcon />,
-          text: "Maintenance",
+          icon: <UsersIcon />,
+          text: "Users",
           onPress: () => showUnderDevelopment(),
         };
       case "account-settings":
@@ -59,10 +59,10 @@ const HomeIcon = (props: { type: HomeIconTypes }) => {
           text: "Account Settings",
           onPress: () => navigation.navigate("account"),
         };
-      case "peripheral":
+      case "computer":
         return {
           icon: <PeripheralsCategoryIcon />,
-          text: "Peripheral Category",
+          text: "Computers",
           onPress: () => showUnderDevelopment(),
         };
     }
@@ -100,9 +100,9 @@ const AdminHomeScreen = () => {
           <HomeIcon type="inventory" />
           <HomeIcon type="reports" />
           <HomeIcon type="track" />
-          <HomeIcon type="maintenance" />
+          <HomeIcon type="users" />
           <HomeIcon type="account-settings" />
-          <HomeIcon type="peripheral" />
+          <HomeIcon type="computer" />
         </View>
       </ScrollView>
     </ScreenContainer>
