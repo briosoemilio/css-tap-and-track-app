@@ -63,8 +63,11 @@ const UpdateLocationBottomSheet = (props: UpdateLocationBottomSheetProps) => {
       const res = await updateItemLocation(itemId, selectedLocation);
       if (res) {
         navigation?.reset({
-          index: 1,
+          index: 2,
           routes: [
+            {
+              name: "main",
+            },
             {
               name: "inventory",
             },
