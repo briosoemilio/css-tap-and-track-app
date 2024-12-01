@@ -77,7 +77,7 @@ const AdminInventoryCreatorScreen = () => {
             index: 1,
             routes: [
               {
-                name: "home",
+                name: "main",
               },
               {
                 name: "peripheral-details",

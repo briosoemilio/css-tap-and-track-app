@@ -13,14 +13,16 @@ import AdminInventoryListScreen from "src/features/admin/screens/AdminInventoryL
 import AdminInventoryCreatorScreen from "src/features/admin/screens/AdminInventoryCreatorScreen/AdminInventoryCreatorScreen";
 import AdminPeripheralDetailsScreen from "src/features/admin/screens/AdminPeripheralDetailsScreen/AdminPeripheralDetailsScreen";
 import { ItemDetails } from "src/services/item/types";
+import SuccessScreen from "src/features/success/SuccessScreen";
 
 export type AdminNavParams = {
-  home: undefined;
+  main: undefined;
   track: { trackType: TrackType };
   account: undefined;
   inventory: undefined;
   "inventory-creator": undefined;
   "peripheral-details": { itemDetails: ItemDetails };
+  success: { message?: string };
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -30,7 +32,7 @@ const AdminStack = createNativeStackNavigator();
 const AdminNavStack = () => {
   return (
     <AdminStack.Navigator
-      initialRouteName="home"
+      initialRouteName="main"
       screenOptions={{
         header: ({ navigation, route }) => (
           <AdminNavStackHeader
@@ -41,7 +43,7 @@ const AdminNavStack = () => {
         ),
       }}
     >
-      <AdminStack.Screen name="home" component={AdminHomeScreen} />
+      <AdminStack.Screen name="main" component={AdminHomeScreen} />
       <AdminStack.Screen name="track" component={TrackNavigator} />
       <AdminStack.Screen name="account" component={AdminAccounSettingsScreen} />
       <AdminStack.Screen
@@ -56,6 +58,7 @@ const AdminNavStack = () => {
         name="peripheral-details"
         component={AdminPeripheralDetailsScreen}
       />
+      <AdminStack.Screen name="success" component={SuccessScreen} />
     </AdminStack.Navigator>
   );
 };
