@@ -12,5 +12,6 @@ export const COLORS = {
   transparent: "transparent",
   teal: "#395784",
   green: "#34cc33",
+  disabledGreen: "#9ed99e",
   navyBlue: "#263750",
 };
