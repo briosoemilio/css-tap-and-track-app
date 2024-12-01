@@ -120,7 +120,11 @@ const AdminPeripheralDetailsScreen = () => {
         bottomSheetRef={locationBottomSheetRef}
         locationName={locationName}
       />
-      <UpdateStatusBottomSheet bottomSheetRef={statusBottomSheetRef} />
+      <UpdateStatusBottomSheet
+        itemId={id}
+        bottomSheetRef={statusBottomSheetRef}
+        itemStatus={status}
+      />
     </ScreenContainer>
   );
 };
