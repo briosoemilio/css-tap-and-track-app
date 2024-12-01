@@ -20,3 +20,9 @@ export interface LocationDetails {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CreateLocationRes {
+  statusCode: number;
+  message: string;
+  data: LocationDetails;
+}
