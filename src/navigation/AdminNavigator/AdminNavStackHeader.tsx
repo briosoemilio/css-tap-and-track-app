@@ -36,10 +36,9 @@ const AdminNavStackHeader = (props: {
   }, [routeName]);
   return (
     <View>
-      <StatusBar />
       <View
         style={{
-          height: 100,
+          height: 50,
           backgroundColor: COLORS.black,
           display: "flex",
           flexDirection: "row",
