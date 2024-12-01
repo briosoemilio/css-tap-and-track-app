@@ -22,6 +22,7 @@ const AdminReportsScreen = () => {
         <FlatList
           data={parsedAdminReportList}
           keyExtractor={(_, index) => `report-${index}`}
+          contentContainerStyle={{ gap: 15 }}
           renderItem={({ item: report }) => (
             <AdminReportCard
               userName={report.userName}
