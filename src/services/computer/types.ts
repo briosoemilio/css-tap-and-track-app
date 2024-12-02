@@ -38,3 +38,16 @@ export interface InRepairComponent {
   uuid: string;
   status: string;
 }
+
+export interface GetAllComputersRes {
+  statusCode: number;
+  message: string;
+  data: GetAllComputersResData;
+}
+
+export interface GetAllComputersResData {
+  data: ComputerDetails[];
+  total: number;
+  page: number;
+  itemsPerPage: number;
+}
