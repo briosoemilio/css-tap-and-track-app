@@ -67,3 +67,16 @@ export interface ComputerLog {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface GetAllComputerLogsRes {
+  statusCode: number;
+  message: string;
+  data: GetAllComputerLogsData;
+}
+
+export interface GetAllComputerLogsData {
+  data: ComputerLog[];
+  total: number;
+  page: number;
+  itemsPerPage: number;
+}
