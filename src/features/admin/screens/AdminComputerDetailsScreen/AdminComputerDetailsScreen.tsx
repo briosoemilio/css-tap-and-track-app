@@ -1,0 +1,101 @@
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import React from "react";
+import ScreenContainer from "src/components/ScreenContainer";
+import { CONSTANTS } from "src/constants/constants";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { AdminNavParams } from "src/navigation/AdminNavigator/AdminNavStack";
+import Text from "src/components/Text";
+import { DetailValues } from "../AdminPeripheralDetailsScreen/AdminPeripheralDetailsScreen";
+import { COLORS } from "src/constants/colors";
+import { parseStringifiedMetadata } from "../AdminPeripheralDetailsScreen/utils";
+import Button from "src/components/Button";
+import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
+
+const DetailComponent = (props: {
+  details: DetailValues;
+  onPress?: () => void;
+}) => {
+  const { details } = props;
+  const { detail, value } = details;
+  return (
+    <View>
+      <Text variant="body2bold">{detail}</Text>
+      <View style={styles.attributeContainer}>
+        <View style={styles.attributeDetails}>
+          <Text variant="body2regular">{value}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const AdminComputerDetailsScreen = () => {
+  const route = useRoute<RouteProp<AdminNavParams, "computer-details">>();
+  const computerDetails = route.params?.computerDetails;
+  const {
+    monitorName,
+    keyboardName,
+    mouseName,
+    systemUnitName,
+    locationName,
+    metadata: _metadata,
+    lastLogUUID,
+  } = computerDetails;
+  const metadata = parseStringifiedMetadata(_metadata);
+  return (
+    <ScreenContainer>
+      <ScrollView
+        style={styles.mainContainer}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <DetailComponent
+          details={{ detail: "Location", value: locationName }}
+        />
+        {metadata?.map((attribute, index) => (
+          <DetailComponent
+            key={`metadata-${index}`}
+            details={{ detail: attribute.detail, value: attribute.value }}
+          />
+        ))}
+        <DetailComponent details={{ detail: "Monitor", value: monitorName }} />
+        <DetailComponent
+          details={{ detail: "Keyboard", value: keyboardName }}
+        />
+        <DetailComponent details={{ detail: "Mouse", value: mouseName }} />
+        <DetailComponent
+          details={{ detail: "System Unit", value: systemUnitName }}
+        />
+        {lastLogUUID && (
+          <View style={{ gap: 15 }}>
+            <Text variant="body2bold">LastUsed</Text>
+            <Button title="View Log" onPress={() => showUnderDevelopment()} />
+          </View>
+        )}
+      </ScrollView>
+    </ScreenContainer>
+  );
+};
+
+export default AdminComputerDetailsScreen;
+
+const styles = StyleSheet.create({
+  mainContainer: { paddingHorizontal: CONSTANTS.layout },
+  contentContainer: {
+    flexGrow: 1,
+    paddingTop: 20,
+    gap: 15,
+    display: "flex",
+  },
+  attributeContainer: {
+    backgroundColor: COLORS.transparent,
+    padding: 12,
+    display: "flex",
+    flexDirection: "row",
+    borderWidth: 2,
+    borderColor: COLORS.blue,
+    borderRadius: 12,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  attributeDetails: { display: "flex", flexDirection: "row", gap: 15 },
+});

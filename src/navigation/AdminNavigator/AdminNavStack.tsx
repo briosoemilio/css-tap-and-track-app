@@ -19,6 +19,8 @@ import AdminReportsScreen from "src/features/admin/screens/AdminReportsScreen/Ad
 import AdminUsersListScreen from "src/features/admin/screens/AdminUsersListScreen/AdminUsersListScreen";
 import { AdminReportCardInfo } from "src/features/admin/screens/AdminReportsScreen/components/AdminReportCard";
 import AdminComputersListScreen from "src/features/admin/screens/AdminComputersListScreen/AdminComputersListScreen";
+import AdminComputerDetailsScreen from "src/features/admin/screens/AdminComputerDetailsScreen/AdminComputerDetailsScreen";
+import { ComputerDetails } from "src/services/computer/types";
 
 export type AdminNavParams = {
   main: undefined;
@@ -32,6 +34,7 @@ export type AdminNavParams = {
   reports?: { reportsList?: AdminReportCardInfo[] };
   users: undefined;
   computers: undefined;
+  "computer-details": { computerDetails: ComputerDetails };
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -77,6 +80,10 @@ const AdminNavStack = () => {
       <AdminStack.Screen
         name="computers"
         component={AdminComputersListScreen}
+      />
+      <AdminStack.Screen
+        name="computer-details"
+        component={AdminComputerDetailsScreen}
       />
     </AdminStack.Navigator>
   );

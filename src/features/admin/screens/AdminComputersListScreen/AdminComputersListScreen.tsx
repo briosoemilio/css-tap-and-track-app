@@ -57,19 +57,21 @@ const AdminComputersListScreen = () => {
           >
             <FilterIcon />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation?.navigate("inventory-creator")}
-          >
+          <TouchableOpacity onPress={() => showUnderDevelopment()}>
             <AddIcon />
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 12, flex: 1 }}>
           <FlatList
             data={computersList}
-            renderItem={({ item: computer }) => (
+            renderItem={({ item: computerDetails }) => (
               <ComputerCard
-                computerDetails={computer}
-                onPress={() => showUnderDevelopment()}
+                computerDetails={computerDetails}
+                onPress={() =>
+                  navigation?.navigate("computer-details", {
+                    computerDetails,
+                  })
+                }
               />
             )}
             keyExtractor={(_, index) => `key-${index}`}
