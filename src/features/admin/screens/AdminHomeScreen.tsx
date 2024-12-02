@@ -63,7 +63,7 @@ const HomeIcon = (props: { type: HomeIconTypes }) => {
         return {
           icon: <PeripheralsCategoryIcon />,
           text: "Computers",
-          onPress: () => showUnderDevelopment(),
+          onPress: () => navigation.navigate("computers"),
         };
     }
   };

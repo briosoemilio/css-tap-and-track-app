@@ -33,10 +33,13 @@ const AdminNavStackHeader = (props: {
         return "Location List";
       }
       case "reports": {
-        return "Reports List";
+        return "Report List";
       }
       case "users": {
-        return "Users List";
+        return "User List";
+      }
+      case "computers": {
+        return "Computer List";
       }
       default: {
         return "";

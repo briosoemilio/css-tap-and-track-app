@@ -18,6 +18,7 @@ import AdminLocationListScreen from "src/features/admin/screens/AdminLocationLis
 import AdminReportsScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportsScreen";
 import AdminUsersListScreen from "src/features/admin/screens/AdminUsersListScreen/AdminUsersListScreen";
 import { AdminReportCardInfo } from "src/features/admin/screens/AdminReportsScreen/components/AdminReportCard";
+import AdminComputersListScreen from "src/features/admin/screens/AdminComputersListScreen/AdminComputersListScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -30,6 +31,7 @@ export type AdminNavParams = {
   "add-location": undefined;
   reports?: { reportsList?: AdminReportCardInfo[] };
   users: undefined;
+  computers: undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -72,6 +74,10 @@ const AdminNavStack = () => {
       />
       <AdminStack.Screen name="reports" component={AdminReportsScreen} />
       <AdminStack.Screen name="users" component={AdminUsersListScreen} />
+      <AdminStack.Screen
+        name="computers"
+        component={AdminComputersListScreen}
+      />
     </AdminStack.Navigator>
   );
 };
