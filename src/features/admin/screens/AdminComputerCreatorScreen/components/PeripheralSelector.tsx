@@ -16,6 +16,12 @@ const PeripheralSelector = (props: { category: string }) => {
   const methods = useFormContext<ComputerCreatorForm>();
   const location = methods?.watch("locationName");
 
+  useEffect(() => {
+    if (location && error) {
+      setError("");
+    }
+  }, [error, location]);
+
   return (
     <View>
       <TouchableOpacity
