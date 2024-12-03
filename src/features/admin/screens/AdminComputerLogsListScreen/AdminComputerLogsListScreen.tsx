@@ -41,7 +41,11 @@ const AdminComputerLogsListScreen = () => {
             renderItem={({ item: computerLogDetails }) => (
               <ComputerLogCard
                 computerLogDetails={computerLogDetails}
-                onPress={() => showUnderDevelopment()}
+                onPress={() =>
+                  navigation?.navigate("computer-logs-details", {
+                    computerIdentifier: computerLogDetails?.uuid,
+                  })
+                }
               />
             )}
             keyExtractor={(_, index) => `key-${index}`}

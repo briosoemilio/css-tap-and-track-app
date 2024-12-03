@@ -47,6 +47,9 @@ const AdminNavStackHeader = (props: {
       case "computer-logs": {
         return "Computer Logs List";
       }
+      case "computer-logs-details": {
+        return "Log Details";
+      }
       default: {
         return "";
       }
