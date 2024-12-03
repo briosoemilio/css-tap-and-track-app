@@ -62,7 +62,10 @@ const AddBottomSheet = (props: FilterBottomSheetProps) => {
             title="Add Item"
             onPress={() => navigation?.navigate("inventory-creator")}
           />
-          <Button title="Add Category" onPress={() => showUnderDevelopment()} />
+          <Button
+            title="Add Category"
+            onPress={() => navigation?.navigate("add-category")}
+          />
         </View>
       </BottomSheetView>
     </BottomSheet>

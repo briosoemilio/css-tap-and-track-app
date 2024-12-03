@@ -4,7 +4,7 @@ import { CategoryData } from "src/services/category/types";
 import { parseCategoryData } from "../utils";
 import { FlatList } from "react-native";
 
-export const useGetCategoryList = () => {
+export const useGetCategoryList = (insertAll = true) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [categoryList, setCategoryList] = useState<CategoryData[]>([]);
   const [selectedCategory, setCategory] = useState<string>("ALL");
@@ -14,8 +14,12 @@ export const useGetCategoryList = () => {
     setLoading(true);
     try {
       const categoryData = await getCategoryList();
-      const parsedCategoryData = parseCategoryData(categoryData.data);
-      setCategoryList(parsedCategoryData);
+      if (insertAll) {
+        const parsedCategoryData = parseCategoryData(categoryData.data);
+        setCategoryList(parsedCategoryData);
+      } else {
+        setCategoryList(categoryData.data);
+      }
     } catch (e) {
       console.log("Error loading category data -> ", e);
     } finally {

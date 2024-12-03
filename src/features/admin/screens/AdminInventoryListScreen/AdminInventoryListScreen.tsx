@@ -10,7 +10,7 @@ import CategoryCard from "./components/CategoryCard";
 import ItemCard from "./components/ItemCard";
 import FilterBottomSheet from "./components/FilterBottomSheet";
 import CloseIcon from "@assets/icons/close-icon.svg";
-import AddIcon from "@assets/icons/inventory-list/add-icon.svg";
+import SettingsIcon from "@assets/icons/inventory-list/gear-icon.svg";
 
 // constants
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
@@ -85,7 +85,7 @@ const AdminInventoryListScreen = () => {
           <TouchableOpacity
             onPress={() => addBottomSheetRef?.current?.expand()}
           >
-            <AddIcon />
+            <SettingsIcon />
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 12 }}>

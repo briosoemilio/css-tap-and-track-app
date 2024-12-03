@@ -56,6 +56,9 @@ const AdminNavStackHeader = (props: {
       case "computer-peripheral-select": {
         return "Select Peripheral";
       }
+      case "add-category": {
+        return "Category List";
+      }
       default: {
         return "";
       }
