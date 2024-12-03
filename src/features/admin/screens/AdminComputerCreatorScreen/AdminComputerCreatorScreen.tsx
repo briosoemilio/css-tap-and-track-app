@@ -9,6 +9,8 @@ import { useLocationList } from "../AdminInventoryListScreen/hooks/useLocationLi
 import { parseLocationList } from "../AdminInventoryCreatorScreen/utils";
 import ConfirmResetModal from "./components/ConfirmResetModal";
 import FormTextFieldOutline from "src/components/TextField/FormTextFieldOutline";
+import PeripheralSelector from "./components/PeripheralSelector";
+import { useGetCategoryList } from "../AdminInventoryListScreen/hooks/useGetCategoryList";
 
 export type ComputerCreatorForm = {
   name: string;
@@ -28,6 +30,8 @@ const AdminComputerCreatorScreen = () => {
 
   const { locationList } = useLocationList();
   const LOCATION_OPTIONS = parseLocationList(locationList);
+
+  const { categoryList } = useGetCategoryList();
 
   const handleBeforeLocChange = (value: any) => {
     const prevLoc = methods.getValues("locationName");
@@ -78,6 +82,11 @@ const AdminComputerCreatorScreen = () => {
             placeholder="Enter computer name"
             control={methods.control}
           />
+          <PeripheralSelector category={"MOUSE"} />
+          <PeripheralSelector category={"KEYBOARD"} />
+          <PeripheralSelector category={"MONITOR"} />
+          <PeripheralSelector category={"SYSTEM_UNIT"} />
+          <PeripheralSelector category={"OTHERS"} />
         </ScrollView>
       </ScreenContainer>
       <ConfirmResetModal

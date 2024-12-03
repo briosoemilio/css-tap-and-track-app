@@ -24,6 +24,7 @@ import { ComputerDetails } from "src/services/computer/types";
 import AdminComputerLogsListScreen from "src/features/admin/screens/AdminComputerLogsListScreen/AdminComputerLogsListScreen";
 import AdminComputerLogsDetailsScreen from "src/features/admin/screens/AdminComputerLogsDetailsScreen/AdminComputerLogsDetailsScreen";
 import AdminComputerCreatorScreen from "src/features/admin/screens/AdminComputerCreatorScreen/AdminComputerCreatorScreen";
+import AdminComputerPeripheralSelectScreen from "src/features/admin/screens/AdminComputerCreatorScreen/AdminComputerPeripheralSelectScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -41,6 +42,7 @@ export type AdminNavParams = {
   "computer-logs"?: { computerIdentifier: string | number };
   "computer-logs-details": { computerIdentifier: string };
   "computer-creator": undefined;
+  "computer-peripheral-select": { location: string; category: string };
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -102,6 +104,10 @@ const AdminNavStack = () => {
       <AdminStack.Screen
         name="computer-creator"
         component={AdminComputerCreatorScreen}
+      />
+      <AdminStack.Screen
+        name="computer-peripheral-select"
+        component={AdminComputerPeripheralSelectScreen}
       />
     </AdminStack.Navigator>
   );

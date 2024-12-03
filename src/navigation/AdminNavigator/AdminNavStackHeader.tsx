@@ -53,6 +53,9 @@ const AdminNavStackHeader = (props: {
       case "computer-creator": {
         return "Create Computer";
       }
+      case "computer-peripheral-select": {
+        return "Select Peripheral";
+      }
       default: {
         return "";
       }
