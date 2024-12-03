@@ -11,8 +11,8 @@ const ItemCard = (props: { itemDetails: ItemDetails; onPress: () => void }) => {
   return (
     <TouchableOpacity style={styles.itemCard} onPress={onPress}>
       <View>
-        <Text variant="body2bold">{name}</Text>
-        <Text variant="body3regular">{locationName}</Text>
+        <Text variant="body2bold">Name: {name}</Text>
+        <Text variant="body3regular">Location: {locationName}</Text>
       </View>
       <View>
         <Text variant="body3regular" textAlign="right">

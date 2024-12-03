@@ -23,9 +23,11 @@ import ListFooter from "./components/ListFooter";
 import ListEmpty from "./components/ListEmpty";
 import { parseCategoryName } from "./utils";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
+import AddBottomSheet from "./components/AddBottomSheet";
 
 const AdminInventoryListScreen = () => {
-  const bottomSheetRef = useRef<BottomSheetMethods>(null);
+  const filterBottomSheetRef = useRef<BottomSheetMethods>(null);
+  const addBottomSheetRef = useRef<BottomSheetMethods>(null);
   const navigation = useAdminNavigation();
 
   const { categoryList, selectedCategory, onPressCategory, categoryListRef } =
@@ -75,13 +77,13 @@ const AdminInventoryListScreen = () => {
             </TouchableOpacity>
           )}
           <TouchableOpacity
-            onPress={() => bottomSheetRef?.current?.expand()}
+            onPress={() => filterBottomSheetRef?.current?.expand()}
             style={{ marginRight: 12 }}
           >
             <FilterIcon />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation?.navigate("inventory-creator")}
+            onPress={() => addBottomSheetRef?.current?.expand()}
           >
             <AddIcon />
           </TouchableOpacity>
@@ -135,11 +137,12 @@ const AdminInventoryListScreen = () => {
       </View>
 
       <FilterBottomSheet
-        bottomSheetRef={bottomSheetRef}
+        bottomSheetRef={filterBottomSheetRef}
         filters={filters}
         onPressFilter={onPressFilter}
         resetFilters={resetFilters}
       />
+      <AddBottomSheet bottomSheetRef={addBottomSheetRef} />
     </ScreenContainer>
   );
 };
@@ -147,12 +150,13 @@ const AdminInventoryListScreen = () => {
 export default AdminInventoryListScreen;
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, paddingHorizontal: CONSTANTS.layout },
+  mainContainer: { flex: 1, paddingHorizontal: CONSTANTS.layout, gap: 15 },
   headerContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
+    marginTop: 15,
   },
   loadMore: {
     paddingVertical: 8,
@@ -168,5 +172,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 4,
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
   },
 });
