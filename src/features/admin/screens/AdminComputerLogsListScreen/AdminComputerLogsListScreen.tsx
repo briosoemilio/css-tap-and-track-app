@@ -12,12 +12,12 @@ import { COLORS } from "src/constants/colors";
 import ListFooter from "./components/ListFooter";
 import ListEmpty from "./components/ListEmpty";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
-import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 import { useGetComputerLogsList } from "./hooks/useGetComputerLogsList";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AdminNavParams } from "src/navigation/AdminNavigator/AdminNavStack";
 import ComputerLogCard from "./components/ComputerLogCard";
 import Text from "src/components/Text";
+import { useGetComputerDetails } from "../AdminComputerDetailsScreen/hooks/useGetComputerDetails";
 
 const AdminComputerLogsListScreen = () => {
   const route = useRoute<RouteProp<AdminNavParams, "computer-logs">>();
@@ -27,12 +27,14 @@ const AdminComputerLogsListScreen = () => {
   const { computerLogs, isLoading, endReached, loadMore } =
     useGetComputerLogsList(computerIdentifier);
 
+  const { computerDetails } = useGetComputerDetails(computerIdentifier);
+
   return (
     <ScreenContainer>
       <View style={styles.mainContainer}>
         {computerIdentifier && (
           <Text variant="body2bold" style={{ marginTop: 15 }}>
-            Logs of PC number: {computerIdentifier}
+            Logs of PC: {computerDetails?.name}
           </Text>
         )}
         <View style={{ marginTop: 12, flex: 1 }}>
