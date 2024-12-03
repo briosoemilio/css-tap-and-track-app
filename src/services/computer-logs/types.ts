@@ -9,6 +9,7 @@ export interface ComputerLogDetails {
   uuid: string;
   startedAt: Date;
   endedAt: null;
+  endedBy: number;
   createdAt: Date;
   updatedAt: Date;
   user: User;
