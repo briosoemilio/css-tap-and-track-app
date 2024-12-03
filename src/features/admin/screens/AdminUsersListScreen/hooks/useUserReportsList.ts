@@ -12,10 +12,7 @@ export const useUserReportsList = () => {
   const [endReached, setEndReached] = useState(false);
   const [page, setPage] = useState(1);
 
-  console.log({ userReports });
-
   const loadReports = async (nextPage: number, userID?: number) => {
-    console.log("load reports invoked", userID);
     setIsLoading(true);
     try {
       const { data: newReports } = await getReportList(nextPage, userID);
