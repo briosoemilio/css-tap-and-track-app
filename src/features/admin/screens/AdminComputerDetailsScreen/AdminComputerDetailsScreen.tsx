@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
@@ -13,6 +13,7 @@ import { useGetComputerLogDetails } from "./hooks/useGetComputerLogDetails";
 import { formatDate } from "src/helpers/formatDate";
 import Loader from "src/components/Loader";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
+import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 
 const DetailComponent = (props: {
   details: DetailValues;
@@ -78,6 +79,30 @@ const AdminComputerDetailsScreen = () => {
         <DetailComponent
           details={{ detail: "System Unit", value: systemUnitName }}
         />
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <TouchableOpacity onPress={showUnderDevelopment}>
+            <DetailComponent
+              details={{
+                detail: "NFC",
+                value: "Tap to Write Tag",
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={showUnderDevelopment}>
+            <DetailComponent
+              details={{
+                detail: "QR Code",
+                value: "Tap to create QR",
+              }}
+            />
+          </TouchableOpacity>
+        </View>
         {isLoading ? (
           <Loader />
         ) : (
