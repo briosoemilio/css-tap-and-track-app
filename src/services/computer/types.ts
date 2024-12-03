@@ -51,3 +51,9 @@ export interface GetAllComputersResData {
   page: number;
   itemsPerPage: number;
 }
+
+export interface CreateComputerRes {
+  statusCode: number;
+  message: string;
+  data: ComputerDetails;
+}

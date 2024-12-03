@@ -15,6 +15,8 @@ import Button from "src/components/Button";
 import { COLORS } from "src/constants/colors";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 import AddMorePeripherals from "./components/AddMorePeripherals";
+import { createComputer } from "src/services/computer/createComputer";
+import { getErrorMessage } from "src/services/helpers";
 
 export type ComputerCreatorForm = {
   name: string;
@@ -32,9 +34,14 @@ const AdminComputerCreatorScreen = () => {
   const methods = useFormContext<ComputerCreatorForm>();
   const others = methods.watch("others") || [];
 
+  // Nav Hooks
+  const navigation = useAdminNavigation();
+
   // React Hooks
   const [showModal, setShowModal] = useState(false);
   const [newLoc, setNewLoc] = useState<string>("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     return () => methods.reset();
   }, []);
@@ -60,8 +67,33 @@ const AdminComputerCreatorScreen = () => {
     methods.setValue("locationName", newLoc);
   };
 
-  const createComputer = (formData: ComputerCreatorForm) => {
-    console.log({ formData: others });
+  const onPressCreateComputer = async (formData: ComputerCreatorForm) => {
+    const { others: _others, ...rest } = formData;
+    const others = _others ? _others.map((other) => other.name) : [];
+    const parsedFormData = { ...rest, others };
+
+    try {
+      setIsLoading(true);
+      const res = await createComputer(parsedFormData);
+      if (res) {
+        navigation?.reset({
+          index: 1,
+          routes: [
+            { name: "main" },
+            {
+              name: "success",
+              params: { message: `Successfully created computer: ${res.name}` },
+            },
+          ],
+        });
+      }
+    } catch (err) {
+      const errMessage = getErrorMessage(err);
+      console.log("Error on press create computer -> ", errMessage);
+      setError(errMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -114,8 +146,14 @@ const AdminComputerCreatorScreen = () => {
           <Button
             title="Create Computer"
             style={{ marginTop: 50 }}
-            onPress={methods.handleSubmit(createComputer)}
+            onPress={methods.handleSubmit(onPressCreateComputer)}
+            isLoading={isLoading}
           />
+          {error && (
+            <Text variant="body2bold" style={{ color: COLORS.red }}>
+              {error}
+            </Text>
+          )}
         </ScrollView>
       </ScreenContainer>
       <ConfirmResetModal
