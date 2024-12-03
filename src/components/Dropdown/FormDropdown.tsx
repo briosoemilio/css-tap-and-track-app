@@ -18,7 +18,7 @@ export type FormDropdownProps<T extends FieldValues> = {
   rules?: ControllerProps["rules"];
   required?: boolean;
   disabled?: boolean;
-  onBeforeChange?: () => void;
+  onBeforeChange?: (value?: any) => boolean;
   control: Control<any, T>;
 };
 
@@ -47,7 +47,10 @@ const FormDropdown = <T extends FieldValues>({
           options={options}
           value={getLabel(value)}
           onSelect={(opt) => {
-            onBeforeChange?.();
+            const skip = onBeforeChange?.(opt.value as any);
+            if (skip) {
+              return;
+            }
             onChange(opt.value);
           }}
           error={error?.message}
