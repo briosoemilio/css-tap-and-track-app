@@ -4,7 +4,7 @@ import { GetAllComputerLogsRes } from "./types";
 export const getAllComputerLogs = async (
   page: number = 1,
   itemsPerPage: number = 10,
-  computerIdentifier: string = ""
+  computerIdentifier: string | number = ""
 ) => {
   const res = await wretch()
     .url(
