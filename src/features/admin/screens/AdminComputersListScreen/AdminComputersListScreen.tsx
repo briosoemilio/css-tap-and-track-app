@@ -58,7 +58,9 @@ const AdminComputersListScreen = () => {
           >
             <FilterIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => showUnderDevelopment()}>
+          <TouchableOpacity
+            onPress={() => navigation?.navigate("computer-creator")}
+          >
             <AddIcon />
           </TouchableOpacity>
         </View>

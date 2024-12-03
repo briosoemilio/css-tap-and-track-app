@@ -50,6 +50,9 @@ const AdminNavStackHeader = (props: {
       case "computer-logs-details": {
         return "Log Details";
       }
+      case "computer-creator": {
+        return "Create Computer";
+      }
       default: {
         return "";
       }
