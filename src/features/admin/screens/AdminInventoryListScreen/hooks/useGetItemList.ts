@@ -20,7 +20,11 @@ const INITIAL_FILTERS = [
   },
 ] as FilterOption[];
 
-export const useGetItemList = () => {
+export const useGetItemList = (
+  _categoryName?: string,
+  locationName?: string,
+  status?: string
+) => {
   const [itemList, setItemList] = useState<ItemDetails[]>([]);
   const [originalList, setOriginalList] = useState<ItemDetails[]>([]);
   const [page, setPage] = useState(1);
@@ -48,7 +52,7 @@ export const useGetItemList = () => {
     try {
       const { data: newItems } =
         categoryName === "ALL"
-          ? await getAllItems(page)
+          ? await getAllItems(page, 10, _categoryName, locationName, status)
           : await getItemByCategory(categoryName, nextPage);
 
       if (newItems.length < 10) {
@@ -106,9 +110,7 @@ export const useGetItemList = () => {
   };
 
   const loadMoreItems = () => {
-    if (!isLoading && !endReached) {
-      setPage((prev) => prev + 1);
-    }
+    setPage((prev) => prev + 1);
   };
 
   return {
@@ -124,5 +126,6 @@ export const useGetItemList = () => {
     filters,
     resetFilters,
     onPressFilter,
+    loadMoreItems,
   };
 };

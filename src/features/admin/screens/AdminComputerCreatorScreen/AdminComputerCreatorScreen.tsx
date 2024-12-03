@@ -1,9 +1,9 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import Text from "src/components/Text";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import FormDropdown from "src/components/Dropdown/FormDropdown";
 import { useLocationList } from "../AdminInventoryListScreen/hooks/useLocationList";
 import { parseLocationList } from "../AdminInventoryCreatorScreen/utils";
@@ -11,6 +11,10 @@ import ConfirmResetModal from "./components/ConfirmResetModal";
 import FormTextFieldOutline from "src/components/TextField/FormTextFieldOutline";
 import PeripheralSelector from "./components/PeripheralSelector";
 import { useGetCategoryList } from "../AdminInventoryListScreen/hooks/useGetCategoryList";
+import Button from "src/components/Button";
+import { COLORS } from "src/constants/colors";
+import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
+import AddMorePeripherals from "./components/AddMorePeripherals";
 
 export type ComputerCreatorForm = {
   name: string;
@@ -20,19 +24,26 @@ export type ComputerCreatorForm = {
   mouseName: string;
   systemUnitName: string;
   locationName: string;
-  others: string[];
+  others: { name: string; categoryName: string }[];
 };
 
 const AdminComputerCreatorScreen = () => {
-  const methods = useForm<ComputerCreatorForm>();
+  // Form Hooks
+  const methods = useFormContext<ComputerCreatorForm>();
+  const others = methods.watch("others") || [];
+
+  // React Hooks
   const [showModal, setShowModal] = useState(false);
   const [newLoc, setNewLoc] = useState<string>("");
+  useEffect(() => {
+    return () => methods.reset();
+  }, []);
 
+  // Data
   const { locationList } = useLocationList();
   const LOCATION_OPTIONS = parseLocationList(locationList);
 
-  const { categoryList } = useGetCategoryList();
-
+  // Functions
   const handleBeforeLocChange = (value: any) => {
     const prevLoc = methods.getValues("locationName");
     if (prevLoc && prevLoc !== value) {
@@ -44,23 +55,17 @@ const AdminComputerCreatorScreen = () => {
     }
   };
 
-  const resetForm = () => {
-    methods.resetField("name");
-    methods.resetField("keyboardName");
-    methods.resetField("metadata");
-    methods.resetField("monitorName");
-    methods.resetField("mouseName");
-    methods.resetField("others");
-    methods.resetField("systemUnitName");
-  };
-
   const onPressOk = () => {
-    resetForm();
+    methods.reset();
     methods.setValue("locationName", newLoc);
   };
 
+  const createComputer = (formData: ComputerCreatorForm) => {
+    console.log({ formData: others });
+  };
+
   return (
-    <FormProvider {...methods}>
+    <>
       <ScreenContainer>
         <ScrollView
           style={styles.mainContainer}
@@ -82,11 +87,35 @@ const AdminComputerCreatorScreen = () => {
             placeholder="Enter computer name"
             control={methods.control}
           />
-          <PeripheralSelector category={"MOUSE"} />
-          <PeripheralSelector category={"KEYBOARD"} />
-          <PeripheralSelector category={"MONITOR"} />
-          <PeripheralSelector category={"SYSTEM_UNIT"} />
-          <PeripheralSelector category={"OTHERS"} />
+          <PeripheralSelector
+            category={"MOUSE"}
+            value={methods.watch("mouseName")}
+          />
+          <PeripheralSelector
+            category={"KEYBOARD"}
+            value={methods.watch("keyboardName")}
+          />
+          <PeripheralSelector
+            category={"MONITOR"}
+            value={methods.watch("monitorName")}
+          />
+          <PeripheralSelector
+            category={"SYSTEM_UNIT"}
+            value={methods.watch("systemUnitName")}
+          />
+          {others.map((other, index) => (
+            <PeripheralSelector
+              category={other.categoryName}
+              value={other.name}
+              key={`others-${index}`}
+            />
+          ))}
+          <AddMorePeripherals />
+          <Button
+            title="Create Computer"
+            style={{ marginTop: 50 }}
+            onPress={methods.handleSubmit(createComputer)}
+          />
         </ScrollView>
       </ScreenContainer>
       <ConfirmResetModal
@@ -94,7 +123,7 @@ const AdminComputerCreatorScreen = () => {
         showModal={showModal}
         setShowModal={setShowModal}
       />
-    </FormProvider>
+    </>
   );
 };
 

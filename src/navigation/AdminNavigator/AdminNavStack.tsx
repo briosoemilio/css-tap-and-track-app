@@ -23,8 +23,11 @@ import AdminComputerDetailsScreen from "src/features/admin/screens/AdminComputer
 import { ComputerDetails } from "src/services/computer/types";
 import AdminComputerLogsListScreen from "src/features/admin/screens/AdminComputerLogsListScreen/AdminComputerLogsListScreen";
 import AdminComputerLogsDetailsScreen from "src/features/admin/screens/AdminComputerLogsDetailsScreen/AdminComputerLogsDetailsScreen";
-import AdminComputerCreatorScreen from "src/features/admin/screens/AdminComputerCreatorScreen/AdminComputerCreatorScreen";
+import AdminComputerCreatorScreen, {
+  ComputerCreatorForm,
+} from "src/features/admin/screens/AdminComputerCreatorScreen/AdminComputerCreatorScreen";
 import AdminComputerPeripheralSelectScreen from "src/features/admin/screens/AdminComputerCreatorScreen/AdminComputerPeripheralSelectScreen";
+import { FormProvider, useForm } from "react-hook-form";
 
 export type AdminNavParams = {
   main: undefined;
@@ -50,6 +53,7 @@ export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
 const AdminStack = createNativeStackNavigator();
 
 const AdminNavStack = () => {
+  const methods = useForm<ComputerCreatorForm>();
   return (
     <AdminStack.Navigator
       initialRouteName="main"
@@ -101,13 +105,22 @@ const AdminNavStack = () => {
         name="computer-logs-details"
         component={AdminComputerLogsDetailsScreen}
       />
+
       <AdminStack.Screen
         name="computer-creator"
-        component={AdminComputerCreatorScreen}
+        children={() => (
+          <FormProvider {...methods}>
+            <AdminComputerCreatorScreen />
+          </FormProvider>
+        )}
       />
       <AdminStack.Screen
         name="computer-peripheral-select"
-        component={AdminComputerPeripheralSelectScreen}
+        children={() => (
+          <FormProvider {...methods}>
+            <AdminComputerPeripheralSelectScreen />
+          </FormProvider>
+        )}
       />
     </AdminStack.Navigator>
   );
