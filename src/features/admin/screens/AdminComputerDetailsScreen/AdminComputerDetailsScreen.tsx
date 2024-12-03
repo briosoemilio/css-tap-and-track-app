@@ -10,6 +10,8 @@ import { COLORS } from "src/constants/colors";
 import { parseStringifiedMetadata } from "../AdminPeripheralDetailsScreen/utils";
 import Button from "src/components/Button";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
+import { useGetComputerLogDetails } from "./hooks/useGetComputerLogDetails";
+import { formatDate } from "src/helpers/formatDate";
 
 const DetailComponent = (props: {
   details: DetailValues;
@@ -42,6 +44,9 @@ const AdminComputerDetailsScreen = () => {
     lastLogUUID,
   } = computerDetails;
   const metadata = parseStringifiedMetadata(_metadata);
+
+  const { computerLogDetails } = useGetComputerLogDetails(lastLogUUID);
+  const { startedAt, user } = computerLogDetails!;
   return (
     <ScreenContainer>
       <ScrollView
@@ -67,8 +72,24 @@ const AdminComputerDetailsScreen = () => {
         />
         {lastLogUUID && (
           <View style={{ gap: 15 }}>
-            <Text variant="body2bold">LastUsed</Text>
-            <Button title="View Log" onPress={() => showUnderDevelopment()} />
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <View>
+                <Text variant="body2bold">Last Used By</Text>
+                <Text variant="body2regular">{user.name}</Text>
+                <Text variant="body3regular">{user.yearSection}</Text>
+              </View>
+              <View>
+                <Text variant="body2bold">Last Used At</Text>
+                <Text variant="body2regular">{formatDate(startedAt!)}</Text>
+              </View>
+            </View>
+            <Button title="View Logs" onPress={() => showUnderDevelopment()} />
           </View>
         )}
       </ScrollView>
