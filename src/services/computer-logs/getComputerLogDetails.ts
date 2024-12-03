@@ -1,7 +1,7 @@
 import wretch from "src/lib/wretch/wretch";
 import { GetComputerLogRes } from "./types";
 
-export const getComputerLogDetails = async (identifier: string) => {
+export const getComputerLogDetails = async (identifier: string | number) => {
   const res = await wretch()
     .url(`/computer-logs/${identifier}`)
     .get()
