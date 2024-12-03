@@ -12,6 +12,7 @@ import Button from "src/components/Button";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 import { useGetComputerLogDetails } from "./hooks/useGetComputerLogDetails";
 import { formatDate } from "src/helpers/formatDate";
+import Loader from "src/components/Loader";
 
 const DetailComponent = (props: {
   details: DetailValues;
@@ -45,8 +46,11 @@ const AdminComputerDetailsScreen = () => {
   } = computerDetails;
   const metadata = parseStringifiedMetadata(_metadata);
 
-  const { computerLogDetails } = useGetComputerLogDetails(lastLogUUID);
-  const { startedAt, user } = computerLogDetails!;
+  const { isLoading, computerLogDetails } =
+    useGetComputerLogDetails(lastLogUUID);
+  const startedAt = computerLogDetails?.startedAt;
+  const user = computerLogDetails?.user;
+
   return (
     <ScreenContainer>
       <ScrollView
@@ -70,27 +74,34 @@ const AdminComputerDetailsScreen = () => {
         <DetailComponent
           details={{ detail: "System Unit", value: systemUnitName }}
         />
-        {lastLogUUID && (
-          <View style={{ gap: 15 }}>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <View>
-                <Text variant="body2bold">Last Used By</Text>
-                <Text variant="body2regular">{user.name}</Text>
-                <Text variant="body3regular">{user.yearSection}</Text>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          lastLogUUID && (
+            <View style={{ gap: 15 }}>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                  <Text variant="body2bold">Last Used By</Text>
+                  <Text variant="body2regular">{user?.name}</Text>
+                  <Text variant="body3regular">{user?.yearSection}</Text>
+                </View>
+                <View>
+                  <Text variant="body2bold">Last Used At</Text>
+                  <Text variant="body2regular">{formatDate(startedAt!)}</Text>
+                </View>
               </View>
-              <View>
-                <Text variant="body2bold">Last Used At</Text>
-                <Text variant="body2regular">{formatDate(startedAt!)}</Text>
-              </View>
+              <Button
+                title="View Logs"
+                onPress={() => showUnderDevelopment()}
+              />
             </View>
-            <Button title="View Logs" onPress={() => showUnderDevelopment()} />
-          </View>
+          )
         )}
       </ScrollView>
     </ScreenContainer>
