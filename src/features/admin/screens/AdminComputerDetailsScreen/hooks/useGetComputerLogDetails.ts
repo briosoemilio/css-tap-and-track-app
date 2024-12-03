@@ -5,7 +5,6 @@ import { ComputerLogDetails } from "src/services/computer-logs/types";
 export const useGetComputerLogDetails = (identifier: string) => {
   const [computerLogDetails, setComputerLogDetails] =
     useState<ComputerLogDetails>();
-  const [lastUsedBy, setLastUsedBy] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
 
   const loadDetails = async () => {
