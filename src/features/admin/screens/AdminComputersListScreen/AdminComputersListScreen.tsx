@@ -21,6 +21,7 @@ import ListEmpty from "./components/ListEmpty";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 import ComputerCard from "./components/ComputerCard";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
+import Button from "src/components/Button";
 
 const AdminComputersListScreen = () => {
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
@@ -96,6 +97,11 @@ const AdminComputersListScreen = () => {
         filters={filters}
         onPressFilter={onPressFilter}
         resetFilters={resetFilters}
+      />
+      <Button
+        title="Go To Computer Logs"
+        style={{ marginHorizontal: CONSTANTS.layout }}
+        onPress={() => navigation?.navigate("computer-logs")}
       />
     </ScreenContainer>
   );
