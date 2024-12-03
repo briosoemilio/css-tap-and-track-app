@@ -19,3 +19,9 @@ export interface CategoryData {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CreateCategoryRes {
+  statusCode: number;
+  message: string;
+  data: CategoryData;
+}
