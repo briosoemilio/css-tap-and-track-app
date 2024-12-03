@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import React from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
@@ -9,10 +9,10 @@ import { DetailValues } from "../AdminPeripheralDetailsScreen/AdminPeripheralDet
 import { COLORS } from "src/constants/colors";
 import { parseStringifiedMetadata } from "../AdminPeripheralDetailsScreen/utils";
 import Button from "src/components/Button";
-import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 import { useGetComputerLogDetails } from "./hooks/useGetComputerLogDetails";
 import { formatDate } from "src/helpers/formatDate";
 import Loader from "src/components/Loader";
+import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 
 const DetailComponent = (props: {
   details: DetailValues;
@@ -35,6 +35,9 @@ const DetailComponent = (props: {
 const AdminComputerDetailsScreen = () => {
   const route = useRoute<RouteProp<AdminNavParams, "computer-details">>();
   const computerDetails = route.params?.computerDetails;
+
+  const navigation = useAdminNavigation();
+
   const {
     monitorName,
     keyboardName,
@@ -50,6 +53,7 @@ const AdminComputerDetailsScreen = () => {
     useGetComputerLogDetails(lastLogUUID);
   const startedAt = computerLogDetails?.startedAt;
   const user = computerLogDetails?.user;
+  const computerID = computerLogDetails?.computer?.id;
 
   return (
     <ScreenContainer>
@@ -98,7 +102,11 @@ const AdminComputerDetailsScreen = () => {
               </View>
               <Button
                 title="View Logs"
-                onPress={() => showUnderDevelopment()}
+                onPress={() =>
+                  navigation?.navigate("computer-logs", {
+                    computerIdentifier: computerID!,
+                  })
+                }
               />
             </View>
           )
