@@ -3,10 +3,13 @@ import { GetAllComputerLogsRes } from "./types";
 
 export const getAllComputerLogs = async (
   page: number = 1,
-  itemsPerPage: number = 10
+  itemsPerPage: number = 10,
+  computerIdentifier: string = ""
 ) => {
   const res = await wretch()
-    .url(`/computer-logs?page=${page}&itemsPerPage=${itemsPerPage}`)
+    .url(
+      `/computer-logs?page=${page}&itemsPerPage=${itemsPerPage}&computerIdentifier=${computerIdentifier}`
+    )
     .get()
     .json<GetAllComputerLogsRes>()
     .catch((err) => {
