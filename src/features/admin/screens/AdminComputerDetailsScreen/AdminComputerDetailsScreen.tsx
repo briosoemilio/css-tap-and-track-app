@@ -14,6 +14,7 @@ import { formatDate } from "src/helpers/formatDate";
 import Loader from "src/components/Loader";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
+import { TagType } from "src/features/track/types";
 
 const DetailComponent = (props: {
   details: DetailValues;
@@ -86,19 +87,18 @@ const AdminComputerDetailsScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <TouchableOpacity onPress={showUnderDevelopment}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation?.navigate("write-tag", {
+                tagType: TagType.COMPUTER,
+                id: computerDetails?.id,
+              })
+            }
+          >
             <DetailComponent
               details={{
                 detail: "NFC",
                 value: "Tap to Write Tag",
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={showUnderDevelopment}>
-            <DetailComponent
-              details={{
-                detail: "QR Code",
-                value: "Tap to create QR",
               }}
             />
           </TouchableOpacity>
