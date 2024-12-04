@@ -26,19 +26,11 @@ export interface UserDetails {
 export interface ChangeSectionRes {
   statusCode: number;
   message: string;
-  data: Data;
+  data: UserDetails;
 }
 
-export interface Data {
-  id: number;
-  uuid: string;
-  email: string;
-  password: string;
-  name: string;
-  role: string;
-  yearSection: string;
-  idNumber: string;
-  isLogged: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+export interface ChangePasswordRes {
+  statusCode: number;
+  message: string;
+  data: UserDetails;
 }
