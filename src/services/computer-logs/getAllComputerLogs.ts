@@ -18,8 +18,7 @@ export const getAllComputerLogs = async (
   if (userIdentifier) {
     url += `&userIdentifier=${encodeURIComponent(userIdentifier)}`;
   }
-  console.log({ userIdentifier });
-
+  
   const res = await wretch()
     .url(url)
     .get()
