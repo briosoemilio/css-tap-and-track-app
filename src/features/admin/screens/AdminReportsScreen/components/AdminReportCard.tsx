@@ -30,16 +30,17 @@ const AdminReportCard = (props: {
         borderRadius: 12,
         borderColor: COLORS.blue,
         padding: 12,
+        gap: 8,
       }}
     >
-      <View>
+      <View style={{ flex: 1 }}>
         <Text variant="body2bold">{itemName}</Text>
         <Text variant="body3regular">{locationName}</Text>
         <Text variant="body3regular" numberOfLines={1} ellipsizeMode="tail">
           {remarks}
         </Text>
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         <Text variant="body2bold" textAlign="right">
           Reported By:
         </Text>

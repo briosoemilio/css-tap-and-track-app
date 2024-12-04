@@ -25,7 +25,7 @@ const AdminComputerLogsListScreen = () => {
   const navigation = useAdminNavigation();
 
   const { computerLogs, isLoading, endReached, loadMore } =
-    useGetComputerLogsList(computerIdentifier);
+    useGetComputerLogsList({ computerIdentifier });
 
   const { computerDetails } = useGetComputerDetails(computerIdentifier);
 

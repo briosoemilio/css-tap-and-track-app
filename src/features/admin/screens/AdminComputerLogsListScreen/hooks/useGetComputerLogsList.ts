@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { getAllComputerLogs } from "src/services/computer-logs/getAllComputerLogs";
 import { ComputerLog } from "src/services/computer-logs/types";
 
-export const useGetComputerLogsList = (
-  computerIdentifier?: string | number
-) => {
+export const useGetComputerLogsList = (request: {
+  computerIdentifier?: string | number;
+  userIdentifier?: string | number;
+}) => {
+  const { computerIdentifier, userIdentifier } = request;
   const [computerLogs, setComputerLogs] = useState<ComputerLog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -16,7 +18,8 @@ export const useGetComputerLogsList = (
       const { data: newLogs } = await getAllComputerLogs(
         nextPage,
         10,
-        computerIdentifier
+        computerIdentifier,
+        userIdentifier
       );
       if (newLogs.length < 10) {
         setEndReached(true);

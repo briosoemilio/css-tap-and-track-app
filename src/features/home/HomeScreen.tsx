@@ -16,11 +16,13 @@ import { getCurrentDayOfTheWeek } from "src/helpers/getCurrentDayOfTheWeek";
 import TimeInIcon from "@assets/icons/home/timein-icon.svg";
 import ReportIcon from "@assets/icons/home/report-icon.svg";
 import TrackIcon from "@assets/icons/home/track-icon.svg";
+import LogsIcon from "@assets/icons/home/logs-icon.svg";
+
 import { COLORS } from "src/constants/colors";
 import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 import { TrackType } from "../track/types";
 
-const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
+const HomeIcon = (props: { type: "time-in" | "report" | "track" | "logs" }) => {
   const navigation = useAuthNavigation();
   const { type } = props;
   const icon = () => {
@@ -48,13 +50,19 @@ const HomeIcon = (props: { type: "time-in" | "report" | "track" }) => {
           onPress: () =>
             navigation.navigate("track", { trackType: TrackType.ITEM_DETAILS }),
         };
+      case "logs":
+        return {
+          icon: <LogsIcon />,
+          text: "Computer Logs",
+          onPress: () => navigation?.navigate("logs"),
+        };
     }
   };
 
   return (
     <TouchableOpacity onPress={() => icon().onPress()} style={styles.homeIcon}>
       {icon().icon}
-      <Text variant="body2bold" style={{ marginTop: 12 }}>
+      <Text variant="body2bold" textAlign="center" style={{ marginTop: 12 }}>
         {icon().text}
       </Text>
     </TouchableOpacity>
@@ -88,6 +96,7 @@ const HomeScreen = () => {
           <HomeIcon type="time-in" />
           <HomeIcon type="report" />
           <HomeIcon type="track" />
+          <HomeIcon type="logs" />
         </View>
       </ScrollView>
     </ScreenContainer>
