@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import NfcManager, { NfcTech, Ndef } from "react-native-nfc-manager";
 import ScreenContainer from "src/components/ScreenContainer";
 import Text from "src/components/Text";
 
@@ -13,6 +14,7 @@ import Button from "src/components/Button";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 import { CONSTANTS } from "src/constants/constants";
 import { useCameraPermissions } from "expo-camera";
+import { useFocusEffect } from "@react-navigation/native";
 
 const PermissionButton = (props: {
   text: string;
@@ -46,6 +48,29 @@ const PermissionButton = (props: {
 const OnboardingScreen = () => {
   const navigation = useUnauthNavigation();
   const [permission, requestPermission] = useCameraPermissions();
+
+  const [isNfcSupported, setIsNfcSupported] = useState(false);
+  const [isNfcEnabled, setIsNfcEnabled] = useState(false);
+
+  useFocusEffect(() => {
+    console.log("invoked");
+    NfcManager.isSupported()
+      .then((supported) => {
+        setIsNfcSupported(supported);
+      })
+      .catch((err) => {
+        console.warn("Error checking NFC support:", err);
+      });
+
+    NfcManager.isEnabled()
+      .then((enabled) => {
+        setIsNfcEnabled(enabled);
+      })
+      .catch((err) => {
+        console.warn("Error checking NFC status:", err);
+      });
+  });
+
   return (
     <ScreenContainer>
       <ScrollView
@@ -64,12 +89,18 @@ const OnboardingScreen = () => {
             onPress={requestPermission}
           />
           <PermissionButton text={"Enable Wifi"} icon={"wifi"} />
-          <PermissionButton text={"Enable NFC"} icon={"nfc"} />
+          <PermissionButton
+            text={"Enable NFC"}
+            icon={"nfc"}
+            onPress={() => NfcManager.goToNfcSetting()}
+          />
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
         <Button
-          disabled={permission?.granted === false}
+          disabled={
+            permission?.granted === false || (isNfcSupported && !isNfcEnabled)
+          }
           title="Get Started"
           onPress={() => navigation.push("login")}
         />

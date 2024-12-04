@@ -36,6 +36,10 @@ const LoginScreen = () => {
       if (errMessage.includes("Wrong password")) {
         setError("password", { message: "Incorrect password" });
       }
+
+      if (errMessage.includes("Account unauthorized")) {
+        setError("email", { message: "Unauthorized account." });
+      }
     } finally {
       setIsLoading(false);
     }

@@ -16,11 +16,16 @@ import { COLORS } from "src/constants/colors";
 import TrackBottomSheet from "src/components/TrackBottomSheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import ItemModal from "../components/ItemModal";
+import { checkIfAdminCard } from "../utils";
+import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
+import { useAuth } from "src/context/auth/useAuth";
 
 const NFCTrackScreen = () => {
   const navigation = useTrackNavigation();
   const authNavigation = useAuthNavigation();
+  const unAuthNav = useUnauthNavigation();
   const route = useRoute<RouteProp<TrackNavParams, "nfc">>();
+  const { user } = useAuth();
   const { trackType } = route.params;
 
   const [showModal, setShowModal] = useState(false);
@@ -34,10 +39,20 @@ const NFCTrackScreen = () => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
+      console.log({ tag });
+
+      // Check if Admin Key Card
+      const isAdmin = checkIfAdminCard(tag);
+      if (isAdmin && !user) {
+        unAuthNav?.reset({
+          index: 1,
+          routes: [{ name: "login" }, { name: "admin-login" }],
+        });
+      }
+
       if (tag?.ndefMessage) {
         for (let record of tag.ndefMessage) {
           if (record?.tnf === Ndef.TNF_WELL_KNOWN) {
-            // Decode the raw text payload from the NFC record
             const payload = record?.payload as unknown as Uint8Array;
             const text = JSON.parse(Ndef.text.decodePayload(payload));
             const json = JSON.parse(text);
@@ -49,7 +64,6 @@ const NFCTrackScreen = () => {
     } catch (ex) {
       console.warn("Oops!", ex);
     } finally {
-      // stop the nfc scanning
       NfcManager.cancelTechnologyRequest();
     }
   }

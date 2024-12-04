@@ -14,6 +14,7 @@ import TrackNavigator from "src/features/track/TrackNavigator";
 import RegisterOnboardingScreen from "src/features/register/RegisterOnboardingScreen";
 import { Role } from "src/types/Role";
 import { TrackType } from "src/features/track/types";
+import AdminLoginScreen from "src/features/admin/screens/AdminLoginScreen/AdminLoginScreen";
 
 export type UnauthNavParams = {
   onboarding: undefined;
@@ -22,6 +23,7 @@ export type UnauthNavParams = {
   register: { role: Role.STUDENT | Role.PROF };
   "register-success": undefined;
   track: { trackType: TrackType };
+  "admin-login": undefined;
 };
 
 export type UnauthNavProps = NativeStackNavigationProp<UnauthNavParams>;
@@ -47,6 +49,7 @@ const UnauthNavStack = () => {
       <Stack.Screen name="register" component={RegisterScreen} />
       <Stack.Screen name="register-success" component={RegisterSuccessScreen} />
       <Stack.Screen name="track" component={TrackNavigator} />
+      <Stack.Screen name="admin-login" component={AdminLoginScreen} />
     </Stack.Navigator>
   );
 };
