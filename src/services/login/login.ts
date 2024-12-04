@@ -10,6 +10,5 @@ export const login = async (reqBody: { email: string; password: string }) => {
       console.log("Err logging in => ", err);
       throw err;
     });
-  console.log("RESPONSE : ", res);
   return res.data;
 };
