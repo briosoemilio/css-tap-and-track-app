@@ -7,3 +7,14 @@ export interface LoginRes {
 interface Data {
   token: string;
 }
+
+export interface CheckAdminRes {
+  statusCode: number;
+  message: string;
+  data: CheckAdminResData;
+}
+
+export interface CheckAdminResData {
+  isAdmin: boolean;
+  message: string;
+}

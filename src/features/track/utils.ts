@@ -1,9 +1,7 @@
-import { ADMIN_ID } from "../admin/constants";
+import { checkAdmin } from "src/services/login/checkAdmin";
 
-export const checkIfAdminCard = (tag: any) => {
+export const checkIfAdminCard = async (tag: any) => {
   const { id } = tag;
-  if (ADMIN_ID.includes(id)) {
-    return true;
-  }
-  return false;
+  const { isAdmin } = await checkAdmin(id);
+  return isAdmin;
 };

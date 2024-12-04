@@ -42,7 +42,7 @@ const NFCTrackScreen = () => {
       console.log({ tag });
 
       // Check if Admin Key Card
-      const isAdmin = checkIfAdminCard(tag);
+      const isAdmin = await checkIfAdminCard(tag);
       if (isAdmin && !user) {
         unAuthNav?.reset({
           index: 1,
