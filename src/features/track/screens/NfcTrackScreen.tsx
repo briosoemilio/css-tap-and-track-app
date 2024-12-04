@@ -55,8 +55,12 @@ const NFCTrackScreen = () => {
           if (record?.tnf === Ndef.TNF_WELL_KNOWN) {
             const payload = record?.payload as unknown as Uint8Array;
             const text = JSON.parse(Ndef.text.decodePayload(payload));
-            const json = JSON.parse(text);
-            peripheralDetected(json);
+            if (typeof text === "string") {
+              const json = JSON.parse(text);
+              peripheralDetected(json);
+            } else {
+              peripheralDetected(text);
+            }
             return;
           }
         }

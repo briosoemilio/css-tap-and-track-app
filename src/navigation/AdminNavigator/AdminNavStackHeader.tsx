@@ -62,6 +62,9 @@ const AdminNavStackHeader = (props: {
       case "add-admin": {
         return "Add New Admin Card";
       }
+      case "write-tag": {
+        return "Write Tag";
+      }
       default: {
         return "";
       }
@@ -71,7 +74,7 @@ const AdminNavStackHeader = (props: {
     <View>
       <View
         style={{
-          height: 50,
+          paddingVertical: 50,
           backgroundColor: COLORS.black,
           display: "flex",
           flexDirection: "row",
@@ -79,6 +82,7 @@ const AdminNavStackHeader = (props: {
           alignItems: "flex-end",
         }}
       >
+        <StatusBar />
         {canGoBack && (
           <TouchableOpacity
             onPress={() => navigation?.goBack()}

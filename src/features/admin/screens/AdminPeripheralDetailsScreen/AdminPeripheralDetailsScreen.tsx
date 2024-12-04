@@ -13,6 +13,8 @@ import { formatDate } from "src/helpers/formatDate";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import UpdateLocationBottomSheet from "./components/UpdateLocationBottomSheet";
 import UpdateStatusBottomSheet from "./components/UpdateStatusBottomSheet";
+import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
+import { TagType } from "src/features/track/types";
 
 export type DetailValues = { detail: string; value: string };
 
@@ -40,6 +42,7 @@ const DetailComponent = (props: {
 };
 
 const AdminPeripheralDetailsScreen = () => {
+  const navigation = useAdminNavigation();
   const route = useRoute<RouteProp<AdminNavParams, "peripheral-details">>();
   const { itemDetails } = route.params;
   const {
@@ -97,19 +100,15 @@ const AdminPeripheralDetailsScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <TouchableOpacity onPress={showUnderDevelopment}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation?.navigate("write-tag", { tagType: TagType.ITEM, id })
+            }
+          >
             <DetailComponent
               details={{
                 detail: "NFC",
                 value: "Tap to Write Tag",
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={showUnderDevelopment}>
-            <DetailComponent
-              details={{
-                detail: "QR Code",
-                value: "Tap to create QR",
               }}
             />
           </TouchableOpacity>

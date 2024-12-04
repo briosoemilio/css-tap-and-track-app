@@ -6,7 +6,7 @@ import {
 } from "@react-navigation/native-stack";
 import AdminHomeScreen from "src/features/admin/screens/AdminHomeScreen";
 import TrackNavigator from "src/features/track/TrackNavigator";
-import { TrackType } from "src/features/track/types";
+import { TagType, TrackType } from "src/features/track/types";
 import AdminAccounSettingsScreen from "src/features/admin/screens/AdminAccountSettingsScreen";
 import AdminNavStackHeader from "./AdminNavStackHeader";
 import AdminInventoryListScreen from "src/features/admin/screens/AdminInventoryListScreen/AdminInventoryListScreen";
@@ -30,6 +30,7 @@ import AdminComputerPeripheralSelectScreen from "src/features/admin/screens/Admi
 import { FormProvider, useForm } from "react-hook-form";
 import AdminCategoryListScreen from "src/features/admin/screens/AdminCategoryListScreen/AdminCategoryListScreen";
 import AdminAddCardScreen from "src/features/admin/screens/AdminAddCardScreen/AdminAddCardScreen";
+import AdminWriteTagScreen from "src/features/admin/screens/AdminWriteTagScreen/AdminWriteTagScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -50,6 +51,7 @@ export type AdminNavParams = {
   "computer-logs-details": { computerIdentifier: string };
   "computer-creator": undefined;
   "computer-peripheral-select": { location: string; category: string };
+  "write-tag": { tagType: TagType; id: number };
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -131,6 +133,7 @@ const AdminNavStack = () => {
         )}
       />
       <AdminStack.Screen name="add-admin" component={AdminAddCardScreen} />
+      <AdminStack.Screen name="write-tag" component={AdminWriteTagScreen} />
     </AdminStack.Navigator>
   );
 };
