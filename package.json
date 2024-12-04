@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build-local:android": "eas build -p android --profile local"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.0.5",
