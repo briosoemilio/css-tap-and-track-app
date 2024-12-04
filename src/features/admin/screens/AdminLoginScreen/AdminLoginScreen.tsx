@@ -38,7 +38,6 @@ const AdminLoginScreen = () => {
         style={styles.mainContainer}
         contentContainerStyle={styles.contentContainer}
       >
-        <Text variant="body1bold">Admin Login</Text>
         <Text variant="body2regular">
           It seems you have scanned an admin key card.
         </Text>

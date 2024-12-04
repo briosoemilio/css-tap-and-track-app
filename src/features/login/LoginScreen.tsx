@@ -51,7 +51,6 @@ const LoginScreen = () => {
           style={styles.mainContainer}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text variant="header2">Login</Text>
           <LoginForm />
           <View
             style={{
@@ -90,7 +89,7 @@ const LoginScreen = () => {
           />
           <Button
             title="Login"
-            style={{ marginTop: 24 }}
+            style={{ marginTop: 50 }}
             onPress={handleSubmit(onSubmit)}
             isLoading={isLoading}
           />
@@ -105,9 +104,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   mainContainer: { paddingHorizontal: CONSTANTS.layout },
   contentContainer: {
-    flexGrow: 1,
     justifyContent: "center",
-    paddingBottom: 80,
   },
   buttonContainer: { paddingHorizontal: CONSTANTS.layout },
 });

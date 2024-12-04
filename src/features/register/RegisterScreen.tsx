@@ -15,7 +15,6 @@ const RegisterScreen = () => {
   return (
     <ScreenContainer>
       <ScrollView style={styles.mainContainer}>
-        <Text variant="header2">Sign Up</Text>
         {role === Role.STUDENT && <RegisterStudentForm />}
         {role === Role.PROF && <RegisterProfessorForm />}
       </ScrollView>
