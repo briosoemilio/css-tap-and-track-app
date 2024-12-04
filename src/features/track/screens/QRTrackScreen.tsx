@@ -76,7 +76,7 @@ const QRTrackScreen = () => {
     let parsedData;
 
     try {
-      parsedData = JSON.parse(data);
+      parsedData = JSON.parse(JSON.parse(data));
     } catch (error) {
       Alert.alert(
         "Invalid Data",
