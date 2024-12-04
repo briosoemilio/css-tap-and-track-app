@@ -48,7 +48,10 @@ const AccountScreen = () => {
             onPress={() => navigation.navigate("change-section")}
             style={styles.changeSectionButton}
           />
-          <Button title="Change Password" onPress={showUnderDevelopment} />
+          <Button
+            title="Change Password"
+            onPress={() => navigation?.navigate("change-password")}
+          />
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>

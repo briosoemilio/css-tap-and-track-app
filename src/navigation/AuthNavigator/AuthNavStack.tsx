@@ -14,6 +14,7 @@ import ReportDetailsScreen from "src/features/report/ReportDetailsScreen";
 import ChangeSectionScreen from "src/features/account/ChangeSectionScreen";
 import LogsListScreen from "src/features/logs/LogsListScreen";
 import AdminComputerLogsDetailsScreen from "src/features/admin/screens/AdminComputerLogsDetailsScreen/AdminComputerLogsDetailsScreen";
+import ChangePasswordScreen from "src/features/account/ChangePasswordScreen";
 
 export type AuthNavParams = {
   main: undefined;
@@ -33,6 +34,7 @@ export type AuthNavParams = {
   "change-section": undefined;
   logs: undefined;
   "logs-details": { computerIdentifier: string };
+  "change-password": undefined;
 };
 
 export type AuthNavProps = NativeStackNavigationProp<AuthNavParams>;
@@ -56,6 +58,10 @@ const AuthNavStack = () => {
       <AuthStack.Screen
         name="logs-details"
         component={AdminComputerLogsDetailsScreen}
+      />
+      <AuthStack.Screen
+        name="change-password"
+        component={ChangePasswordScreen}
       />
     </AuthStack.Navigator>
   );
