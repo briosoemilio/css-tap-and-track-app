@@ -59,6 +59,9 @@ const AdminNavStackHeader = (props: {
       case "add-category": {
         return "Category List";
       }
+      case "add-admin": {
+        return "Add New Admin Card";
+      }
       default: {
         return "";
       }

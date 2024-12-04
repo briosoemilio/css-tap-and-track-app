@@ -29,6 +29,7 @@ import AdminComputerCreatorScreen, {
 import AdminComputerPeripheralSelectScreen from "src/features/admin/screens/AdminComputerCreatorScreen/AdminComputerPeripheralSelectScreen";
 import { FormProvider, useForm } from "react-hook-form";
 import AdminCategoryListScreen from "src/features/admin/screens/AdminCategoryListScreen/AdminCategoryListScreen";
+import AdminAddCardScreen from "src/features/admin/screens/AdminAddCardScreen/AdminAddCardScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -40,6 +41,7 @@ export type AdminNavParams = {
   success: { message?: string };
   "add-location": undefined;
   "add-category": undefined;
+  "add-admin": undefined;
   reports?: { reportsList?: AdminReportCardInfo[] };
   users: undefined;
   computers: undefined;
@@ -128,6 +130,7 @@ const AdminNavStack = () => {
           </FormProvider>
         )}
       />
+      <AdminStack.Screen name="add-admin" component={AdminAddCardScreen} />
     </AdminStack.Navigator>
   );
 };

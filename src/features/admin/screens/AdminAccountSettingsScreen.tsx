@@ -40,10 +40,12 @@ const AdminAccounSettingsScreen = () => {
           </Text>
           <AccountIconLarge />
           <Text variant="body1bold">{user?.name}</Text>
-          <Text variant="body2regular">{user?.email}</Text>
         </View>
         <View style={styles.buttonContainers}>
-          <Button title="Change Password" onPress={showUnderDevelopment} />
+          <Button
+            title="Add Admin Card"
+            onPress={() => navigation?.navigate("add-admin")}
+          />
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   buttonContainers: {
     width: "100%",
     marginTop: 50,
+    gap: 15,
   },
   changeSectionButton: { marginBottom: 24 },
   mb10: { marginBottom: 10 },
