@@ -65,6 +65,9 @@ const AdminNavStackHeader = (props: {
       case "write-tag": {
         return "Write Tag";
       }
+      case "reports-summary": {
+        return "Report Summary";
+      }
       default: {
         return "";
       }

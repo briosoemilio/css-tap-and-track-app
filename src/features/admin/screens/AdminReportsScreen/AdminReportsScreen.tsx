@@ -8,6 +8,7 @@ import ListFooter from "./components/ListFooter";
 import ListEmpty from "./components/ListEmpty";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AdminNavParams } from "src/navigation/AdminNavigator/AdminNavStack";
+import SummaryGenerator from "./components/SummaryGenerator";
 
 const AdminReportsScreen = () => {
   // props
@@ -25,6 +26,7 @@ const AdminReportsScreen = () => {
   return (
     <ScreenContainer>
       <View style={styles.mainContainer}>
+        <SummaryGenerator />
         <FlatList
           data={reportsList || parsedAdminReportList}
           keyExtractor={(_, index) => `report-${index}`}
@@ -58,7 +60,6 @@ export default AdminReportsScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     paddingHorizontal: CONSTANTS.layout,
-    paddingTop: 20,
     gap: 15,
   },
 });

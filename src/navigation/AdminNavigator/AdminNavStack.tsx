@@ -31,6 +31,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import AdminCategoryListScreen from "src/features/admin/screens/AdminCategoryListScreen/AdminCategoryListScreen";
 import AdminAddCardScreen from "src/features/admin/screens/AdminAddCardScreen/AdminAddCardScreen";
 import AdminWriteTagScreen from "src/features/admin/screens/AdminWriteTagScreen/AdminWriteTagScreen";
+import AdminReportSummaryScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportSummaryScreen";
+import { GenerateReportResData } from "src/services/report/types";
 
 export type AdminNavParams = {
   main: undefined;
@@ -44,6 +46,7 @@ export type AdminNavParams = {
   "add-category": undefined;
   "add-admin": undefined;
   reports?: { reportsList?: AdminReportCardInfo[] };
+  "reports-summary": { reportSummary: GenerateReportResData };
   users: undefined;
   computers: undefined;
   "computer-details": { computerDetails: ComputerDetails };
@@ -98,6 +101,10 @@ const AdminNavStack = () => {
         component={AdminCategoryListScreen}
       />
       <AdminStack.Screen name="reports" component={AdminReportsScreen} />
+      <AdminStack.Screen
+        name="reports-summary"
+        component={AdminReportSummaryScreen}
+      />
       <AdminStack.Screen name="users" component={AdminUsersListScreen} />
       <AdminStack.Screen
         name="computers"
