@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import TextFieldOutline from "src/components/TextField/TextFieldOutline";
 import { formatDate } from "src/helpers/formatDate";
@@ -11,6 +11,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import FormTextField from "src/components/TextField/FormTextField";
 import { getItemDetails } from "src/services/item/getItemDetails";
 import { ItemDetails } from "src/services/item/types";
+import Text from "src/components/Text";
 
 export type ReportItemForm = {
   remarks: string;
@@ -28,6 +29,7 @@ const ReportItem = (props: { id: number }) => {
   const [itemDetails, setItemDetails] = useState<ItemDetails>();
   const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Functions
   const loadDetails = async () => {
@@ -48,7 +50,7 @@ const ReportItem = (props: { id: number }) => {
     try {
       const { remarks } = data;
       await createReport({
-        itemName: itemDetails?.name as string,
+        itemId: itemDetails?.id as number,
         remarks,
       });
       navigation?.reset({
@@ -65,6 +67,7 @@ const ReportItem = (props: { id: number }) => {
       });
     } catch (err) {
       console.log("Error submitting report => ", err);
+      setError("An error has occurred, please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -116,6 +119,11 @@ const ReportItem = (props: { id: number }) => {
           onPress={formMethods.handleSubmit(onPressSubmit)}
           isLoading={isLoading}
         />
+        {error && (
+          <Text variant="body2bold" style={{ color: COLORS.red }}>
+            {error}
+          </Text>
+        )}
       </View>
     </FormProvider>
   );
