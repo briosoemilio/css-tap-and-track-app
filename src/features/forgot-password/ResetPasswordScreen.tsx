@@ -27,7 +27,6 @@ const ResetPasswordScreen = () => {
   const navigation = useUnauthNavigation();
   const route = useRoute<RouteProp<UnauthNavParams, "reset-password">>();
   const email = route?.params?.email;
-  console.log({ email });
 
   const [isLoading, setIsLoading] = useState(false);
   const formMethods = useForm<ResetPasswordForm>();
