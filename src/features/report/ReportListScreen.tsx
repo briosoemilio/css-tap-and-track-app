@@ -46,17 +46,6 @@ const ReportListScreen = () => {
     loadList(page);
   }, [page]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // Reset state and reload data when the screen is focused
-      setPage(1);
-      setReportList([]);
-      setEndReached(false);
-      setIsScrolling(false);
-      loadList(1);
-    }, [])
-  );
-
   return (
     <ScreenContainer>
       <View style={styles.mainContainer}>
