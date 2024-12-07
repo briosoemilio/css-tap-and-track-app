@@ -29,6 +29,15 @@ const UnauthNavStackHeader = (props: {
       case "admin-login": {
         return "Admin Login";
       }
+      case "otp": {
+        return "OTP";
+      }
+      case "forgot-password": {
+        return "Forgot Password";
+      }
+      case "reset-password": {
+        return "Reset Password";
+      }
     }
   }, [routeName]);
 

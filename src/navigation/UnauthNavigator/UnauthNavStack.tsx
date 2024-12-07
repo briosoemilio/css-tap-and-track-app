@@ -1,6 +1,5 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
-import { useAuth } from "../../context/auth/useAuth";
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -15,6 +14,10 @@ import RegisterOnboardingScreen from "src/features/register/RegisterOnboardingSc
 import { Role } from "src/types/Role";
 import { TrackType } from "src/features/track/types";
 import AdminLoginScreen from "src/features/admin/screens/AdminLoginScreen/AdminLoginScreen";
+import OtpScreen from "src/features/otp/OtpScreen";
+import ForgotPasswordScreen from "src/features/forgot-password/ForgotPasswordScreen";
+import ResetPasswordScreen from "src/features/forgot-password/ResetPasswordScreen";
+import UnauthSuccessScreen from "src/features/success/UnauthSuccessScreen";
 
 export type UnauthNavParams = {
   onboarding: undefined;
@@ -24,6 +27,10 @@ export type UnauthNavParams = {
   "register-success": undefined;
   track: { trackType: TrackType };
   "admin-login": undefined;
+  "forgot-password": undefined;
+  otp: { email: string; otp: string };
+  "reset-password": { email: string };
+  success: { message?: string };
 };
 
 export type UnauthNavProps = NativeStackNavigationProp<UnauthNavParams>;
@@ -53,6 +60,10 @@ const UnauthNavStack = () => {
       <Stack.Screen name="register-success" component={RegisterSuccessScreen} />
       <Stack.Screen name="track" component={TrackNavigator} />
       <Stack.Screen name="admin-login" component={AdminLoginScreen} />
+      <Stack.Screen name="forgot-password" component={ForgotPasswordScreen} />
+      <Stack.Screen name="otp" component={OtpScreen} />
+      <Stack.Screen name="reset-password" component={ResetPasswordScreen} />
+      <Stack.Screen name="success" component={UnauthSuccessScreen} />
     </Stack.Navigator>
   );
 };

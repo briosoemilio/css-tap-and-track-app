@@ -51,48 +51,43 @@ const LoginScreen = () => {
           style={styles.mainContainer}
           contentContainerStyle={styles.contentContainer}
         >
-          <LoginForm />
-          <View
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: 36,
-            }}
-          >
-            <Text variant="body2regular" style={{ marginBottom: -12 }}>
-              Don't have account yet?
-            </Text>
+          <View style={{ flexGrow: 1 }}>
+            <LoginForm />
+            <View style={styles.trackNowContainer}>
+              <Text variant="body2regular" style={{ marginBottom: -12 }}>
+                For tracking peripherals, no account needed
+              </Text>
+              <Button
+                title="Track Now"
+                variant="text"
+                onPress={() =>
+                  navigation.push("track", {
+                    trackType: TrackType.ITEM_DETAILS,
+                  })
+                }
+              />
+            </View>
+            <Button
+              title="Login"
+              style={{ marginTop: 12 }}
+              onPress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
           </View>
-          <Button
-            title="Click here to sign up"
-            variant="text"
-            onPress={() => navigation.push("register", { role: Role.STUDENT })}
-            style={{ marginBottom: 12 }}
-          />
-          <View
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: 36,
-            }}
-          >
-            <Text variant="body2regular" style={{ marginBottom: -12 }}>
-              For tracking peripherals, no account needed
-            </Text>
+          <View style={styles.footerContainer}>
+            <Button
+              title="Create an account"
+              variant="text"
+              onPress={() =>
+                navigation.push("register", { role: Role.STUDENT })
+              }
+            />
+            <Button
+              title="Forgot password?"
+              variant="text"
+              onPress={() => navigation?.navigate("forgot-password")}
+            />
           </View>
-          <Button
-            title="Track Now"
-            variant="text"
-            onPress={() =>
-              navigation.push("track", { trackType: TrackType.ITEM_DETAILS })
-            }
-          />
-          <Button
-            title="Login"
-            style={{ marginTop: 50 }}
-            onPress={handleSubmit(onSubmit)}
-            isLoading={isLoading}
-          />
         </ScrollView>
       </ScreenContainer>
     </FormProvider>
@@ -102,9 +97,22 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  mainContainer: { paddingHorizontal: CONSTANTS.layout },
+  mainContainer: {
+    paddingHorizontal: CONSTANTS.layout,
+  },
   contentContainer: {
-    justifyContent: "center",
+    display: "flex",
+    height: "95%",
   },
   buttonContainer: { paddingHorizontal: CONSTANTS.layout },
+  trackNowContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: 36,
+  },
+  footerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 });
