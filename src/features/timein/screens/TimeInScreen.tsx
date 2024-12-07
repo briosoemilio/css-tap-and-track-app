@@ -17,6 +17,8 @@ import ComputerUnderMaintenanceComponent from "../component/ComputerUnderMainten
 import ComputerRunningComponent from "../component/ComputerRunningComponent";
 import { getComputerLogDetails } from "src/services/computer-logs/getComputerLogDetails";
 import { useAuth } from "src/context/auth/useAuth";
+import { formatDate } from "src/helpers/formatDate";
+import { formatDateTime } from "src/helpers/formatDateTime";
 
 const TimeInScreen = () => {
   const navigation = useAuthNavigation();
@@ -25,6 +27,7 @@ const TimeInScreen = () => {
   const { computerId } = route.params;
   const [computerDetails, setComputerDetails] = useState<ComputerDetails>();
   const [isSameUser, setIsSameUser] = useState(false);
+  const [timeStamp, setTimeStamp] = useState(formatDate(new Date()));
 
   const loadDetails = async () => {
     try {
@@ -33,6 +36,8 @@ const TimeInScreen = () => {
 
       const lastLogUUID = _computerDetails.lastLogUUID;
       const computerLog = await getComputerLogDetails(lastLogUUID);
+
+      setTimeStamp(formatDateTime(computerLog?.startedAt));
       if (computerLog.user.uuid === user?.uuid) {
         setIsSameUser(true);
       }
@@ -95,7 +100,7 @@ const TimeInScreen = () => {
         />
         <TextFieldOutline
           label={"Date"}
-          value={"09/27/2024"}
+          value={timeStamp}
           containerStyle={styles.mb24}
           editable={false}
         />

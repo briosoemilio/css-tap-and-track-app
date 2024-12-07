@@ -9,6 +9,7 @@ import { getComputerLogDetails } from "src/services/computer-logs/getComputerLog
 import Button from "src/components/Button";
 import TimeOutIcon from "@assets/icons/time-in/time-out.svg";
 import { endComputerLog } from "src/services/computer-logs/endComputerLog";
+import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigation";
 
 type ComputerInUseComponentProps = {
   computerDetails: ComputerDetails;
@@ -19,6 +20,7 @@ const ComputerInUseComponent = (props: ComputerInUseComponentProps) => {
   const { secondsLeft, isRunning, startTimer, stopTimer } = useTimeLog();
   const [computerLogDetails, setComputerLogDetails] =
     useState<ComputerLogDetails>();
+  const navigation = useAuthNavigation();
 
   const fetchLogDetails = async () => {
     try {
@@ -33,6 +35,16 @@ const ComputerInUseComponent = (props: ComputerInUseComponentProps) => {
     }
   };
 
+  const resetNav = () => {
+    navigation.reset({
+      index: 1,
+      routes: [
+        { name: "main" },
+        { name: "time-in", params: { computerId: computerDetails?.id } },
+      ],
+    });
+  };
+
   useEffect(() => {
     fetchLogDetails();
   }, []);
@@ -40,6 +52,7 @@ const ComputerInUseComponent = (props: ComputerInUseComponentProps) => {
   const endTimeLog = async () => {
     await endComputerLog(computerLogDetails?.id as number);
     stopTimer();
+    resetNav();
   };
 
   return (

@@ -202,7 +202,7 @@ const ComputerDetailsComponent = (props: {
               value={component}
             />
           ))}
-        {computerDetails &&
+        {computerDetails?.metadata &&
           Object.entries(JSON.parse(computerDetails?.metadata)).map(
             ([attributeName, attributeValue], index) => (
               <AttributeRow
