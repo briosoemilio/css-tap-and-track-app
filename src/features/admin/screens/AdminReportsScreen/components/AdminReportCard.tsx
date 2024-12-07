@@ -4,56 +4,75 @@ import { ReportDetails } from "src/services/report/types";
 import Text from "src/components/Text";
 import { COLORS } from "src/constants/colors";
 import { formatDate } from "src/helpers/formatDate";
+import { formatDateTime } from "src/helpers/formatDateTime";
 
 export type AdminReportCardInfo = {
   userName: string;
   itemName: string;
   locationName: string;
   reportDetails: ReportDetails;
+  isLastItem?: boolean;
 };
 
-const AdminReportCard = (props: {
-  userName: string;
-  itemName: string;
-  locationName: string;
-  reportDetails: ReportDetails;
-}) => {
-  const { reportDetails, userName, itemName, locationName } = props;
+const AdminReportCard = (props: AdminReportCardInfo) => {
+  const {
+    reportDetails,
+    userName,
+    itemName,
+    locationName,
+    isLastItem = false,
+  } = props;
   const { remarks, createdAt } = reportDetails;
   return (
     <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        borderWidth: 3,
-        borderRadius: 12,
-        borderColor: COLORS.blue,
-        padding: 12,
-        gap: 8,
-      }}
+      style={[
+        {
+          borderWidth: 3,
+          borderRadius: 12,
+          borderColor: COLORS.blue,
+          padding: 12,
+        },
+        isLastItem && { marginBottom: 50 },
+      ]}
     >
-      <View style={{ flex: 1 }}>
-        <Text variant="body2bold">{itemName}</Text>
-        <Text variant="body3regular">{locationName}</Text>
-        <Text variant="body3regular" numberOfLines={1} ellipsizeMode="tail">
-          {remarks}
-        </Text>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          gap: 8,
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <Text variant="body2bold">{itemName}</Text>
+          <Text variant="body3regular">{locationName}</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text variant="body2bold" textAlign="right">
+            Reported By:
+          </Text>
+          <Text
+            variant="body3regular"
+            textAlign="right"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {userName}
+          </Text>
+          <Text variant="body3regular" textAlign="right">
+            {formatDateTime(createdAt)}
+          </Text>
+        </View>
       </View>
-      <View style={{ flex: 1 }}>
-        <Text variant="body2bold" textAlign="right">
-          Reported By:
-        </Text>
+      <View>
+        <Text variant="body2bold">Remarks</Text>
         <Text
           variant="body3regular"
-          textAlign="right"
-          numberOfLines={1}
+          numberOfLines={2}
+          style={{ flexWrap: "wrap" }}
           ellipsizeMode="tail"
         >
-          {userName}
-        </Text>
-        <Text variant="body3regular" textAlign="right">
-          {formatDate(createdAt)}
+          {remarks}
         </Text>
       </View>
     </View>

@@ -26,11 +26,10 @@ const AdminReportsScreen = () => {
   return (
     <ScreenContainer>
       <View style={styles.mainContainer}>
-        <SummaryGenerator />
         <FlatList
           data={reportsList || parsedAdminReportList}
           keyExtractor={(_, index) => `report-${index}`}
-          contentContainerStyle={{ gap: 15 }}
+          contentContainerStyle={{ gap: 15, paddingBottom: 50 }}
           renderItem={({ item: report }) => (
             <AdminReportCard
               userName={report.userName}
@@ -39,6 +38,7 @@ const AdminReportsScreen = () => {
               reportDetails={report.reportDetails}
             />
           )}
+          ListHeaderComponent={() => <SummaryGenerator />}
           ListFooterComponent={() => {
             return (
               <ListFooter

@@ -16,6 +16,7 @@ import { useAuthNavigation } from "src/navigation/AuthNavigator/useAuthNavigatio
 import { FormProvider, useForm } from "react-hook-form";
 import FormDropdown from "src/components/Dropdown/FormDropdown";
 import FormTextField from "src/components/TextField/FormTextField";
+import { getItemDetails } from "src/services/item/getItemDetails";
 
 export type ReportPCForm = {
   remarks: string;
@@ -57,8 +58,9 @@ const ReportComputer = (props: { id: number }) => {
     setIsLoading(true);
     try {
       const { remarks, itemName } = data;
+      const item = await getItemDetails(itemName);
       await createReport({
-        itemName,
+        itemId: item?.id,
         remarks,
       });
       navigation?.reset({
