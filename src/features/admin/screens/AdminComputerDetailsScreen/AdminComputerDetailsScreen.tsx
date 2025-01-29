@@ -20,6 +20,7 @@ import AddIcon from "assets/icons/inventory-list/add-icon.svg";
 import DeleteIcon from "assets/icons/inventory-list/delete-icon.svg";
 import ArchiveComputerBottomSheet from "./components/ArchiveComputerBottomSheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import ScheduleComputerMaintenanceBottomSheet from "./components/ScheduleComputerMaintenanceBottomSheet";
 
 const DetailComponent = (props: {
   details: DetailValues;
@@ -52,6 +53,7 @@ const AdminComputerDetailsScreen = () => {
 
   const [isItemLoading, setIsItemLoading] = useState(false);
   const archiveComputerBottomSheetRef = useRef<BottomSheetMethods>(null);
+  const maintenanceBottomSheetRef = useRef<BottomSheetMethods>(null);
 
   const navigation = useAdminNavigation();
 
@@ -160,6 +162,11 @@ const AdminComputerDetailsScreen = () => {
             }}
           />
         </View>
+        <Button
+          title="Schedule Maintenance"
+          style={{ backgroundColor: COLORS.red, marginTop: 12 }}
+          onPress={() => maintenanceBottomSheetRef?.current?.expand()}
+        />
         {isLoading ? (
           <Loader />
         ) : (
@@ -198,6 +205,10 @@ const AdminComputerDetailsScreen = () => {
         computerId={id}
         isArchived={isArchived}
         bottomSheetRef={archiveComputerBottomSheetRef}
+      />
+      <ScheduleComputerMaintenanceBottomSheet
+        computerId={id}
+        bottomSheetRef={maintenanceBottomSheetRef}
       />
     </ScreenContainer>
   );
