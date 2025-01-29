@@ -15,6 +15,9 @@ import UpdateLocationBottomSheet from "./components/UpdateLocationBottomSheet";
 import UpdateStatusBottomSheet from "./components/UpdateStatusBottomSheet";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 import { TagType } from "src/features/track/types";
+import ArchiveItemBottomSheet from "./components/ArchiveItemBottomSheet";
+import DeleteIcon from "assets/icons/inventory-list/delete-icon.svg";
+import AddIcon from "assets/icons/inventory-list/add-icon.svg";
 
 export type DetailValues = { detail: string; value: string };
 
@@ -26,10 +29,16 @@ const DetailComponent = (props: {
   const { detail, value } = details;
   return (
     <View>
-      <Text variant="body2bold">{detail}</Text>
+      {detail === "archive" ? (
+        <Text variant="body2bold">{""}</Text>
+      ) : (
+        <Text variant="body2bold">{detail}</Text>
+      )}
       <View style={styles.attributeContainer}>
         <View style={styles.attributeDetails}>
           <Text variant="body2regular">{value}</Text>
+          {value === "Archive Item" && <DeleteIcon />}
+          {value === "Activate Item" && <AddIcon />}
         </View>
         {onPress && (
           <TouchableOpacity onPress={() => onPress?.()}>
@@ -52,12 +61,14 @@ const AdminPeripheralDetailsScreen = () => {
     categoryName,
     locationName,
     status,
+    isArchived,
   } = itemDetails;
   const metadata = parseStringifiedMetadata(_metadata);
   const createdAt = formatDate(_createdAt) as string;
 
   const locationBottomSheetRef = useRef<BottomSheetMethods>(null);
   const statusBottomSheetRef = useRef<BottomSheetMethods>(null);
+  const archiveItemBottomSheetRef = useRef<BottomSheetMethods>(null);
   return (
     <ScreenContainer>
       <ScrollView
@@ -112,6 +123,16 @@ const AdminPeripheralDetailsScreen = () => {
               }}
             />
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => archiveItemBottomSheetRef?.current?.expand()}
+          >
+            <DetailComponent
+              details={{
+                detail: "archive",
+                value: isArchived ? "Activate Item" : "Archive Item",
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <UpdateLocationBottomSheet
@@ -123,6 +144,11 @@ const AdminPeripheralDetailsScreen = () => {
         itemId={id}
         bottomSheetRef={statusBottomSheetRef}
         itemStatus={status}
+      />
+      <ArchiveItemBottomSheet
+        itemId={id}
+        isArchived={!!isArchived}
+        bottomSheetRef={archiveItemBottomSheetRef}
       />
     </ScreenContainer>
   );

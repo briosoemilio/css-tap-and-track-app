@@ -44,6 +44,14 @@ const LoginScreen = () => {
       setIsLoading(false);
     }
   };
+
+  const navToLoginAdmin = () => {
+    navigation?.reset({
+      index: 1,
+      routes: [{ name: "login" }, { name: "admin-login" }],
+    });
+  };
+
   return (
     <FormProvider {...methods}>
       <ScreenContainer>
@@ -71,6 +79,12 @@ const LoginScreen = () => {
               title="Login"
               style={{ marginTop: 12 }}
               onPress={handleSubmit(onSubmit)}
+              isLoading={isLoading}
+            />
+            <Button
+              title="Login Admin"
+              style={{ marginTop: 12 }}
+              onPress={navToLoginAdmin}
               isLoading={isLoading}
             />
           </View>

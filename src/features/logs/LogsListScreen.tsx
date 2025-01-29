@@ -30,7 +30,11 @@ const LogsListScreen = () => {
     <ScreenContainer>
       <View style={styles.mainContainer}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation?.goBack}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation?.goBack();
+            }}
+          >
             <BackIcon />
           </TouchableOpacity>
           <Text variant="header2">Logs List</Text>

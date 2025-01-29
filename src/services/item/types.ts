@@ -15,6 +15,7 @@ export interface ItemDetails {
   createdAt: Date;
   updatedAt: Date;
   computerId: null;
+  isArchived?: boolean;
 }
 
 export interface GetAllItemsRes {
@@ -43,6 +44,18 @@ export interface UpdateItemLocationRes {
 }
 
 export interface UpdateItemStatusRes {
+  statusCode: number;
+  message: string;
+  data: ItemDetails;
+}
+
+export interface ArchiveItemRes {
+  statusCode: number;
+  message: string;
+  data: ItemDetails;
+}
+
+export interface UnarchiveItemRes {
   statusCode: number;
   message: string;
   data: ItemDetails;
