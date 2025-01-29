@@ -1,20 +1,43 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Text from "src/components/Text";
 import { COLORS } from "src/constants/colors";
-import { ItemStatus } from "src/types/ItemStatus";
-import { ItemDetails } from "src/services/item/types";
 import { ComputerDetails } from "src/services/computer/types";
 import { formatDate } from "src/helpers/formatDate";
+import ArchiveImage from "assets/png/archived-png.png";
 
 const ComputerCard = (props: {
   computerDetails: ComputerDetails;
   onPress: () => void;
 }) => {
   const { computerDetails, onPress } = props;
-  const { name, locationName, status, createdAt } = computerDetails;
+  const { name, locationName, status, createdAt, isArchived } = computerDetails;
   return (
-    <TouchableOpacity style={styles.itemCard} onPress={onPress}>
+    <TouchableOpacity
+      style={[
+        styles.itemCard,
+        isArchived && { backgroundColor: COLORS.white50 },
+      ]}
+      onPress={onPress}
+    >
+      {isArchived && (
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={ArchiveImage}
+            style={{ height: 80, marginTop: 10, marginLeft: 40 }}
+            resizeMode="contain"
+          />
+        </View>
+      )}
       <View>
         <Text variant="body2bold">{name}</Text>
         <Text variant="body3regular">{locationName}</Text>

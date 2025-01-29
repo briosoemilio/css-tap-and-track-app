@@ -75,6 +75,13 @@ const AdminPeripheralDetailsScreen = () => {
         style={styles.mainContainer}
         contentContainerStyle={styles.contentContainer}
       >
+        {isArchived && (
+          <View>
+            <Text variant="header3" style={{ color: COLORS.red }}>
+              THIS ITEM IS ARCHIVED
+            </Text>
+          </View>
+        )}
         <DetailComponent
           details={{
             detail: "Category",

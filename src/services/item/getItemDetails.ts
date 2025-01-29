@@ -1,9 +1,9 @@
 import wretch from "src/lib/wretch/wretch";
 import { GetItemRes } from "./types";
 
-export const getItemDetails = async (id: number | string) => {
+export const getItemDetails = async (identifier: number | string) => {
   const res = await wretch()
-    .url(`/items/${id}`)
+    .url(`/items/${identifier}`)
     .get()
     .json<GetItemRes>()
     .catch((err) => {

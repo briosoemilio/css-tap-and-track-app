@@ -19,6 +19,7 @@ export interface ComputerDetails {
   updatedAt: Date;
   lastLogUUID: string;
   status: string;
+  isArchived: boolean;
 }
 
 export interface GetComputerStatusRes {
@@ -53,6 +54,18 @@ export interface GetAllComputersResData {
 }
 
 export interface CreateComputerRes {
+  statusCode: number;
+  message: string;
+  data: ComputerDetails;
+}
+
+export interface ArchiveComputerRes {
+  statusCode: number;
+  message: string;
+  data: ComputerDetails;
+}
+
+export interface UnarchiveComputerRes {
   statusCode: number;
   message: string;
   data: ComputerDetails;

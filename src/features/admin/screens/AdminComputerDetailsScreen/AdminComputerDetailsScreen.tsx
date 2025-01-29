@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useRef, useState } from "react";
 import ScreenContainer from "src/components/ScreenContainer";
 import { CONSTANTS } from "src/constants/constants";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -15,22 +15,34 @@ import Loader from "src/components/Loader";
 import { useAdminNavigation } from "src/navigation/AdminNavigator/useAdminNavigation";
 import { showUnderDevelopment } from "src/helpers/showUnderDevelopment";
 import { TagType } from "src/features/track/types";
+import { getItemDetails } from "src/services/item/getItemDetails";
+import AddIcon from "assets/icons/inventory-list/add-icon.svg";
+import DeleteIcon from "assets/icons/inventory-list/delete-icon.svg";
+import ArchiveComputerBottomSheet from "./components/ArchiveComputerBottomSheet";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
 const DetailComponent = (props: {
   details: DetailValues;
   onPress?: () => void;
+  disabled?: boolean;
 }) => {
-  const { details } = props;
+  const { details, onPress, disabled = false } = props;
   const { detail, value } = details;
   return (
-    <View>
-      <Text variant="body2bold">{detail}</Text>
+    <TouchableOpacity onPress={() => onPress?.()} disabled={disabled}>
+      {detail === "archive" ? (
+        <Text variant="body2bold">{""}</Text>
+      ) : (
+        <Text variant="body2bold">{detail}</Text>
+      )}
       <View style={styles.attributeContainer}>
         <View style={styles.attributeDetails}>
           <Text variant="body2regular">{value}</Text>
+          {value === "Archive Item" && <DeleteIcon />}
+          {value === "Activate Item" && <AddIcon />}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -38,9 +50,13 @@ const AdminComputerDetailsScreen = () => {
   const route = useRoute<RouteProp<AdminNavParams, "computer-details">>();
   const computerDetails = route.params?.computerDetails;
 
+  const [isItemLoading, setIsItemLoading] = useState(false);
+  const archiveComputerBottomSheetRef = useRef<BottomSheetMethods>(null);
+
   const navigation = useAdminNavigation();
 
   const {
+    id,
     monitorName,
     keyboardName,
     mouseName,
@@ -48,6 +64,7 @@ const AdminComputerDetailsScreen = () => {
     locationName,
     metadata: _metadata,
     lastLogUUID,
+    isArchived,
   } = computerDetails;
   const metadata = parseStringifiedMetadata(_metadata);
 
@@ -57,28 +74,64 @@ const AdminComputerDetailsScreen = () => {
   const user = computerLogDetails?.user;
   const computerID = computerLogDetails?.computer?.id;
 
+  const viewItemDetails = async (itemName: string) => {
+    try {
+      setIsItemLoading(true);
+      const itemDetails = await getItemDetails(itemName);
+      if (itemDetails) {
+        navigation?.navigate("peripheral-details", { itemDetails });
+      }
+    } catch (err) {
+      console.log("error getting item details : ", err);
+    } finally {
+      setIsItemLoading(false);
+    }
+  };
+
   return (
     <ScreenContainer>
+      {isItemLoading && (
+        <View style={{ position: "absolute", top: "40%", left: "40%" }}>
+          <Loader size={"large"} />
+        </View>
+      )}
       <ScrollView
         style={styles.mainContainer}
         contentContainerStyle={styles.contentContainer}
       >
+        {isArchived && (
+          <View>
+            <Text variant="header3" style={{ color: COLORS.red }}>
+              THIS COMPUTER IS ARCHIVED
+            </Text>
+          </View>
+        )}
         <DetailComponent
           details={{ detail: "Location", value: locationName }}
+          disabled
         />
         {metadata?.map((attribute, index) => (
           <DetailComponent
             key={`metadata-${index}`}
             details={{ detail: attribute.detail, value: attribute.value }}
+            disabled
           />
         ))}
-        <DetailComponent details={{ detail: "Monitor", value: monitorName }} />
+        <DetailComponent
+          details={{ detail: "Monitor", value: monitorName }}
+          onPress={() => viewItemDetails(monitorName)}
+        />
         <DetailComponent
           details={{ detail: "Keyboard", value: keyboardName }}
+          onPress={() => viewItemDetails(keyboardName)}
         />
-        <DetailComponent details={{ detail: "Mouse", value: mouseName }} />
+        <DetailComponent
+          details={{ detail: "Mouse", value: mouseName }}
+          onPress={() => viewItemDetails(mouseName)}
+        />
         <DetailComponent
           details={{ detail: "System Unit", value: systemUnitName }}
+          onPress={() => viewItemDetails(systemUnitName)}
         />
         <View
           style={{
@@ -87,21 +140,25 @@ const AdminComputerDetailsScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <TouchableOpacity
+          <DetailComponent
             onPress={() =>
               navigation?.navigate("write-tag", {
                 tagType: TagType.COMPUTER,
                 id: computerDetails?.id,
               })
             }
-          >
-            <DetailComponent
-              details={{
-                detail: "NFC",
-                value: "Tap to Write Tag",
-              }}
-            />
-          </TouchableOpacity>
+            details={{
+              detail: "NFC",
+              value: "Tap to Write Tag",
+            }}
+          />
+          <DetailComponent
+            onPress={() => archiveComputerBottomSheetRef?.current?.expand()}
+            details={{
+              detail: "archive",
+              value: isArchived ? "Activate Item" : "Archive Item",
+            }}
+          />
         </View>
         {isLoading ? (
           <Loader />
@@ -137,6 +194,11 @@ const AdminComputerDetailsScreen = () => {
           )
         )}
       </ScrollView>
+      <ArchiveComputerBottomSheet
+        computerId={id}
+        isArchived={isArchived}
+        bottomSheetRef={archiveComputerBottomSheetRef}
+      />
     </ScreenContainer>
   );
 };
