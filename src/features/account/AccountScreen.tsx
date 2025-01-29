@@ -43,11 +43,11 @@ const AccountScreen = () => {
           <Text variant="body2regular">{user?.email}</Text>
         </View>
         <View style={styles.buttonContainers}>
-          <Button
+          {/* <Button
             title="Change Section"
             onPress={() => navigation.navigate("change-section")}
             style={styles.changeSectionButton}
-          />
+          /> */}
           <Button
             title="Change Password"
             onPress={() => navigation?.navigate("change-password")}
