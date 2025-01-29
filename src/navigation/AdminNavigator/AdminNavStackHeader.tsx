@@ -68,6 +68,9 @@ const AdminNavStackHeader = (props: {
       case "reports-summary": {
         return "Report Summary";
       }
+      case "maintenance": {
+        return "Maintenance List";
+      }
       default: {
         return "";
       }

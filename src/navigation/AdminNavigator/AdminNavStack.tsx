@@ -33,6 +33,7 @@ import AdminAddCardScreen from "src/features/admin/screens/AdminAddCardScreen/Ad
 import AdminWriteTagScreen from "src/features/admin/screens/AdminWriteTagScreen/AdminWriteTagScreen";
 import AdminReportSummaryScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportSummaryScreen";
 import { GenerateReportResData } from "src/services/report/types";
+import AdminMaintenanceScreen from "src/features/admin/screens/AdminMaintenanceScreen/AdminMaintenanceScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -55,6 +56,7 @@ export type AdminNavParams = {
   "computer-creator": undefined;
   "computer-peripheral-select": { location: string; category: string };
   "write-tag": { tagType: TagType; id: number };
+  maintenance: undefined;
 };
 
 export type AdminNavProps = NativeStackNavigationProp<AdminNavParams>;
@@ -141,6 +143,10 @@ const AdminNavStack = () => {
       />
       <AdminStack.Screen name="add-admin" component={AdminAddCardScreen} />
       <AdminStack.Screen name="write-tag" component={AdminWriteTagScreen} />
+      <AdminStack.Screen
+        name="maintenance"
+        component={AdminMaintenanceScreen}
+      />
     </AdminStack.Navigator>
   );
 };

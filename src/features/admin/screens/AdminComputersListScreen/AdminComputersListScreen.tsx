@@ -100,11 +100,26 @@ const AdminComputersListScreen = () => {
         onPressFilter={onPressFilter}
         resetFilters={resetFilters}
       />
-      <Button
-        title="Go To Computer Logs"
-        style={{ marginHorizontal: CONSTANTS.layout }}
-        onPress={() => navigation?.navigate("computer-logs")}
-      />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginHorizontal: CONSTANTS.layout,
+          gap: 12,
+        }}
+      >
+        <Button
+          title="Computer Logs"
+          style={{ flex: 1 }}
+          onPress={() => navigation?.navigate("computer-logs")}
+        />
+        <Button
+          title="Maintenance"
+          style={{ flex: 1 }}
+          onPress={() => navigation?.navigate("maintenance")}
+        />
+      </View>
     </ScreenContainer>
   );
 };
