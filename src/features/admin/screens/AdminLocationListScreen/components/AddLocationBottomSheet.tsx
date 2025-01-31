@@ -71,7 +71,6 @@ const AddLocationBottomSheet = (props: AddLocationBottomSheetProps) => {
     try {
       const { name, floor } = data;
       const res = await createLocation(name, floor);
-      console.log({ res });
       if (res) {
         navigation?.reset({
           index: 2,
