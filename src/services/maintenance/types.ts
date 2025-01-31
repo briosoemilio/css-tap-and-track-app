@@ -12,6 +12,7 @@ export interface MaintenanceDetails {
   scheduleDate: Date;
   createdAt: Date;
   updatedAt: Date;
+  isDone: boolean;
 }
 
 export interface GetAllMaintenanceRes {
@@ -25,4 +26,10 @@ export interface GetAllMaintenanceResData {
   total: number;
   page: number;
   itemsPerPage: number;
+}
+
+export interface MarkAsDoneRes {
+  statusCode: number;
+  message: string;
+  data: MaintenanceDetails;
 }

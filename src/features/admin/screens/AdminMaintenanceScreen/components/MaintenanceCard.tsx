@@ -2,9 +2,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Text from "src/components/Text";
 import { COLORS } from "src/constants/colors";
-import { ComputerDetails } from "src/services/computer/types";
 import { formatDate } from "src/helpers/formatDate";
-import ArchiveImage from "assets/png/archived-png.png";
 import { MaintenanceDetails } from "src/services/maintenance/types";
 
 const MaintenanceCard = (props: {
@@ -12,12 +10,27 @@ const MaintenanceCard = (props: {
   onPress: () => void;
 }) => {
   const { maintenanceDetails, onPress } = props;
-  const { scheduledBy, computerId, scheduleDate } = maintenanceDetails;
+  const { scheduledBy, computerId, scheduleDate, isDone } = maintenanceDetails;
   return (
     <TouchableOpacity style={[styles.itemCard]} onPress={onPress}>
       <View>
-        <Text variant="body2bold">Scheduled By: {scheduledBy}</Text>
-        <Text variant="body3regular">Computer ID: {computerId}</Text>
+        <Text variant="body2bold">Computer ID: {computerId}</Text>
+        {isDone && (
+          <View style={{ display: "flex", flexDirection: "row", gap: 4 }}>
+            <Text variant="body3bold">STATUS:</Text>
+            <Text variant="body3regular" style={{ color: COLORS.green }}>
+              DONE
+            </Text>
+          </View>
+        )}
+        {!isDone && (
+          <View style={{ display: "flex", flexDirection: "row", gap: 4 }}>
+            <Text variant="body3bold">STATUS:</Text>
+            <Text variant="body3regular" style={{ color: COLORS.red }}>
+              ONGOING
+            </Text>
+          </View>
+        )}
       </View>
       <View>
         <Text variant="body3bold" textAlign="right">
