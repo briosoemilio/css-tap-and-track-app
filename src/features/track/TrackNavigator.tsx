@@ -39,8 +39,13 @@ const TrackNavigator = (props: TrackNavigatorProps) => {
     <Stack.Navigator
       initialRouteName="choose-track"
       screenOptions={{
-        header: () => <UnauthNavStackHeader />,
         headerShown: withHeader,
+        header: ({ navigation, route }) => (
+          <UnauthNavStackHeader
+            canGoBack={navigation.canGoBack()}
+            routeName={route?.name}
+          />
+        ),
       }}
     >
       <Stack.Screen name="choose-track" component={ChooseTrackScreen} />
