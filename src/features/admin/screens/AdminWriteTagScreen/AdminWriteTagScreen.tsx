@@ -38,8 +38,6 @@ const LoadingComponent = () => {
 const AdminWriteTagScreen = () => {
   const route = useRoute<RouteProp<AdminNavParams, "write-tag">>();
   const { tagType: type, id } = route.params;
-  console.log({ type });
-  console.log({ id });
 
   const navigation = useAdminNavigation();
   const [showModal, setShowModal] = useState(false);
