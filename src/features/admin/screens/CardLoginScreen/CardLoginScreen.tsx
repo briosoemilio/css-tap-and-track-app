@@ -26,10 +26,10 @@ const CardLoginScreen = () => {
     setIsLoading(true);
     try {
       const userDetails = await getUserDetails(cardKey);
-      console.log({ userDetails });
       const loginRes = await login({
         email: userDetails?.email,
         password: data.password,
+        cardKey,
       });
       onLogin(loginRes);
     } catch (err) {

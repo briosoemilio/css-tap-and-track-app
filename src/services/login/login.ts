@@ -1,7 +1,11 @@
 import wretch from "src/lib/wretch/wretch";
 import { LoginRes } from "./types";
 
-export const login = async (reqBody: { email: string; password: string }) => {
+export const login = async (reqBody: {
+  email: string;
+  password: string;
+  cardKey?: string;
+}) => {
   const res = await wretch()
     .url("/auth/login")
     .post(reqBody)

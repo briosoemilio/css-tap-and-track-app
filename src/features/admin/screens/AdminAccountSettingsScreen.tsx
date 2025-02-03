@@ -41,12 +41,6 @@ const AdminAccounSettingsScreen = () => {
           <AccountIconLarge />
           <Text variant="body1bold">{user?.name}</Text>
         </View>
-        <View style={styles.buttonContainers}>
-          <Button
-            title="Add Admin Card"
-            onPress={() => navigation?.navigate("add-admin")}
-          />
-        </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
         <Button
