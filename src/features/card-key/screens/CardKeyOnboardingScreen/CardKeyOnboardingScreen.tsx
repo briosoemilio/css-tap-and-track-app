@@ -108,6 +108,13 @@ const FourthPage = () => {
       index: 0,
       routes: [{ name: "main" }],
     });
+
+  const goToLink = () =>
+    navigation?.reset({
+      index: 0,
+      routes: [{ name: "card-key-link" }],
+    });
+
   return (
     <View style={{ width: "100%", height: "100%" }} key="4">
       <View style={{ marginTop: 60, alignItems: "center" }}>
@@ -125,6 +132,7 @@ const FourthPage = () => {
       <Button
         title="Link Card Key"
         style={{ marginBottom: 12, backgroundColor: COLORS.green }}
+        onPress={goToLink}
       />
       <Button title="Go to Home" onPress={goToHome} />
     </View>
