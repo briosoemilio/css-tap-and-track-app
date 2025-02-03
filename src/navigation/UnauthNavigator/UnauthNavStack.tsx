@@ -13,7 +13,7 @@ import TrackNavigator from "src/features/track/TrackNavigator";
 import RegisterOnboardingScreen from "src/features/register/RegisterOnboardingScreen";
 import { Role } from "src/types/Role";
 import { TrackType } from "src/features/track/types";
-import AdminLoginScreen from "src/features/admin/screens/AdminLoginScreen/AdminLoginScreen";
+import CardLoginScreen from "src/features/admin/screens/CardLoginScreen/CardLoginScreen";
 import OtpScreen from "src/features/otp/OtpScreen";
 import ForgotPasswordScreen from "src/features/forgot-password/ForgotPasswordScreen";
 import ResetPasswordScreen from "src/features/forgot-password/ResetPasswordScreen";
@@ -26,7 +26,7 @@ export type UnauthNavParams = {
   register: { role: Role.STUDENT | Role.PROF };
   "register-success": undefined;
   track: { trackType: TrackType };
-  "admin-login": undefined;
+  "card-login": { cardKey: string };
   "forgot-password": undefined;
   otp: { email: string; otp: string };
   "reset-password": { email: string };
@@ -59,7 +59,7 @@ const UnauthNavStack = () => {
       <Stack.Screen name="register" component={RegisterScreen} />
       <Stack.Screen name="register-success" component={RegisterSuccessScreen} />
       <Stack.Screen name="track" component={TrackNavigator} />
-      <Stack.Screen name="admin-login" component={AdminLoginScreen} />
+      <Stack.Screen name="card-login" component={CardLoginScreen} />
       <Stack.Screen name="forgot-password" component={ForgotPasswordScreen} />
       <Stack.Screen name="otp" component={OtpScreen} />
       <Stack.Screen name="reset-password" component={ResetPasswordScreen} />

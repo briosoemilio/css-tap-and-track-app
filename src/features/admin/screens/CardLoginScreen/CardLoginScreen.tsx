@@ -9,8 +9,15 @@ import Button from "src/components/Button";
 import { adminLogin } from "src/services/login/adminLogin";
 import { useAuth } from "src/context/auth/useAuth";
 import { getErrorMessage } from "src/services/helpers";
+import { getUserDetails } from "src/services/user/getUserDetails";
+import { UnauthNavParams } from "src/navigation/UnauthNavigator/UnauthNavStack";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { login } from "src/services/login/login";
 
-const AdminLoginScreen = () => {
+const CardLoginScreen = () => {
+  const route = useRoute<RouteProp<UnauthNavParams, "card-login">>();
+  const cardKey = route.params?.cardKey;
+
   const methods = useForm<{ password: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const { onLogin } = useAuth();
@@ -18,8 +25,13 @@ const AdminLoginScreen = () => {
   const onSubmit = async (data: { password: string }) => {
     setIsLoading(true);
     try {
-      const res = await adminLogin(data);
-      onLogin(res);
+      const userDetails = await getUserDetails(cardKey);
+      console.log({ userDetails });
+      const loginRes = await login({
+        email: userDetails?.email,
+        password: data.password,
+      });
+      onLogin(loginRes);
     } catch (err) {
       const errMessage = getErrorMessage(err);
       if (errMessage.includes("Wrong password")) {
@@ -39,10 +51,10 @@ const AdminLoginScreen = () => {
         contentContainerStyle={styles.contentContainer}
       >
         <Text variant="body2regular">
-          It seems you have scanned an admin key card.
+          It seems you have scanned a user key card.
         </Text>
         <Text variant="body2regular">
-          Please enter admin password to continue.
+          Please enter your password to continue.
         </Text>
         <FormTextField
           control={methods.control}
@@ -65,7 +77,7 @@ const AdminLoginScreen = () => {
   );
 };
 
-export default AdminLoginScreen;
+export default CardLoginScreen;
 
 const styles = StyleSheet.create({
   mainContainer: { paddingHorizontal: CONSTANTS.layout },

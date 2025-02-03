@@ -16,9 +16,9 @@ import { COLORS } from "src/constants/colors";
 import TrackBottomSheet from "src/components/TrackBottomSheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import ItemModal from "../components/ItemModal";
-import { checkIfAdminCard } from "../utils";
 import { useUnauthNavigation } from "src/navigation/UnauthNavigator/useUnauthNavigation";
 import { useAuth } from "src/context/auth/useAuth";
+import { checkCardKey } from "src/services/user/checkCardKey";
 
 const NFCTrackScreen = () => {
   const navigation = useTrackNavigation();
@@ -39,14 +39,16 @@ const NFCTrackScreen = () => {
       await NfcManager.requestTechnology(NfcTech.Ndef);
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
-      console.log({ tag });
 
       // Check if Admin Key Card
-      const isAdmin = await checkIfAdminCard(tag);
-      if (isAdmin && !user) {
+      const isCardKeyUsed = await checkCardKey(tag?.id as string);
+      if (isCardKeyUsed && !user) {
         unAuthNav?.reset({
           index: 1,
-          routes: [{ name: "login" }, { name: "admin-login" }],
+          routes: [
+            { name: "login" },
+            { name: "card-login", params: { cardKey: tag?.id } },
+          ],
         });
       }
 
