@@ -15,7 +15,8 @@ import ChangeSectionScreen from "src/features/account/ChangeSectionScreen";
 import LogsListScreen from "src/features/logs/LogsListScreen";
 import AdminComputerLogsDetailsScreen from "src/features/admin/screens/AdminComputerLogsDetailsScreen/AdminComputerLogsDetailsScreen";
 import ChangePasswordScreen from "src/features/account/ChangePasswordScreen";
-import CardKeyOnboardingScreen from "src/features/card-key/CardKeyOnboardingScreen";
+import CardKeyOnboardingScreen from "src/features/card-key/screens/CardKeyOnboardingScreen/CardKeyOnboardingScreen";
+import CardKeyLinkScreen from "src/features/card-key/screens/CardKeyLinkScreen/CardKeyLinkScreen";
 
 export type AuthNavParams = {
   main: undefined;
@@ -37,6 +38,7 @@ export type AuthNavParams = {
   "logs-details": { computerIdentifier: string };
   "change-password": undefined;
   "card-key-onboarding": undefined;
+  "card-key-link": undefined;
 };
 
 export type AuthNavProps = NativeStackNavigationProp<AuthNavParams>;
@@ -69,6 +71,7 @@ const AuthNavStack = () => {
         name="card-key-onboarding"
         component={CardKeyOnboardingScreen}
       />
+      <AuthStack.Screen name="card-key-link" component={CardKeyLinkScreen} />
     </AuthStack.Navigator>
   );
 };

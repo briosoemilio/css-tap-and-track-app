@@ -49,6 +49,11 @@ const AccountScreen = () => {
             style={styles.changeSectionButton}
           /> */}
           <Button
+            title="Link Card Key"
+            onPress={() => navigation.navigate("card-key-link")}
+            style={styles.linkCardKeyButton}
+          />
+          <Button
             title="Change Password"
             onPress={() => navigation?.navigate("change-password")}
           />
@@ -84,4 +89,5 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   changeSectionButton: { marginBottom: 24 },
+  linkCardKeyButton: { marginBottom: 24, backgroundColor: COLORS.green },
 });
