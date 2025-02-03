@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { useAuth } from "../context/auth/useAuth";
 import UnauthNavStack from "./UnauthNavigator/UnauthNavStack";
 import AuthNavStack from "./AuthNavigator/AuthNavStack";
 import AdminNavStack from "./AdminNavigator/AdminNavStack";
+import { isEmpty } from "lodash";
 
 const RootNavStack = () => {
   const { user, isAdmin } = useAuth();
@@ -12,7 +12,11 @@ const RootNavStack = () => {
 
   if (isAdmin === true) return <AdminNavStack />;
 
-  return <AuthNavStack />;
+  return (
+    <AuthNavStack
+      initialRouteName={isEmpty(user.cardKey) ? "card-key-onboarding" : "main"}
+    />
+  );
 };
 
 export default RootNavStack;

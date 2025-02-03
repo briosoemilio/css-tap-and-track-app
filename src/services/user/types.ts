@@ -19,6 +19,8 @@ export interface UserDetails {
   role: string;
   yearSection: null;
   idNumber: string;
+  metadata: string;
+  cardKey: string;
   createdAt: Date;
   updatedAt: Date;
 }

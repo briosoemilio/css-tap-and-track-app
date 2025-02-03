@@ -45,10 +45,12 @@ export type AuthNavProps = NativeStackNavigationProp<AuthNavParams>;
 
 const AuthStack = createNativeStackNavigator();
 
-const AuthNavStack = () => {
+const AuthNavStack = (props: {
+  initialRouteName: "main" | "card-key-onboarding";
+}) => {
   return (
     <AuthStack.Navigator
-      initialRouteName="main"
+      initialRouteName={props.initialRouteName}
       screenOptions={{ headerShown: false }}
     >
       <AuthStack.Screen name="main" component={BottomTabNavStack} />

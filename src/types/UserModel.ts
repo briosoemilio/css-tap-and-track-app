@@ -8,4 +8,5 @@ export type UserModel = {
   email: string;
   id: number;
   uuid: string;
+  cardKey: string;
 };
