@@ -45,13 +45,6 @@ const LoginScreen = () => {
     }
   };
 
-  const navToLoginAdmin = () => {
-    navigation?.reset({
-      index: 1,
-      routes: [{ name: "login" }, { name: "admin-login" }],
-    });
-  };
-
   return (
     <FormProvider {...methods}>
       <ScreenContainer>
@@ -81,21 +74,15 @@ const LoginScreen = () => {
               onPress={handleSubmit(onSubmit)}
               isLoading={isLoading}
             />
-            <Button
-              title="Login Admin"
-              style={{ marginTop: 12 }}
-              onPress={navToLoginAdmin}
-              isLoading={isLoading}
-            />
           </View>
           <View style={styles.footerContainer}>
-            <Button
+            {/* <Button
               title="Create an account"
               variant="text"
               onPress={() =>
                 navigation.push("register", { role: Role.STUDENT })
               }
-            />
+            /> */}
             <Button
               title="Forgot password?"
               variant="text"
