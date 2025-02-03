@@ -111,8 +111,8 @@ const FourthPage = () => {
 
   const goToLink = () =>
     navigation?.reset({
-      index: 0,
-      routes: [{ name: "card-key-link" }],
+      index: 1,
+      routes: [{ name: "main" }, { name: "card-key-link" }],
     });
 
   return (

@@ -8,8 +8,9 @@ import Button from "src/components/Button";
 const AlreadyLinkedModal = (props: {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  message: string;
 }) => {
-  const { showModal, setShowModal } = props;
+  const { showModal, setShowModal, message } = props;
 
   return (
     <Modal
@@ -22,9 +23,7 @@ const AlreadyLinkedModal = (props: {
           <Text variant="header3">Already Linked</Text>
         </View>
         <View style={styles.modalContentContainer}>
-          <Text textAlign="center">
-            It seems that this card is already linked to a different account.
-          </Text>
+          <Text textAlign="center">{message}</Text>
           <View style={styles.modalButtonContainer}>
             <Button
               title={"Ok"}

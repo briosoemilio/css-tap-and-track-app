@@ -15,6 +15,10 @@ import { checkIfAdminCard } from "src/features/track/utils";
 import { addNewAdmin } from "src/services/login/addNewAdmin";
 import Loader from "src/components/Loader";
 import AlreadyLinkedModal from "./components/AlreadyLinkedModal";
+import { useAuth } from "src/context/auth/useAuth";
+import { isEmpty } from "lodash";
+import { checkCardKey } from "src/services/user/checkCardKey";
+import { writeCardKey } from "src/services/user/writeCardKey";
 
 const LoadingComponent = () => {
   return (
@@ -29,11 +33,24 @@ const LoadingComponent = () => {
   );
 };
 
+const MODAL_MESSAGE = {
+  hasLinkedCard: "User already linked their card.",
+  invalidCard:
+    "Invalid card. This card is already linked to a different account.",
+};
+
 const CardKeyLinkScreen = () => {
+  const { user } = useAuth();
   const navigation = useAuthNavigation();
   const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const _showModal = (message: string) => {
+    setModalMessage(message);
+    setShowModal(true);
+  };
 
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
@@ -44,12 +61,15 @@ const CardKeyLinkScreen = () => {
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
 
-      // Check if already linked card
-      const isAdmin = await checkIfAdminCard(tag);
-      if (isAdmin) {
-        setShowModal(true); // if already admin show modal
+      // Check if user already linked card
+      if (!isEmpty(user?.cardKey))
+        return _showModal(MODAL_MESSAGE.hasLinkedCard);
+
+      const { isCardKeyUsed } = await checkCardKey(tag?.id as string);
+      if (isCardKeyUsed) {
+        _showModal(MODAL_MESSAGE.invalidCard); // if cardkey already used, show modal
       } else {
-        await addAdmin(tag); // proceed with add of admin
+        await _writeCardKey(tag); // proceed with write of card key
       }
     } catch (ex) {
       console.warn("Oops!", ex);
@@ -58,18 +78,21 @@ const CardKeyLinkScreen = () => {
     }
   }
 
-  const addAdmin = async (tag: any) => {
+  const _writeCardKey = async (tag: any) => {
     bottomSheetRef?.current?.close();
     setIsLoading(true);
     try {
       if (tag.techTypes.includes("android.nfc.tech.MifareClassic")) {
-        const res = await addNewAdmin({ id: tag.id });
+        const res = await writeCardKey(tag.id);
         if (res) {
           navigation?.reset({
             index: 1,
             routes: [
               { name: "main" },
-              { name: "success", params: { message: res.message } },
+              {
+                name: "success",
+                params: { message: "Successfully linked your card key!" },
+              },
             ],
           });
         }
@@ -124,7 +147,11 @@ const CardKeyLinkScreen = () => {
         />
       </View>
       <TrackBottomSheet bottomSheetRef={bottomSheetRef} onOpen={readNdef} />
-      <AlreadyLinkedModal showModal={showModal} setShowModal={setShowModal} />
+      <AlreadyLinkedModal
+        message={modalMessage}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </ScreenContainer>
   );
 };

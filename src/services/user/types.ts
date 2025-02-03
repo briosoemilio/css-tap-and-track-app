@@ -36,3 +36,15 @@ export interface ChangePasswordRes {
   message: string;
   data: UserDetails;
 }
+
+export interface WriteCardKeyRes {
+  statusCode: number;
+  message: string;
+  data: UserDetails;
+}
+
+export interface CardKeyCheckRes {
+  statusCode: number;
+  message: string;
+  data: { isCardKeyUsed: boolean };
+}
