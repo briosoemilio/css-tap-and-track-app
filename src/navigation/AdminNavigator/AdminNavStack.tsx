@@ -34,6 +34,8 @@ import AdminWriteTagScreen from "src/features/admin/screens/AdminWriteTagScreen/
 import AdminReportSummaryScreen from "src/features/admin/screens/AdminReportsScreen/AdminReportSummaryScreen";
 import { GenerateReportResData } from "src/services/report/types";
 import AdminMaintenanceScreen from "src/features/admin/screens/AdminMaintenanceScreen/AdminMaintenanceScreen";
+import CardKeyLinkScreen from "src/features/card-key/screens/CardKeyLinkScreen/CardKeyLinkScreen";
+import CardKeyOnboardingScreen from "src/features/card-key/screens/CardKeyOnboardingScreen/CardKeyOnboardingScreen";
 
 export type AdminNavParams = {
   main: undefined;
@@ -147,6 +149,11 @@ const AdminNavStack = () => {
         name="maintenance"
         component={AdminMaintenanceScreen}
       />
+      <AdminStack.Screen
+        name="card-key-onboarding"
+        component={CardKeyOnboardingScreen}
+      />
+      <AdminStack.Screen name="card-key-link" component={CardKeyLinkScreen} />
     </AdminStack.Navigator>
   );
 };

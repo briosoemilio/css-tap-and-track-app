@@ -39,8 +39,8 @@ const DetailComponent = (props: {
       <View style={styles.attributeContainer}>
         <View style={styles.attributeDetails}>
           <Text variant="body2regular">{value}</Text>
-          {value === "Archive Computer" && <DeleteIcon />}
-          {value === "Activate Computer" && <AddIcon />}
+          {value === "Archive PC" && <DeleteIcon />}
+          {value === "Activate PC" && <AddIcon />}
         </View>
       </View>
     </TouchableOpacity>
@@ -158,7 +158,7 @@ const AdminComputerDetailsScreen = () => {
             onPress={() => archiveComputerBottomSheetRef?.current?.expand()}
             details={{
               detail: "archive",
-              value: isArchived ? "Activate Computer" : "Archive Computer",
+              value: isArchived ? "Activate PC" : "Archive PC",
             }}
           />
         </View>
