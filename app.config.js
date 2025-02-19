@@ -7,7 +7,7 @@ export default () => {
       slug: "ccs-tap-and-track",
       scheme: "ccstapandtrack",
       version: VERSION,
-      owner: "briosoemilio",
+      owner: "jandalealcaraz",
       orientation: "portrait",
       icon: "./assets/icon.png",
       userInterfaceStyle: "dark",
