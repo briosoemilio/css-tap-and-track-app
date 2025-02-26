@@ -12,9 +12,11 @@ import { getErrorMessage } from "src/services/helpers";
 import { login } from "src/services/login/login";
 import { TrackType } from "../track/types";
 import { Role } from "src/types/Role";
+import ArchivedAccountModal from "./components/ArchivedAccountModal";
 
 const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigation = useUnauthNavigation();
   const { onLogin } = useAuth();
   const methods = useForm<LoginFormBody>({
@@ -39,6 +41,11 @@ const LoginScreen = () => {
 
       if (errMessage.includes("Account unauthorized")) {
         setError("email", { message: "Unauthorized account." });
+      }
+
+      if (errMessage.includes("User archived")) {
+        setShowModal(true);
+        setError("email", { message: "Archived account." });
       }
     } finally {
       setIsLoading(false);
@@ -91,6 +98,7 @@ const LoginScreen = () => {
           </View>
         </ScrollView>
       </ScreenContainer>
+      <ArchivedAccountModal showModal={showModal} setShowModal={setShowModal} />
     </FormProvider>
   );
 };
