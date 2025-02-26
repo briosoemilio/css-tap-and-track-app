@@ -114,7 +114,11 @@ const ItemDetailsComponent = (props: { itemDetails: ItemDetails }) => {
         <AttributeRow
           variant={"body1bold"}
           attributeName={"Condition"}
-          value={upperCase(itemDetails?.status)}
+          value={
+            itemDetails?.isArchived
+              ? "ARCHIVED"
+              : upperCase(itemDetails?.status)
+          }
           valueStyle={
             itemDetails?.status === "AVAILABLE"
               ? { color: COLORS.green }
@@ -163,7 +167,11 @@ const ComputerDetailsComponent = (props: {
         <AttributeRow
           variant="body1bold"
           attributeName="Condition"
-          value={upperCase(computerDetails?.status)}
+          value={
+            computerDetails?.isArchived
+              ? "ARCHIVED"
+              : upperCase(computerDetails?.status)
+          }
           valueStyle={
             computerDetails?.status === "AVAILABLE"
               ? { color: COLORS.green }
