@@ -18,6 +18,7 @@ import { ComputerLogDetails } from "src/services/computer-logs/types";
 import { getErrorMessage } from "src/services/helpers";
 import { ERROR_MESSAGES } from "../constants";
 import TimeInModal from "./TimeInModal";
+import ArchivedModal from "./ArchivedModal";
 
 const ComputerRunningComponent = (props: {
   computerDetails: ComputerDetails;
@@ -25,10 +26,9 @@ const ComputerRunningComponent = (props: {
 }) => {
   const { computerDetails, isSameUser } = props;
   const { secondsLeft, startTimer, stopTimer, isRunning } = useTimeLog();
-  console.log({ isRunning });
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<
-    "time-out" | "error" | "time-in"
+    "time-out" | "error" | "time-in" | "archived"
   >();
   const [computerLogDetails, setComputerLogDetails] =
     useState<ComputerLogDetails>();
@@ -65,16 +65,22 @@ const ComputerRunningComponent = (props: {
       startTimer();
     } catch (err: any) {
       console.log("Error time in -> ", err);
+
       const errMessage = getErrorMessage(err);
       if (errMessage === ERROR_MESSAGES.ALREADY_LOGGED_IN) {
         const { computer: errorComputer } = JSON.parse(err.message);
         setErrorPCDetails(errorComputer);
         openModal("error");
       }
+      if (errMessage.includes("Computer archived")) {
+        const { computer: errorComputer } = JSON.parse(err.message);
+        setErrorPCDetails(errorComputer);
+        openModal("archived");
+      }
     }
   };
 
-  const openModal = (type: "time-out" | "error" | "time-in") => {
+  const openModal = (type: "time-out" | "error" | "time-in" | "archived") => {
     setShowModal(true);
     setModalType(type);
   };
@@ -169,6 +175,14 @@ const ComputerRunningComponent = (props: {
           showModal={showModal}
           setShowModal={setShowModal}
           onPressClose={startTimer}
+        />
+      )}
+
+      {modalType === "archived" && (
+        <ArchivedModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          computerName={errorPCDetails?.name as unknown as string}
         />
       )}
     </>
