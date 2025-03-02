@@ -7,7 +7,7 @@ import Button from "src/components/Button";
 import NFCIcon from "@assets/icons/nfc-track-icon.svg";
 import Text from "src/components/Text";
 import { useTrackNavigation } from "../useTrackNavigation";
-import NfcManager, { NfcTech, Ndef } from "react-native-nfc-manager";
+import NfcManager, { NfcTech, Ndef, TagEvent } from "react-native-nfc-manager";
 import { TagType, TrackType } from "../types";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { TrackNavParams } from "../TrackNavigator";
@@ -33,6 +33,37 @@ const NFCTrackScreen = () => {
 
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
+  const cardKeyHandler = async (tag: TagEvent | null) => {
+    const isCardKeyUsed = await checkCardKey(tag?.id as string);
+    if (isCardKeyUsed && !user) {
+      unAuthNav?.reset({
+        index: 1,
+        routes: [
+          { name: "login" },
+          { name: "card-login", params: { cardKey: tag?.id } },
+        ],
+      });
+    }
+  };
+
+  const peripheralHandler = async (tag: TagEvent | null) => {
+    if (tag?.ndefMessage) {
+      for (let record of tag.ndefMessage) {
+        if (record?.tnf === Ndef.TNF_WELL_KNOWN) {
+          const payload = record?.payload as unknown as Uint8Array;
+          const text = JSON.parse(Ndef.text.decodePayload(payload));
+          if (typeof text === "string") {
+            const json = JSON.parse(text);
+            peripheralDetected(json);
+          } else {
+            peripheralDetected(text);
+          }
+          return;
+        }
+      }
+    }
+  };
+
   async function readNdef() {
     try {
       // register for the NFC tag with NDEF in it
@@ -40,33 +71,11 @@ const NFCTrackScreen = () => {
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
 
-      // Check if Admin Key Card
-      const isCardKeyUsed = await checkCardKey(tag?.id as string);
-      if (isCardKeyUsed && !user) {
-        unAuthNav?.reset({
-          index: 1,
-          routes: [
-            { name: "login" },
-            { name: "card-login", params: { cardKey: tag?.id } },
-          ],
-        });
-      }
+      // Peripheral handler
+      await peripheralHandler(tag);
 
-      if (tag?.ndefMessage) {
-        for (let record of tag.ndefMessage) {
-          if (record?.tnf === Ndef.TNF_WELL_KNOWN) {
-            const payload = record?.payload as unknown as Uint8Array;
-            const text = JSON.parse(Ndef.text.decodePayload(payload));
-            if (typeof text === "string") {
-              const json = JSON.parse(text);
-              peripheralDetected(json);
-            } else {
-              peripheralDetected(text);
-            }
-            return;
-          }
-        }
-      }
+      // Card Key Handler
+      await cardKeyHandler(tag);
     } catch (ex) {
       console.warn("Oops!", ex);
     } finally {
