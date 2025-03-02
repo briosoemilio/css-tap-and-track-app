@@ -47,6 +47,7 @@ const NFCTrackScreen = () => {
   };
 
   const peripheralHandler = async (tag: TagEvent | null) => {
+    let willNavigate = false;
     if (tag?.ndefMessage) {
       for (let record of tag.ndefMessage) {
         if (record?.tnf === Ndef.TNF_WELL_KNOWN) {
@@ -55,13 +56,15 @@ const NFCTrackScreen = () => {
           if (typeof text === "string") {
             const json = JSON.parse(text);
             peripheralDetected(json);
+            willNavigate = true;
           } else {
             peripheralDetected(text);
+            willNavigate = true;
           }
-          return;
         }
       }
     }
+    return { willNavigate };
   };
 
   async function readNdef() {
@@ -72,7 +75,8 @@ const NFCTrackScreen = () => {
       const tag = await NfcManager.getTag();
 
       // Peripheral handler
-      await peripheralHandler(tag);
+      const { willNavigate } = await peripheralHandler(tag);
+      if (!!willNavigate) return;
 
       // Card Key Handler
       await cardKeyHandler(tag);
